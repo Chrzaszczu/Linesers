@@ -2,13 +2,12 @@ package com.patryk.main;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-
-import java.util.ArrayList;
+import java.util.List;
 
 public class Lattice
 {
     private LevelDesign levelDesign = new LevelDesign();
-    private ArrayList<ArrayList<SquareTile>> squareTiles;
+    private List<List<SquareTile>> squareTiles;
 
     private Vector startingTile;
 
@@ -17,36 +16,35 @@ public class Lattice
 
     private float tileSize;
 
-    private boolean isFinished()
+    public List<List<SquareTile>> getSquareTiles()
     {
-        if(numberOfGlowingFinalTiles == numberOfFinalTiles)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return squareTiles;
     }
 
-    private boolean isWithinLattice(int x, int y)
+    public Vector getStartingTile()
     {
-        if(y < 0 || y >= squareTiles.size())
+        return startingTile;
+    }
+
+    public boolean isFinished()
+    {
+        for(List<SquareTile> tempSquareTiles: squareTiles)
         {
-            return false;
+            for(SquareTile sqrTiles: tempSquareTiles)
+            {
+                if(sqrTiles.getTileType() == TileType.FINAL_TILE)
+                {
+                    numberOfGlowingFinalTiles += 1;
+                }
+            }
         }
 
-        if(x < 0 || x >= squareTiles.get(0).size())
-        {
-            return false;
-        }
-
-        return true;
+        return numberOfGlowingFinalTiles == numberOfFinalTiles;
     }
 
     private void turnOff()
     {
-        for(ArrayList<SquareTile> tempSquareTiles: squareTiles)
+        for(List<SquareTile> tempSquareTiles: squareTiles)
         {
             for(SquareTile sqrTiles: tempSquareTiles)
             {
@@ -57,75 +55,11 @@ public class Lattice
         numberOfGlowingFinalTiles = 0;
     }
 
-    private boolean isAnotherLine(int tileX, int tileY, Vector lineDirectionA, Vector lineDirectionB)
-    {
-        if(lineDirectionA != lineDirectionB)
-        {
-            if(lineDirectionB.vectorNorm() > 0)
-            {
-                if(isWithinLattice(tileX + lineDirectionB.getX(), tileY - lineDirectionB.getY()))
-                {
-                    if(!squareTiles.get(tileY - lineDirectionB.getY()).get(tileX + lineDirectionB.getX()).isGlowing())
-                    {
-                        return true;
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
-
-    private void checkConnections(int nextTileX, int nextTileY, Vector previousLineDirection)
-    {
-        for(Vector lineDirection: squareTiles.get(nextTileY).get(nextTileX).getLinesDirection())
-        {
-            if(Vector.normOfSum(lineDirection, previousLineDirection) == 0)
-            {
-                squareTiles.get(nextTileY).get(nextTileX).setGlowing(true);
-
-                if(squareTiles.get(nextTileY).get(nextTileX).getTileType() == TileType.FINAL_TILE)
-                {
-                    numberOfGlowingFinalTiles += 1;
-                }
-
-                for(Vector lineDirectionB: squareTiles.get(nextTileY).get(nextTileX).getLinesDirection())
-                {
-                    if(isAnotherLine(nextTileX, nextTileY, lineDirection, lineDirectionB))
-                    {
-                        checkConnections(nextTileX + lineDirectionB.getX(),
-                                nextTileY - lineDirectionB.getY(), lineDirectionB);
-                    }
-                }
-            }
-        }
-    }
-
-    public boolean checkConnections()
-    {
-        int startingTileX = startingTile.getX();
-        int startingTileY = startingTile.getY();
-
-        for(Vector lineDirection: squareTiles.get(startingTileY).get(startingTileX).getLinesDirection())
-        {
-            if(lineDirection.vectorNorm() > 0)
-            {
-                if(isWithinLattice(startingTileX + lineDirection.getX(), startingTileY - lineDirection.getY()))
-                {
-                    checkConnections(startingTileX + lineDirection.getX(),
-                            startingTileY - lineDirection.getY(), lineDirection);
-                }
-            }
-        }
-
-        return isFinished();
-    }
-
     public void onLatticeTouch()
     {
         turnOff();
 
-        for(ArrayList<SquareTile> tempSquareTiles: squareTiles)
+        for(List<SquareTile> tempSquareTiles: squareTiles)
         {
             for(SquareTile sqrTiles: tempSquareTiles)
             {
@@ -139,7 +73,7 @@ public class Lattice
 
     public void addActors(Stage myStage)
     {
-        for(ArrayList<SquareTile> tempSquareTiles: squareTiles)
+        for(List<SquareTile> tempSquareTiles: squareTiles)
         {
             for(SquareTile sqrTiles : tempSquareTiles)
             {
@@ -148,27 +82,31 @@ public class Lattice
         }
     }
 
+    private Vector preparePosition(int tileIndexX, int tileIndexY)
+    {
+        return new Vector(
+                (int)(0.1f * Gdx.graphics.getWidth() + this.tileSize * tileIndexX),
+                (int)(Gdx.graphics.getHeight()/2f + this.tileSize * (squareTiles.size()-2)/2f  - this.tileSize * tileIndexY));
+    }
+
     public void setLattice(int selectedLevel)
     {
         squareTiles = levelDesign.setLevel(selectedLevel);
 
         this.tileSize = (0.8f * Gdx.graphics.getWidth()) / squareTiles.get(0).size();
 
-        int tilePositionX;
-        int tilePositionY = 0;
-        for(ArrayList<SquareTile> tempSquareTiles: squareTiles)
+        int tileIndexX;
+        int tileIndexY = 0;
+        for(List<SquareTile> tempSquareTiles: squareTiles)
         {
-            tilePositionX = 0;
+            tileIndexX = 0;
             for(SquareTile sqrTiles: tempSquareTiles)
             {
-                sqrTiles.setSquareTile(new Vector(
-                        (int)(0.1f * Gdx.graphics.getWidth() + tileSize * tilePositionX),
-                        (int)(Gdx.graphics.getHeight()/2 + tileSize * (squareTiles.size()-2)/2  - tileSize * tilePositionY)),
-                        tileSize);
+                sqrTiles.setSquareTile(preparePosition(tileIndexX, tileIndexY), tileSize);
 
                 if(sqrTiles.getTileType() == TileType.STARTING_TILE)
                 {
-                    startingTile = new Vector(tilePositionX, tilePositionY);
+                    startingTile = new Vector(tileIndexX, tileIndexY);
                 }
 
                 if(sqrTiles.getTileType() == TileType.FINAL_TILE)
@@ -176,9 +114,9 @@ public class Lattice
                     numberOfFinalTiles += 1;
                 }
 
-                tilePositionX += 1;
+                tileIndexX += 1;
             }
-            tilePositionY += 1;
+            tileIndexY += 1;
         }
     }
 }

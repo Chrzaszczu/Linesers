@@ -18,7 +18,6 @@ public class SquareTile
     private TileType tileType;
 
     private int rotationAngle;
-
     private boolean glowing = false;
 
     public boolean isGlowing()
@@ -29,7 +28,7 @@ public class SquareTile
     public void setGlowing(boolean glowing)
     {
         this.glowing = glowing;
-        setImage(glowing);
+        updateImage(glowing);
     }
 
     public int rotateTile(int rotationAngle)
@@ -51,11 +50,6 @@ public class SquareTile
     public LinkedList<Vector> getLinesDirection()
     {
         return linesDirection;
-    }
-
-    public Vector getLineDirection(int i)
-    {
-        return linesDirection.get(i);
     }
 
     public TileType getTileType()
@@ -136,7 +130,7 @@ public class SquareTile
         }
     }
 
-    private void setImage(boolean glowing)
+    private void updateImage(boolean glowing)
     {
         if(glowing)
         {

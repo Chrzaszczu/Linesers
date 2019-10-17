@@ -2,12 +2,13 @@ package com.patryk.main;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class LevelDesign
 {
-    private ArrayList<ArrayList<SquareTile>> squareTiles = new ArrayList<ArrayList<SquareTile>>();
+    private List<List<SquareTile>> squareTiles = new ArrayList<List<SquareTile>>();
 
-    private ArrayList<ArrayList<SquareTile>> levelTmp()
+    private List<List<SquareTile>> levelTmp()
     {
         squareTiles.add(new ArrayList<SquareTile>(Arrays.asList(
                 new SquareTile(TileType.ONE_LINE,0),
@@ -44,7 +45,7 @@ public class LevelDesign
         return squareTiles;
     }
 
-    public ArrayList<ArrayList<SquareTile>> setLevel(int levelNumber)
+    public List<List<SquareTile>> setLevel(int levelNumber)
     {
         return levelTmp();
     }

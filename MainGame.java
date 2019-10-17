@@ -14,23 +14,31 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class MainGame implements Screen
 {
-    private MyGame myGame;
+    private final MyGame myGame;
     private Stage myStage;
     private ImageButton returnButton;
 
     private Lattice squareLattice;
+    private ConnectionChecker connectionChecker;
     private GameState gameState;
 
     private long lastTouch = 0;
+
+    public MainGame (MyGame myGame)
+    {
+        this.myGame = myGame;
+    }
 
     @Override
     public void show()
     {
         returnButton = new ImageButton(new TextureRegionDrawable(
-                new TextureRegion(myGame.myAssets.get("START.png", Texture.class))));
+                new TextureRegion(MyGame.myAssets.get("START.png", Texture.class))));
 
         squareLattice = new Lattice();
         squareLattice.setLattice(1);
+
+        connectionChecker = new ConnectionChecker(squareLattice.getSquareTiles(), squareLattice.getStartingTile());
 
         gameState = new GameState();
 
@@ -42,7 +50,8 @@ public class MainGame implements Screen
         squareLattice.addActors(myStage);
         myStage.addActor(returnButton);
         Gdx.input.setInputProcessor(myStage);
-        squareLattice.checkConnections();
+
+        connectionChecker.checkConnections();
     }
 
     @Override
@@ -55,14 +64,8 @@ public class MainGame implements Screen
                 lastTouch = System.currentTimeMillis();
 
                 squareLattice.onLatticeTouch();
-                if(squareLattice.checkConnections())
-                {
-                    gameState.setFinished(true);
-                }
-                else
-                {
-                    gameState.setFinished(false);
-                }
+                connectionChecker.checkConnections();
+                gameState.setFinished(squareLattice.isFinished());
             }
         }
 
@@ -111,10 +114,5 @@ public class MainGame implements Screen
 
         squareLattice = null;
         returnButton = null;
-    }
-
-    public MainGame (MyGame myGame)
-    {
-        this.myGame = myGame;
     }
 }

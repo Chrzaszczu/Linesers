@@ -5,12 +5,18 @@ public class Vector
     private int x;
     private int y;
 
+    public Vector(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+
     public double vectorNorm()
     {
         return Math.sqrt(x * x + y * y);
     }
 
-    public static Vector sum(Vector vector1, Vector vector2)
+    private static Vector sum(Vector vector1, Vector vector2)
     {
         return new Vector(vector1.getX() + vector2.getX(), vector1.getY() + vector2.getY());
     }
@@ -57,11 +63,5 @@ public class Vector
     public int getY()
     {
         return y;
-    }
-
-    public Vector(int x, int y)
-    {
-        this.x = x;
-        this.y = y;
     }
 }

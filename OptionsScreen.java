@@ -14,20 +14,35 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class OptionsScreen implements Screen
 {
-    private MyGame myGame;
+    private final MyGame myGame;
     private Stage myStage;
 
     private ImageButton returnButton;
     private TextureRegion imgPanel;
 
-    @Override
-    public void show()
+    public OptionsScreen(MyGame myGame)
     {
-
+        this.myGame = myGame;
     }
 
     @Override
-    public void render(float delta) {
+    public void show()
+    {
+        myStage = new Stage(new ScreenViewport());
+
+        imgPanel = new TextureRegion(MyGame.myAssets.get("Options.png", Texture.class));
+        returnButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.get("START.png", Texture.class))));
+
+        returnButton.setPosition(50,50);
+        returnButton.setSize(200,100);
+
+        myStage.addActor(returnButton);
+        Gdx.input.setInputProcessor(myStage);
+    }
+
+    @Override
+    public void render(float delta)
+    {
         Gdx.gl.glClearColor(1,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -40,9 +55,9 @@ public class OptionsScreen implements Screen
            }
         });
 
-        myGame.batch.begin();
-        myGame.batch.draw(imgPanel,(float)(Gdx.graphics.getWidth()*0.2), 0, Gdx.graphics.getWidth() / 2 - imgPanel.getRegionWidth() / 2, Gdx.graphics.getHeight() / 2 - imgPanel.getRegionHeight() / 2, (float)(0.6 * Gdx.graphics.getWidth()), (Gdx.graphics.getHeight()), (float)1, (float)1,0);
-        myGame.batch.end();
+        MyGame.batch.begin();
+        MyGame.batch.draw(imgPanel,(float)(Gdx.graphics.getWidth()*0.2), 0, Gdx.graphics.getWidth() / 2 - imgPanel.getRegionWidth() / 2, Gdx.graphics.getHeight() / 2 - imgPanel.getRegionHeight() / 2, (float)(0.6 * Gdx.graphics.getWidth()), (Gdx.graphics.getHeight()), (float)1, (float)1,0);
+        MyGame.batch.end();
 
         myStage.draw();
     }
@@ -72,25 +87,12 @@ public class OptionsScreen implements Screen
     }
 
     @Override
-    public void dispose() {
+    public void dispose()
+    {
         myGame.dispose();
         myStage.dispose();
 
         imgPanel = null;
         returnButton = null;
-    }
-
-    public OptionsScreen(MyGame myGame){
-        this.myGame = myGame;
-        myStage = new Stage(new ScreenViewport());
-
-        imgPanel = new TextureRegion(myGame.myAssets.get("Options.png", Texture.class));
-        returnButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(myGame.myAssets.get("START.png", Texture.class))));
-
-        returnButton.setPosition(50,50);
-        returnButton.setSize(200,100);
-
-        myStage.addActor(returnButton);
-        Gdx.input.setInputProcessor(myStage);
     }
 }
