@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MyGame extends Game {
+public class MyGame extends Game
+{
     public static SpriteBatch batch;
 
     public static final AssetManager myAssets = new AssetManager(); // NIE UZYWAC STATIC NA ANDROIDZIE

@@ -1,23 +1,36 @@
 package com.patryk.main;
 
-public class Options {
+import com.badlogic.gdx.Preferences;
+
+public class Options
+{
     private static final Options instance = new Options();
-    public static Options getInstance(){
+    public static Options getInstance()
+    {
         return instance;
     }
 
-    // variables
+    private Preferences myPreferences;
+
     private int volume;
+    private int finishedLevel;
     private boolean sound;
 
-    // methods
-    public Options(){
+    private Options()
+    {
     }
 
-    public int getVolume(){
+    public void loadConfigurationFile()
+    {
+
+    }
+
+    public int getVolume()
+    {
         return volume;
     }
-    public boolean ifSound(){
+    public boolean isSound()
+    {
         return sound;
     }
 }
