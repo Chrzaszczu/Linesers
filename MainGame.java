@@ -14,6 +14,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class MainGame implements Screen
 {
+    private final static int TOUCH_COOLDOWN = 250;
+
     private final MyGame myGame;
     private Stage myStage;
     private ImageButton returnButton;
@@ -23,10 +25,12 @@ public class MainGame implements Screen
     private GameState gameState;
 
     private long lastTouch = 0;
+    private int levelNumber;
 
-    public MainGame (MyGame myGame)
+    public MainGame (MyGame myGame, int levelNumber)
     {
         this.myGame = myGame;
+        this.levelNumber = levelNumber;
     }
 
     @Override
@@ -59,7 +63,7 @@ public class MainGame implements Screen
     {
         if(Gdx.input.isTouched())
         {
-            if(System.currentTimeMillis() - lastTouch > 250)
+            if(System.currentTimeMillis() - lastTouch > TOUCH_COOLDOWN)
             {
                 lastTouch = System.currentTimeMillis();
 

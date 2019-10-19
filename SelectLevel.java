@@ -1,87 +1,86 @@
 package com.patryk.main;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-public class SelectLevel implements Screen
+import java.util.LinkedList;
+import java.util.List;
+
+public class SelectLevel
 {
-    private final MyGame myGame;
-    private Stage myStage;
-    private ImageButton returnButton;
+    private final static int NUMBER_OF_LEVELS_PER_PAGE = 12;
+    private final static int NUMBER_OF_ROWS = 3;
 
-    public SelectLevel(MyGame myGame)
+    private List<LevelButton> levelButtons = new LinkedList<LevelButton>();
+    private float buttonSize;
+    private int page;
+
+    public SelectLevel(int page)
     {
-        this.myGame = myGame;
+        this.page = page;
     }
 
-    @Override
-    public void show()
+    public void nextPage()
     {
-        myStage = new Stage(new ScreenViewport());
 
-        returnButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.get("START.png", Texture.class))));
-
-        returnButton.setPosition(50,50);
-        returnButton.setSize(200,100);
-
-        myStage.addActor(returnButton);
-        Gdx.input.setInputProcessor(myStage);
     }
 
-    @Override
-    public void render(float delta)
+    public void previousPage()
     {
-        Gdx.gl.glClearColor(1,0,0,1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        
+    }
 
-        returnButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y)
+    public List<LevelButton> getLevelButtons()
+    {
+        return levelButtons;
+    }
+
+    public void setLevelButtons()
+    {
+        for(int levelNumber = 0; levelNumber < NUMBER_OF_LEVELS_PER_PAGE; ++levelNumber)
+        {
+                levelButtons.add(new LevelButton(levelNumber));
+                levelButtons.get(levelNumber).updateImage();
+        }
+
+        setPositions();
+    }
+
+    public void addActors(Stage myStage)
+    {
+        for(LevelButton lButton: levelButtons)
+        {
+            myStage.addActor(lButton.getImageButton());
+        }
+    }
+
+    private int prepareX(int indexX)
+    {
+        return (int)(0.1f * Gdx.graphics.getWidth() + (0.1f * Gdx.graphics.getWidth() + this.buttonSize) * indexX);
+    }
+
+    private int prepareY(int indexY)
+    {
+        return (int)(Gdx.graphics.getHeight()/2f + 2 * this.buttonSize - (this.buttonSize + 0.1f * Gdx.graphics.getWidth()) * indexY);
+    }
+
+    private void setPositions()
+    {
+        this.buttonSize = (0.8f * Gdx.graphics.getWidth()) / (NUMBER_OF_LEVELS_PER_PAGE/NUMBER_OF_ROWS);
+        int indexX = 0;
+        int indexY = 0;
+
+        for(LevelButton lButtons: levelButtons)
+        {
+            lButtons.getImageButton().setPosition(prepareX(indexX), prepareY(indexY));
+            lButtons.getImageButton().setSize(this.buttonSize, this.buttonSize);
+
+            indexX += 1;
+            if(indexX == NUMBER_OF_ROWS)
             {
-                dispose();
-                myGame.setScreen(new Menu(myGame));
+                indexX = 0;
+                indexY += 1;
             }
-        });
-
-        myStage.draw();
-    }
-
-    @Override
-    public void resize(int width, int height)
-    {
-
-    }
-
-    @Override
-    public void pause()
-    {
-
-    }
-
-    @Override
-    public void resume()
-    {
-
-    }
-
-    @Override
-    public void hide()
-    {
-
-    }
-
-    @Override
-    public void dispose()
-    {
-
+        }
     }
 }

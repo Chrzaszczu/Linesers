@@ -6,6 +6,8 @@ import java.util.List;
 
 public class LevelDesign
 {
+    public final static int NUMBER_OF_LEVELS = 20;
+
     private List<List<SquareTile>> squareTiles = new ArrayList<List<SquareTile>>();
 
     private List<List<SquareTile>> levelTmp()

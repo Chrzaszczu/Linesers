@@ -21,6 +21,11 @@ public class Menu implements Screen
 
     private Stage myStage;
 
+    public Menu(MyGame myGame)
+    {
+        this.myGame = myGame;
+    }
+
     @Override
     public void show()
     {
@@ -50,7 +55,7 @@ public class Menu implements Screen
             @Override
             public void clicked(InputEvent event, float x, float y){
                 dispose();
-                myGame.setScreen(new MainGame(myGame));
+                myGame.setScreen(new SelectLevelScreen(myGame));
             }
         });
 
@@ -64,11 +69,6 @@ public class Menu implements Screen
         });
 
         myStage.draw();
-    }
-
-    public Menu(MyGame myGame)
-    {
-        this.myGame = myGame;
     }
 
     @Override
