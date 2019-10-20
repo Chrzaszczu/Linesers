@@ -43,10 +43,10 @@ public class SelectLevelScreen implements Screen
         returnButton.setPosition(50,50);
         returnButton.setSize(200,100);
 
-        nextPage.setPosition(Gdx.graphics.getWidth() * 0.3f,Gdx.graphics.getHeight() * 0.13f);
+        nextPage.setPosition(Gdx.graphics.getWidth() * 0.6f,Gdx.graphics.getHeight() * 0.13f);
         nextPage.setSize(100,100);
 
-        previousPage.setPosition(Gdx.graphics.getWidth() * 0.6f,Gdx.graphics.getHeight() * 0.13f);
+        previousPage.setPosition(Gdx.graphics.getWidth() * 0.3f,Gdx.graphics.getHeight() * 0.13f);
         previousPage.setSize(100,100);
 
         selectLevel = new SelectLevel(0);
@@ -67,7 +67,7 @@ public class SelectLevelScreen implements Screen
 
         for(LevelButton lButton: selectLevel.getLevelButtons())
         {
-            final int levelNumber = lButton.getLevelNumber();
+            final int levelNum = lButton.getLevelNumber();
 
             lButton.getImageButton().addListener(new ClickListener()
             {
@@ -75,7 +75,7 @@ public class SelectLevelScreen implements Screen
                 public void clicked(InputEvent event, float x, float y)
                 {
                     dispose();
-                    myGame.setScreen(new MainGame(myGame, levelNumber));
+                    myGame.setScreen(new MainGame(myGame, levelNum));
                 }
             });
         }
@@ -95,8 +95,7 @@ public class SelectLevelScreen implements Screen
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                //dispose();
-                //myGame.setScreen(new Menu(myGame));
+                selectLevel.nextPage();
             }
         });
 
@@ -105,8 +104,7 @@ public class SelectLevelScreen implements Screen
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                //dispose();
-                //myGame.setScreen(new Menu(myGame));
+                selectLevel.previousPage();
             }
         });
 

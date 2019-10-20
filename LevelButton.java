@@ -2,6 +2,7 @@ package com.patryk.main;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
@@ -9,6 +10,18 @@ public class LevelButton
 {
     private int levelNumber;
     private ImageButton imageButton;
+
+    public void enable()
+    {
+        imageButton.setVisible(true);
+        imageButton.setTouchable(Touchable.enabled);
+    }
+
+    public void disable()
+    {
+        imageButton.setVisible(false);
+        imageButton.setTouchable(Touchable.disabled);
+    }
 
     public void setLevelNumber(int levelNumber)
     {

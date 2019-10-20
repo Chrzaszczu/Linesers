@@ -22,12 +22,42 @@ public class SelectLevel
 
     public void nextPage()
     {
-
+        if(page + 1 < Math.ceil((double)LevelDesign.NUMBER_OF_LEVELS/(double)NUMBER_OF_LEVELS_PER_PAGE))
+        {
+            this.page += 1;
+            for(LevelButton lButton: levelButtons)
+            {
+                lButton.setLevelNumber(lButton.getLevelNumber() + NUMBER_OF_LEVELS_PER_PAGE);
+                if(lButton.getLevelNumber() + NUMBER_OF_LEVELS_PER_PAGE < LevelDesign.NUMBER_OF_LEVELS)
+                {
+                    lButton.enable();
+                }
+                else
+                {
+                    lButton.disable();
+                }
+            }
+        }
     }
 
     public void previousPage()
     {
-        
+        if(page > 0)
+        {
+            this.page -= 1;
+            for(LevelButton lButton: levelButtons)
+            {
+                lButton.setLevelNumber(lButton.getLevelNumber() - NUMBER_OF_LEVELS_PER_PAGE);
+                if(lButton.getLevelNumber() - NUMBER_OF_LEVELS_PER_PAGE >= 0)
+                {
+                    lButton.enable();
+                }
+                else
+                {
+                    lButton.disable();
+                }
+            }
+        }
     }
 
     public List<LevelButton> getLevelButtons()
