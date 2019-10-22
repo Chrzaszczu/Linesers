@@ -1,6 +1,5 @@
 package com.patryk.main;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -10,6 +9,11 @@ public class LevelButton
 {
     private int levelNumber;
     private ImageButton imageButton;
+
+    public LevelButton(int levelNumber)
+    {
+        this.levelNumber = levelNumber;
+    }
 
     public void enable()
     {
@@ -40,11 +44,6 @@ public class LevelButton
 
     public void updateImage()
     {
-        this.imageButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.get("START.png", Texture.class))));
-    }
-
-    public LevelButton(int levelNumber)
-    {
-        this.levelNumber = levelNumber;
+        this.imageButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.START_BUTTON))));
     }
 }

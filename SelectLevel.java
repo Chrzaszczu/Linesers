@@ -27,7 +27,6 @@ public class SelectLevel
             this.page += 1;
             for(LevelButton lButton: levelButtons)
             {
-                lButton.setLevelNumber(lButton.getLevelNumber() + NUMBER_OF_LEVELS_PER_PAGE);
                 if(lButton.getLevelNumber() + NUMBER_OF_LEVELS_PER_PAGE < LevelDesign.NUMBER_OF_LEVELS)
                 {
                     lButton.enable();
@@ -36,6 +35,7 @@ public class SelectLevel
                 {
                     lButton.disable();
                 }
+                lButton.setLevelNumber(lButton.getLevelNumber() + NUMBER_OF_LEVELS_PER_PAGE);
             }
         }
     }
@@ -47,7 +47,6 @@ public class SelectLevel
             this.page -= 1;
             for(LevelButton lButton: levelButtons)
             {
-                lButton.setLevelNumber(lButton.getLevelNumber() - NUMBER_OF_LEVELS_PER_PAGE);
                 if(lButton.getLevelNumber() - NUMBER_OF_LEVELS_PER_PAGE >= 0)
                 {
                     lButton.enable();
@@ -56,6 +55,7 @@ public class SelectLevel
                 {
                     lButton.disable();
                 }
+                lButton.setLevelNumber(lButton.getLevelNumber() - NUMBER_OF_LEVELS_PER_PAGE);
             }
         }
     }
@@ -91,7 +91,7 @@ public class SelectLevel
 
     private int prepareY(int indexY)
     {
-        return (int)(Gdx.graphics.getHeight()/2f + 2 * this.buttonSize - (this.buttonSize + 0.1f * Gdx.graphics.getWidth()) * indexY);
+        return (int)(0.9f * Gdx.graphics.getHeight()/2f + 2f * this.buttonSize - (this.buttonSize + 0.05f * Gdx.graphics.getWidth()) * indexY);
     }
 
     private void setPositions()

@@ -20,6 +20,12 @@ public class SquareTile
     private int rotationAngle;
     private boolean glowing = false;
 
+    public SquareTile(TileType tileType, int rotationAngle)
+    {
+        this.rotationAngle = rotationAngle;
+        this.tileType = tileType;
+    }
+
     public boolean isGlowing()
     {
         return glowing;
@@ -70,14 +76,14 @@ public class SquareTile
                 linesDirection.add(new Vector(0,1));
                 linesDirection.add(new Vector(0,-1));
                 imageButton = new ImageButton(
-                        new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.get("tmp1.png", Texture.class))));
+                        new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.TILE_ONE))));
                 break;
 
             case TWO_LINES:
                 linesDirection.add(new Vector(0,1));
                 linesDirection.add(new Vector(1,0));
                 imageButton = new ImageButton(
-                        new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.get("tmp2.png", Texture.class))));
+                        new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.TILE_TWO))));
                 break;
 
             case THREE_LINES:
@@ -85,7 +91,7 @@ public class SquareTile
                 linesDirection.add(new Vector(1,0));
                 linesDirection.add(new Vector(-1,0));
                 imageButton = new ImageButton(
-                        new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.get("tmp3.png", Texture.class))));
+                        new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.TILE_THREE))));
                 break;
 
             case FOUR_LINES:
@@ -94,26 +100,26 @@ public class SquareTile
                 linesDirection.add(new Vector(0,-1));
                 linesDirection.add(new Vector(-1,0));
                 imageButton = new ImageButton(
-                        new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.get("tmp4.png", Texture.class))));
+                        new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.TILE_FOUR))));
                 break;
 
             case HALF_LINE:
                 linesDirection.add(new Vector(0,1));
                 imageButton = new ImageButton(
-                        new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.get("tmp5.png", Texture.class))));
+                        new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.TILE_HALF))));
                 break;
 
             case STARTING_TILE:
                 linesDirection.add(new Vector(0,1));
                 imageButton = new ImageButton(
-                        new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.get("tmps.png", Texture.class))));
+                        new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.TILE_START))));
                 imageButton.setTouchable(Touchable.disabled);
                 break;
 
             case FINAL_TILE:
                 linesDirection.add(new Vector(0,1));
                 imageButton = new ImageButton(
-                        new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.get("tmpk.png", Texture.class))));
+                        new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.TILE_FINAL))));
                 imageButton.setTouchable(Touchable.disabled);
                 break;
         }
@@ -138,37 +144,37 @@ public class SquareTile
             {
                 case ONE_LINE:
                     imageButton.getStyle().imageUp =
-                            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.get("tmp1g.png", Texture.class)));
+                            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.GLOWING_TILE_ONE)));
                     break;
 
                 case TWO_LINES:
                     imageButton.getStyle().imageUp =
-                            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.get("tmp2g.png", Texture.class)));
+                            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.GLOWING_TILE_TWO)));
                     break;
 
                 case THREE_LINES:
                     imageButton.getStyle().imageUp =
-                            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.get("tmp3g.png", Texture.class)));
+                            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.GLOWING_TILE_THREE)));
                     break;
 
                 case FOUR_LINES:
                     imageButton.getStyle().imageUp =
-                            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.get("tmp4g.png", Texture.class)));
+                            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.GLOWING_TILE_FOUR)));
                     break;
 
                 case HALF_LINE:
                     imageButton.getStyle().imageUp =
-                            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.get("tmp5g.png", Texture.class)));
+                            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.GLOWING_TILE_HALF)));
                     break;
 
                 case STARTING_TILE:
                     imageButton.getStyle().imageUp =
-                            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.get("tmps.png", Texture.class)));
+                            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.TILE_START)));
                     break;
 
                 case FINAL_TILE:
                     imageButton.getStyle().imageUp =
-                            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.get("tmpkg.png", Texture.class)));
+                            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.GLOWING_TILE_FINAL)));
                     break;
             }
         }
@@ -178,45 +184,39 @@ public class SquareTile
             {
                 case ONE_LINE:
                     imageButton.getStyle().imageUp =
-                            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.get("tmp1.png", Texture.class)));
+                            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.TILE_ONE)));
                     break;
 
                 case TWO_LINES:
                     imageButton.getStyle().imageUp =
-                            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.get("tmp2.png", Texture.class)));
+                            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.TILE_TWO)));
                     break;
 
                 case THREE_LINES:
                     imageButton.getStyle().imageUp =
-                            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.get("tmp3.png", Texture.class)));
+                            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.TILE_THREE)));
                     break;
 
                 case FOUR_LINES:
                     imageButton.getStyle().imageUp =
-                            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.get("tmp4.png", Texture.class)));
+                            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.TILE_FOUR)));
                     break;
 
                 case HALF_LINE:
                     imageButton.getStyle().imageUp =
-                            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.get("tmp5.png", Texture.class)));
+                            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.TILE_HALF)));
                     break;
 
                 case STARTING_TILE:
                     imageButton.getStyle().imageUp =
-                            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.get("tmps.png", Texture.class)));
+                            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.TILE_START)));
                     break;
 
                 case FINAL_TILE:
                     imageButton.getStyle().imageUp =
-                            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.get("tmpk.png", Texture.class)));
+                            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.TILE_FINAL)));
                     break;
             }
         }
-    }
-
-    public SquareTile(TileType tileType, int rotationAngle)
-    {
-        this.rotationAngle = rotationAngle;
-        this.tileType = tileType;
     }
 }

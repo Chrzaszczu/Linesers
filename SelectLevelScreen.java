@@ -24,6 +24,10 @@ public class SelectLevelScreen implements Screen
     private ImageButton nextPage;
     private ImageButton previousPage;
 
+    private TextureRegion background;
+    private TextureRegion backgroundStars;
+    private TextureRegion backgroundBigStars;
+
     private int page = 0;
 
     public SelectLevelScreen(MyGame myGame)
@@ -36,9 +40,13 @@ public class SelectLevelScreen implements Screen
     {
         myStage = new Stage(new ScreenViewport());
 
-        returnButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.get("START.png", Texture.class))));
-        nextPage = new ImageButton(new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.get("Options.png", Texture.class))));
-        previousPage = new ImageButton(new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.get("Options.png", Texture.class))));
+        returnButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.START_BUTTON))));
+        nextPage = new ImageButton(new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.PANEL))));
+        previousPage = new ImageButton(new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.PANEL))));
+
+        background = new TextureRegion(MyGame.myAssets.getTexture(Assets.BACKGROUND_BLUE));
+        backgroundStars = new TextureRegion(MyGame.myAssets.getTexture(Assets.STARS_SMALL));
+        backgroundBigStars = new TextureRegion(MyGame.myAssets.getTexture(Assets.STARS_BIG));
 
         returnButton.setPosition(50,50);
         returnButton.setSize(200,100);
@@ -108,31 +116,34 @@ public class SelectLevelScreen implements Screen
             }
         });
 
+        MyGame.batch.enableBlending();
+        MyGame.batch.begin();
+        MyGame.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        MyGame.batch.draw(backgroundStars, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        MyGame.batch.draw(backgroundBigStars, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        MyGame.batch.end();
+
         myStage.draw();
     }
 
     @Override
     public void resize(int width, int height)
     {
-
     }
 
     @Override
     public void pause()
     {
-
     }
 
     @Override
     public void resume()
     {
-
     }
 
     @Override
     public void hide()
     {
-
     }
 
     @Override
@@ -140,6 +151,5 @@ public class SelectLevelScreen implements Screen
     {
         myGame.dispose();
         myStage.dispose();
-
     }
 }
