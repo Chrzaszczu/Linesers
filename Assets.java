@@ -1,6 +1,10 @@
 package com.patryk.main;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.PixmapLoader;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 
 import java.util.ArrayList;
@@ -34,8 +38,33 @@ public class Assets
 
     private List<String> graphicsList = new ArrayList<String>(Arrays.asList(TILE_ONE, TILE_TWO, TILE_THREE, TILE_FOUR, TILE_HALF,
             TILE_START, TILE_FINAL, GLOWING_TILE_ONE, GLOWING_TILE_TWO, GLOWING_TILE_THREE, GLOWING_TILE_FOUR, GLOWING_TILE_HALF,
-            GLOWING_TILE_FINAL, START_BUTTON, PANEL, BACKGROUND_BLUE, BACKGROUND_AQUA, STARS_SMALL, STARS_BIG, LOGO2));
+            GLOWING_TILE_FINAL, START_BUTTON, PANEL, BACKGROUND_BLUE, BACKGROUND_AQUA, STARS_SMALL, STARS_BIG, LOGO2, "NebulaBlueS.png"));
     private List<String> soundList = new ArrayList<String>();
+
+    public Texture getTexture(String textureName, int width, int height)
+    {
+        Texture originalTexture;
+        Texture newTexture;
+
+        originalTexture = myAssets.get(textureName, Texture.class);
+        if(!originalTexture.getTextureData().isPrepared())
+        {
+            originalTexture.getTextureData().prepare();
+        }
+
+        Pixmap originalPixmap = originalTexture.getTextureData().consumePixmap();
+        Pixmap newPixmap = new Pixmap(width, height, originalPixmap.getFormat());
+        newPixmap.drawPixmap(originalPixmap,
+                0,0, originalPixmap.getWidth(), originalPixmap.getHeight(),
+                0, 0, newPixmap.getWidth(), newPixmap.getHeight());
+
+        newTexture = new Texture(newPixmap);
+
+        originalPixmap.dispose();
+        newPixmap.dispose();
+
+        return newTexture;
+    }
 
     public Texture getTexture(String assetName)
     {

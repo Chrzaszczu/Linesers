@@ -24,15 +24,19 @@ public class SelectLevelScreen implements Screen
     private ImageButton nextPage;
     private ImageButton previousPage;
 
-    private TextureRegion background;
-    private TextureRegion backgroundStars;
-    private TextureRegion backgroundBigStars;
+    private Texture background;
 
     private int page = 0;
 
     public SelectLevelScreen(MyGame myGame)
     {
         this.myGame = myGame;
+    }
+
+    public SelectLevelScreen(MyGame myGame, Texture background)
+    {
+        this.myGame = myGame;
+        this.background = background;
     }
 
     @Override
@@ -44,9 +48,10 @@ public class SelectLevelScreen implements Screen
         nextPage = new ImageButton(new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.PANEL))));
         previousPage = new ImageButton(new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.PANEL))));
 
-        background = new TextureRegion(MyGame.myAssets.getTexture(Assets.BACKGROUND_BLUE));
-        backgroundStars = new TextureRegion(MyGame.myAssets.getTexture(Assets.STARS_SMALL));
-        backgroundBigStars = new TextureRegion(MyGame.myAssets.getTexture(Assets.STARS_BIG));
+        if(background == null)
+        {
+            background = MyGame.myAssets.getTexture("NebulaBlueS.png", Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        }
 
         returnButton.setPosition(50,50);
         returnButton.setSize(200,100);
@@ -94,7 +99,7 @@ public class SelectLevelScreen implements Screen
             public void clicked(InputEvent event, float x, float y)
             {
                 dispose();
-                myGame.setScreen(new Menu(myGame));
+                myGame.setScreen(new Menu(myGame, background));
             }
         });
 
@@ -119,8 +124,6 @@ public class SelectLevelScreen implements Screen
         MyGame.batch.enableBlending();
         MyGame.batch.begin();
         MyGame.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        MyGame.batch.draw(backgroundStars, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        MyGame.batch.draw(backgroundBigStars, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         MyGame.batch.end();
 
         myStage.draw();

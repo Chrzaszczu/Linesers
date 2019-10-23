@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -20,9 +19,7 @@ public class Menu implements Screen
     private ImageButton startButton;
     private ImageButton optionsButton;
 
-    private TextureRegion background;
-    private TextureRegion backgroundStars;
-    private TextureRegion backgroundBigStars;
+    public Texture background;
 
     private Texture logo;
 
@@ -31,6 +28,12 @@ public class Menu implements Screen
     public Menu(MyGame myGame)
     {
         this.myGame = myGame;
+    }
+
+    public Menu(MyGame myGame, Texture background)
+    {
+        this.myGame = myGame;
+        this.background = background;
     }
 
     @Override
@@ -43,10 +46,12 @@ public class Menu implements Screen
         optionsButton = new ImageButton(
                 new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.START_BUTTON))));
 
-        background = new TextureRegion(MyGame.myAssets.getTexture(Assets.BACKGROUND_BLUE));
-        backgroundStars = new TextureRegion(MyGame.myAssets.getTexture(Assets.STARS_SMALL));
-        backgroundBigStars = new TextureRegion(MyGame.myAssets.getTexture(Assets.STARS_BIG));
         logo = new Texture(Assets.LOGO2);
+
+        if(background == null)
+        {
+            background = MyGame.myAssets.getTexture("NebulaBlueS.png", Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        }
 
         startButton.setPosition(Gdx.graphics.getWidth()/2f - startButton.getWidth()/2,Gdx.graphics.getHeight()/2);
         optionsButton.setPosition(Gdx.graphics.getWidth()/2f - startButton.getWidth()/2,Gdx.graphics.getHeight()/2f - 1.3f * optionsButton.getHeight());
@@ -66,7 +71,7 @@ public class Menu implements Screen
             @Override
             public void clicked(InputEvent event, float x, float y){
                 dispose();
-                myGame.setScreen(new SelectLevelScreen(myGame));
+                myGame.setScreen(new SelectLevelScreen(myGame, background));
             }
         });
 
@@ -82,8 +87,6 @@ public class Menu implements Screen
         MyGame.batch.enableBlending();
         MyGame.batch.begin();
         MyGame.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        MyGame.batch.draw(backgroundStars, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        MyGame.batch.draw(backgroundBigStars, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         MyGame.batch.draw(logo, 0.85f * Gdx.graphics.getWidth(), 0.01f * Gdx.graphics.getHeight(),0.12f * Gdx.graphics.getWidth(), 0.095f * Gdx.graphics.getHeight());
         MyGame.batch.end();
 
@@ -123,8 +126,5 @@ public class Menu implements Screen
 
         startButton = null;
         optionsButton = null;
-        background = null;
-        backgroundStars = null;
-        backgroundBigStars = null;
     }
 }
