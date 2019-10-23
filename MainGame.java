@@ -20,9 +20,7 @@ public class MainGame implements Screen
     private Stage myStage;
 
     private ImageButton returnButton;
-    private TextureRegion background;
-    private TextureRegion backgroundStars;
-    private TextureRegion backgroundBigStars;
+    private Texture background;
 
     private Lattice squareLattice;
     private ConnectionChecker connectionChecker;
@@ -43,9 +41,10 @@ public class MainGame implements Screen
         returnButton = new ImageButton(new TextureRegionDrawable(
                 new TextureRegion(MyGame.myAssets.getTexture(Assets.START_BUTTON))));
 
-        background = new TextureRegion(MyGame.myAssets.getTexture(Assets.BACKGROUND_AQUA));
-        backgroundStars = new TextureRegion(MyGame.myAssets.getTexture(Assets.STARS_SMALL));
-        backgroundBigStars = new TextureRegion(MyGame.myAssets.getTexture(Assets.STARS_BIG));
+        if(background == null)
+        {
+            background = MyGame.myAssets.getTexture(Assets.BACKGROUND_AQUA, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        }
 
         squareLattice = new Lattice();
         squareLattice.setLattice(1);
@@ -96,8 +95,6 @@ public class MainGame implements Screen
         MyGame.batch.enableBlending();
         MyGame.batch.begin();
         MyGame.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        MyGame.batch.draw(backgroundStars, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        MyGame.batch.draw(backgroundBigStars, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         MyGame.batch.end();
 
         myStage.act(Gdx.graphics.getDeltaTime());

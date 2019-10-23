@@ -80,7 +80,7 @@ public class Menu implements Screen
             @Override
             public void clicked(InputEvent event, float x, float y){
                 dispose();
-                myGame.setScreen(new OptionsScreen(myGame));
+                myGame.setScreen(new OptionsScreen(myGame, background));
             }
         });
 

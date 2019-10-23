@@ -3,6 +3,7 @@ package com.patryk.main;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -19,13 +20,12 @@ public class OptionsScreen implements Screen
     private ImageButton returnButton;
 
     private TextureRegion imgPanel;
-    private TextureRegion background;
-    private TextureRegion backgroundStars;
-    private TextureRegion backgroundBigStars;
+    private Texture background;
 
-    public OptionsScreen(MyGame myGame)
+    public OptionsScreen(MyGame myGame, Texture background)
     {
         this.myGame = myGame;
+        this.background = background;
     }
 
     @Override
@@ -36,9 +36,10 @@ public class OptionsScreen implements Screen
         imgPanel = new TextureRegion(MyGame.myAssets.getTexture(Assets.PANEL));
         returnButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.START_BUTTON))));
 
-        background = new TextureRegion(MyGame.myAssets.getTexture(Assets.BACKGROUND_BLUE));
-        backgroundStars = new TextureRegion(MyGame.myAssets.getTexture(Assets.STARS_SMALL));
-        backgroundBigStars = new TextureRegion(MyGame.myAssets.getTexture(Assets.STARS_BIG));
+        if(background == null)
+        {
+            background = MyGame.myAssets.getTexture(Assets.BACKGROUND_BLUE, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        }
 
         returnButton.setPosition(50,50);
         returnButton.setSize(200,100);
@@ -58,15 +59,13 @@ public class OptionsScreen implements Screen
            public void clicked(InputEvent event, float x, float y)
            {
                dispose();
-               myGame.setScreen(new Menu(myGame));
+               myGame.setScreen(new Menu(myGame, background));
            }
         });
 
         MyGame.batch.enableBlending();
         MyGame.batch.begin();
         MyGame.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        MyGame.batch.draw(backgroundStars, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        MyGame.batch.draw(backgroundBigStars, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         // OGARNAC PANEL
         MyGame.batch.draw(imgPanel,(float)(Gdx.graphics.getWidth()*0.2), Gdx.graphics.getHeight() / 2 - imgPanel.getRegionHeight() / 2, Gdx.graphics.getWidth() / 2 - imgPanel.getRegionWidth() / 2, Gdx.graphics.getHeight() / 2 - imgPanel.getRegionHeight() / 2, 0.6f * Gdx.graphics.getWidth(), 0.5f * Gdx.graphics.getHeight(), (float)1, (float)1,0);
         MyGame.batch.end();
@@ -106,8 +105,5 @@ public class OptionsScreen implements Screen
 
         imgPanel = null;
         returnButton = null;
-        background = null;
-        backgroundStars = null;
-        backgroundBigStars = null;
     }
 }

@@ -28,17 +28,17 @@ public class Assets
     public final static String GLOWING_TILE_FINAL = "tmpkg.png";
     public final static String START_BUTTON = "START.png";
     public final static String PANEL = "Options.png";
-    public final static String BACKGROUND_BLUE = "NebulaBlue.png";
+    public final static String BACKGROUND_BLUE = "NebulaBlueS.png";
     public final static String BACKGROUND_AQUA = "NebulaAqua.png";
     public final static String STARS_SMALL = "StarsSmall.png";
     public final static String STARS_BIG = "StarsBig2.png";
     public final static String LOGO2 = "Logotmp.png";
 
-    public final AssetManager myAssets = new AssetManager();
+    private final AssetManager myAssets = new AssetManager();
 
     private List<String> graphicsList = new ArrayList<String>(Arrays.asList(TILE_ONE, TILE_TWO, TILE_THREE, TILE_FOUR, TILE_HALF,
             TILE_START, TILE_FINAL, GLOWING_TILE_ONE, GLOWING_TILE_TWO, GLOWING_TILE_THREE, GLOWING_TILE_FOUR, GLOWING_TILE_HALF,
-            GLOWING_TILE_FINAL, START_BUTTON, PANEL, BACKGROUND_BLUE, BACKGROUND_AQUA, STARS_SMALL, STARS_BIG, LOGO2, "NebulaBlueS.png"));
+            GLOWING_TILE_FINAL, START_BUTTON, PANEL, BACKGROUND_BLUE, BACKGROUND_AQUA, STARS_SMALL, STARS_BIG, LOGO2));
     private List<String> soundList = new ArrayList<String>();
 
     public Texture getTexture(String textureName, int width, int height)
