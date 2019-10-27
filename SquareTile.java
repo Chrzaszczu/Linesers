@@ -1,10 +1,13 @@
 package com.patryk.main;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.patryk.main.Assets;
+import com.patryk.main.MyGame;
+import com.patryk.main.Vector;
+
 import java.util.LinkedList;
 
 enum TileType {ONE_LINE, TWO_LINES, THREE_LINES, FOUR_LINES, HALF_LINE, STARTING_TILE, FINAL_TILE}
@@ -15,26 +18,41 @@ public class SquareTile
 
     private LinkedList<Vector> linesDirection = new LinkedList<Vector>();
     private ImageButton imageButton;
-    private TileType tileType;
 
     private int rotationAngle;
-    private boolean glowing = false;
 
-    public SquareTile(TileType tileType, int rotationAngle)
+    public SquareTile()
+    {
+    }
+
+    public void setRotationAngle(int rotationAngle)
     {
         this.rotationAngle = rotationAngle;
-        this.tileType = tileType;
     }
 
-    public boolean isGlowing()
+    protected int getRotationAngle()
     {
-        return glowing;
+        return this.rotationAngle;
     }
 
-    public void setGlowing(boolean glowing)
+    public LinkedList<Vector> getLinesDirection()
     {
-        this.glowing = glowing;
-        updateImage(glowing);
+        return linesDirection;
+    }
+
+    public ImageButton getImageButton()
+    {
+        return imageButton;
+    }
+
+    protected void setImageButton(ImageButton imageButton, Vector position, float size)
+    {
+        this.imageButton = imageButton;
+        this.imageButton.setTransform(true);
+        this.imageButton.setSize(size, size);
+        this.imageButton.setPosition(position.getX(), position.getY());
+        this.imageButton.setOrigin(size/2, size/2);
+        this.imageButton.setRotation(getRotationAngle());
     }
 
     public int rotateTile(int rotationAngle)
@@ -53,22 +71,7 @@ public class SquareTile
         return this.rotationAngle;
     }
 
-    public LinkedList<Vector> getLinesDirection()
-    {
-        return linesDirection;
-    }
-
-    public TileType getTileType()
-    {
-        return tileType;
-    }
-
-    public ImageButton getImageButton()
-    {
-        return imageButton;
-    }
-
-    public void setSquareTile(Vector position, float size)
+    public void setTile(Vector position, float size)
     {
         switch(tileType)
         {
@@ -89,7 +92,7 @@ public class SquareTile
             case THREE_LINES:
                 linesDirection.add(new Vector(0,1));
                 linesDirection.add(new Vector(1,0));
-                linesDirection.add(new Vector(-1,0));
+                linesDirection.add(new Vector(0,-1));
                 imageButton = new ImageButton(
                         new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.TILE_THREE))));
                 break;
@@ -136,7 +139,7 @@ public class SquareTile
         }
     }
 
-    private void updateImage(boolean glowing)
+    /*private void updateImage(boolean glowing)
     {
         if(glowing)
         {
@@ -218,5 +221,6 @@ public class SquareTile
                     break;
             }
         }
-    }
+    }*/
 }
+

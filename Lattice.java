@@ -2,7 +2,12 @@ package com.patryk.main;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.patryk.main.tiles.TileType;
+
 import java.util.List;
+
+import tiles.SquareTile;
+import tiles.TileType;
 
 public class Lattice
 {
@@ -85,8 +90,8 @@ public class Lattice
     private Vector preparePosition(int tileIndexX, int tileIndexY)
     {
         return new Vector(
-                (int)(0.05f * Gdx.graphics.getWidth() + this.tileSize * tileIndexX),
-                (int)(Gdx.graphics.getHeight()/2f + this.tileSize * (squareTiles.size()-2)/2f  - this.tileSize * tileIndexY));
+                (int)(0.05f * Gdx.graphics.getWidth() + this.tileSize * tileIndexX * 0.999f),
+                (int)(Gdx.graphics.getHeight()/2f + this.tileSize * (squareTiles.size()-2)/2f  - this.tileSize * tileIndexY * 0.999f));
     }
 
     public void setLattice(int selectedLevel)
