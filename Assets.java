@@ -1,6 +1,5 @@
 package com.patryk.main;
 
-
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -26,17 +25,26 @@ public class Assets
     public final static String GLOWING_TILE_FOUR = "glowing_four.png";
     public final static String GLOWING_TILE_HALF = "glowing_half.png";
     public final static String GLOWING_TILE_FINAL = "final.png";
-    public final static String START_BUTTON = "START.png";
-    public final static String PANEL = "Options.png";
-    public final static String BACKGROUND_BLUE = "NebulaBlueS.png";
-    public final static String BACKGROUND_AQUA = "NebulaAqua.png";
+    public final static String START_BUTTON = "Start_BTN.png";
+    public final static String EXIT_BUTTON = "Exit_BTN.png";
+    public final static String OPTIONS_BUTTON = "Settings_BTN.png";
+    public final static String INFO_BUTTON = "Info_BTN.png";
+    public final static String RETURN_BUTTON = "Return_BTN.png";
+    public final static String FORWARD_BUTTON = "Forward_BTN.png";
+    public final static String BACKWARD_BUTTON = "Backward_BTN.png";
+    public final static String LEVEL_LOCKED = "Star_02.png";
+    public final static String LEVEL_FINISHED = "Star_03.png";
+    public final static String PANEL = "Options_panel.png";
+    public final static String BACKGROUND_BLUE = "background.png";
+    public final static String BACKGROUND_AQUA = "background.png";
     public final static String LOGO2 = "Logotmp.png";
 
     private final AssetManager myAssets = new AssetManager();
 
     private List<String> graphicsList = new ArrayList<String>(Arrays.asList(TILE_ONE, TILE_TWO, TILE_THREE, TILE_FOUR, TILE_HALF,
             TILE_START, TILE_FINAL, GLOWING_TILE_ONE, GLOWING_TILE_TWO, GLOWING_TILE_THREE, GLOWING_TILE_FOUR, GLOWING_TILE_HALF,
-            GLOWING_TILE_FINAL, START_BUTTON, PANEL, BACKGROUND_BLUE, BACKGROUND_AQUA, LOGO2));
+            GLOWING_TILE_FINAL, START_BUTTON, EXIT_BUTTON, OPTIONS_BUTTON, INFO_BUTTON, RETURN_BUTTON, FORWARD_BUTTON, BACKWARD_BUTTON,
+            LEVEL_LOCKED, LEVEL_FINISHED, PANEL, BACKGROUND_BLUE, BACKGROUND_AQUA, LOGO2));
     private List<String> soundList = new ArrayList<String>();
 
     public Texture getTexture(String textureName, int width, int height)
@@ -69,10 +77,10 @@ public class Assets
         return myAssets.get(assetName, Texture.class);
     }
 
-    public Animation<TextureRegion> prepareAnimation(Texture texture, int numberOfColumns, int numberOfRows, float frameDuration)
+    public Animation<TextureRegion> prepareAnimation(String assetName, int numberOfColumns, int numberOfRows, float frameDuration)
     {
-        TextureRegion[][] temporary = TextureRegion.split(texture,
-                texture.getWidth() / numberOfColumns, texture.getHeight() / numberOfRows);
+        TextureRegion[][] temporary = TextureRegion.split(getTexture(assetName),
+                getTexture(assetName).getWidth() / numberOfColumns, getTexture(assetName).getHeight() / numberOfRows);
 
         TextureRegion[] preparedFrames = new TextureRegion[numberOfColumns * numberOfRows];
 

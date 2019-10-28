@@ -17,7 +17,7 @@ public class TileFinal extends SquareTile
         initializeImageButton(new ImageButton(new TextureRegionDrawable(
                 new TextureRegion(MyGame.myAssets.getTexture(Assets.TILE_FINAL)))), position, size);
 
-        tileAnimation = MyGame.myAssets.prepareAnimation(MyGame.myAssets.getTexture(Assets.GLOWING_TILE_FINAL),
+        tileAnimation = MyGame.myAssets.prepareAnimation(Assets.GLOWING_TILE_FINAL,
                 NUMBER_OF_COLUMNS, NUMBER_OF_ROWS, FRAME_DURATION);
 
         for(Vector vector: getLinesDirection())

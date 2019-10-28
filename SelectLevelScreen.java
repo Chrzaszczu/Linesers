@@ -25,6 +25,7 @@ public class SelectLevelScreen implements Screen
     private ImageButton previousPage;
 
     private Texture background;
+    private Texture panel;
 
     private int page = 0;
 
@@ -44,29 +45,21 @@ public class SelectLevelScreen implements Screen
     {
         myStage = new Stage(new ScreenViewport());
 
-        returnButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.START_BUTTON))));
-        nextPage = new ImageButton(new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.PANEL))));
-        previousPage = new ImageButton(new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.PANEL))));
+        returnButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.RETURN_BUTTON))));
+        nextPage = new ImageButton(new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.FORWARD_BUTTON))));
+        previousPage = new ImageButton(new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.BACKWARD_BUTTON))));
 
         if(background == null)
         {
-            background = MyGame.myAssets.getTexture("NebulaBlueS.png", Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            background = MyGame.myAssets.getTexture(Assets.BACKGROUND_BLUE, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         }
-
-        returnButton.setPosition(50,50);
-        returnButton.setSize(200,100);
-
-        nextPage.setPosition(Gdx.graphics.getWidth() * 0.6f,Gdx.graphics.getHeight() * 0.13f);
-        nextPage.setSize(100,100);
-
-        previousPage.setPosition(Gdx.graphics.getWidth() * 0.3f,Gdx.graphics.getHeight() * 0.13f);
-        previousPage.setSize(100,100);
 
         selectLevel = new SelectLevel(0);
         selectLevel.setLevelButtons();
         selectLevel.addActors(myStage);
 
         prepareButtonsListener();
+        initializeButtons();
 
         myStage.addActor(returnButton);
         myStage.addActor(nextPage);
@@ -120,6 +113,20 @@ public class SelectLevelScreen implements Screen
         });
     }
 
+    private void initializeButtons()
+    {
+        returnButton.setSize(0.12f * Gdx.graphics.getWidth(), 0.12f * Gdx.graphics.getHeight());
+        returnButton.setPosition(0.05f * Gdx.graphics.getWidth(), 0.01f * Gdx.graphics.getHeight());
+
+        nextPage.setPosition(Gdx.graphics.getWidth() * 0.6f,Gdx.graphics.getHeight() * 0.12f);
+        nextPage.setSize(0.12f * Gdx.graphics.getWidth(), 0.12f * Gdx.graphics.getHeight());
+
+        previousPage.setPosition(Gdx.graphics.getWidth() * 0.3f,Gdx.graphics.getHeight() * 0.12f);
+        previousPage.setSize(0.12f * Gdx.graphics.getWidth(), 0.12f * Gdx.graphics.getHeight());
+
+        panel = MyGame.myAssets.getTexture(Assets.PANEL,(int)(0.8 * Gdx.graphics.getWidth()), (int)(0.6 * Gdx.graphics.getHeight()));
+    }
+
     @Override
     public void render(float delta)
     {
@@ -139,6 +146,7 @@ public class SelectLevelScreen implements Screen
         MyGame.batch.enableBlending();
         MyGame.batch.begin();
         MyGame.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        MyGame.batch.draw(panel, 0.1f * Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 2 - 0.85f * panel.getHeight() / 2);
         MyGame.batch.end();
 
         myStage.draw();

@@ -19,7 +19,7 @@ public class OptionsScreen implements Screen
 
     private ImageButton returnButton;
 
-    private TextureRegion imgPanel;
+    private Texture imgPanel;
     private Texture background;
 
     public OptionsScreen(MyGame myGame, Texture background)
@@ -33,19 +33,34 @@ public class OptionsScreen implements Screen
     {
         myStage = new Stage(new ScreenViewport());
 
-        imgPanel = new TextureRegion(MyGame.myAssets.getTexture(Assets.PANEL));
-        returnButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.START_BUTTON))));
+        imgPanel = MyGame.myAssets.getTexture(Assets.PANEL, (int)(0.8 * Gdx.graphics.getWidth()), (int)(0.6 * Gdx.graphics.getHeight()));
+        returnButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.RETURN_BUTTON))));
 
         if(background == null)
         {
             background = MyGame.myAssets.getTexture(Assets.BACKGROUND_BLUE, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         }
 
-        returnButton.setPosition(50,50);
-        returnButton.setSize(200,100);
+        returnButton.setSize(0.12f * Gdx.graphics.getWidth(), 0.12f * Gdx.graphics.getHeight());
+        returnButton.setPosition(0.05f * Gdx.graphics.getWidth(), 0.01f * Gdx.graphics.getHeight());
+
+        prepareButtonsListener();
 
         myStage.addActor(returnButton);
         Gdx.input.setInputProcessor(myStage);
+    }
+
+    private void prepareButtonsListener()
+    {
+        returnButton.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y)
+            {
+                dispose();
+                myGame.setScreen(new Menu(myGame, background));
+            }
+        });
     }
 
     @Override
@@ -54,20 +69,12 @@ public class OptionsScreen implements Screen
         Gdx.gl.glClearColor(1,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        returnButton.addListener(new ClickListener(){
-           @Override
-           public void clicked(InputEvent event, float x, float y)
-           {
-               dispose();
-               myGame.setScreen(new Menu(myGame, background));
-           }
-        });
+        returnButton.getClickListener();
 
         MyGame.batch.enableBlending();
         MyGame.batch.begin();
         MyGame.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        // OGARNAC PANEL
-        MyGame.batch.draw(imgPanel,(float)(Gdx.graphics.getWidth()*0.2), Gdx.graphics.getHeight() / 2 - imgPanel.getRegionHeight() / 2, Gdx.graphics.getWidth() / 2 - imgPanel.getRegionWidth() / 2, Gdx.graphics.getHeight() / 2 - imgPanel.getRegionHeight() / 2, 0.6f * Gdx.graphics.getWidth(), 0.5f * Gdx.graphics.getHeight(), (float)1, (float)1,0);
+        MyGame.batch.draw(imgPanel, 0.1f * Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 2 - imgPanel.getHeight() / 2);
         MyGame.batch.end();
 
         myStage.draw();

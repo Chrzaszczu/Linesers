@@ -44,6 +44,7 @@ public class LevelButton
 
     public void updateImage()
     {
-        this.imageButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.START_BUTTON))));
+        this.imageButton = new ImageButton(new TextureRegionDrawable(
+                new TextureRegion(MyGame.myAssets.getTexture(Assets.LEVEL_LOCKED))));
     }
 }

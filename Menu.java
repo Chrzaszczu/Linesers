@@ -17,7 +17,9 @@ public class Menu implements Screen
     private MyGame myGame;
 
     private ImageButton startButton;
+    private ImageButton exitButton;
     private ImageButton optionsButton;
+    private ImageButton infoButton;
 
     private Texture background;
     private Texture logo;
@@ -42,22 +44,74 @@ public class Menu implements Screen
 
         startButton = new ImageButton(
                 new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.START_BUTTON))));
+        exitButton = new ImageButton(
+                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.EXIT_BUTTON))));
         optionsButton = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.START_BUTTON))));
+                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.OPTIONS_BUTTON))));
+        infoButton = new ImageButton(
+                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.INFO_BUTTON))));
 
         logo = new Texture(Assets.LOGO2);
 
         if(background == null)
         {
-            background = MyGame.myAssets.getTexture("NebulaBlueS.png", Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            background = MyGame.myAssets.getTexture(Assets.BACKGROUND_BLUE, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         }
 
-        startButton.setPosition(Gdx.graphics.getWidth()/2f - startButton.getWidth()/2,Gdx.graphics.getHeight()/2);
-        optionsButton.setPosition(Gdx.graphics.getWidth()/2f - startButton.getWidth()/2,Gdx.graphics.getHeight()/2f - 1.3f * optionsButton.getHeight());
+        initializeButtons();
+        prepareButtonsListener();
 
         myStage.addActor(startButton);
         myStage.addActor(optionsButton);
+        myStage.addActor(exitButton);
+        myStage.addActor(infoButton);
         Gdx.input.setInputProcessor(myStage);
+    }
+
+    private void initializeButtons()
+    {
+        startButton.setSize(0.5f * Gdx.graphics.getWidth(), 0.12f * Gdx.graphics.getHeight());
+        exitButton.setSize(0.5f * Gdx.graphics.getWidth(), 0.12f * Gdx.graphics.getHeight());
+        optionsButton.setSize(0.12f * Gdx.graphics.getWidth(), 0.12f * Gdx.graphics.getHeight());
+        infoButton.setSize(0.12f * Gdx.graphics.getWidth(), 0.12f * Gdx.graphics.getHeight());
+
+        startButton.setPosition(Gdx.graphics.getWidth()/2f - startButton.getWidth()/2,Gdx.graphics.getHeight()/2);
+        exitButton.setPosition(Gdx.graphics.getWidth()/2f - exitButton.getWidth()/2,Gdx.graphics.getHeight()/2f - 1.1f * exitButton.getHeight());
+        optionsButton.setPosition(0.05f * Gdx.graphics.getWidth(), 0.01f * Gdx.graphics.getHeight());
+        infoButton.setPosition(0.1f * Gdx.graphics.getWidth() + infoButton.getWidth(), 0.01f * Gdx.graphics.getHeight());
+    }
+
+    private void prepareButtonsListener()
+    {
+        startButton.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y)
+            {
+                dispose();
+                myGame.setScreen(new SelectLevelScreen(myGame, background));
+            }
+        });
+
+        exitButton.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y)
+            {
+                dispose();
+                System.exit(0);
+            }
+        });
+
+        optionsButton.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y)
+            {
+                dispose();
+                myGame.setScreen(new OptionsScreen(myGame, background));
+            }
+        });
     }
 
     @Override
@@ -65,23 +119,9 @@ public class Menu implements Screen
     {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        startButton.addListener(new ClickListener()
-        {
-            @Override
-            public void clicked(InputEvent event, float x, float y){
-                dispose();
-                myGame.setScreen(new SelectLevelScreen(myGame, background));
-            }
-        });
-
-        optionsButton.addListener(new ClickListener()
-        {
-            @Override
-            public void clicked(InputEvent event, float x, float y){
-                dispose();
-                myGame.setScreen(new OptionsScreen(myGame, background));
-            }
-        });
+        startButton.getClickListener();
+        optionsButton.getClickListener();
+        exitButton.getClickListener();
 
         MyGame.batch.enableBlending();
         MyGame.batch.begin();

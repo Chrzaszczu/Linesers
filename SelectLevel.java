@@ -86,17 +86,17 @@ public class SelectLevel
 
     private int prepareX(int indexX)
     {
-        return (int)(0.1f * Gdx.graphics.getWidth() + (0.1f * Gdx.graphics.getWidth() + this.buttonSize) * indexX);
+        return (int)(0.175f * Gdx.graphics.getWidth() + (0.1f * Gdx.graphics.getWidth() + this.buttonSize) * indexX);
     }
 
     private int prepareY(int indexY)
     {
-        return (int)(0.9f * Gdx.graphics.getHeight()/2f + 2f * this.buttonSize - (this.buttonSize + 0.05f * Gdx.graphics.getWidth()) * indexY);
+        return (int)(0.95f * Gdx.graphics.getHeight()/2f + 2f * this.buttonSize - (this.buttonSize + 0.05f * Gdx.graphics.getWidth()) * indexY);
     }
 
     private void setPositions()
     {
-        this.buttonSize = (0.8f * Gdx.graphics.getWidth()) / (NUMBER_OF_LEVELS_PER_PAGE/NUMBER_OF_ROWS);
+        this.buttonSize = (0.6f * Gdx.graphics.getWidth()) / (NUMBER_OF_LEVELS_PER_PAGE/NUMBER_OF_ROWS);
         int indexX = 0;
         int indexY = 0;
 

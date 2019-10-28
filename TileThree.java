@@ -19,7 +19,7 @@ public class TileThree extends SquareTile
         initializeImageButton(new ImageButton(new TextureRegionDrawable(
                 new TextureRegion(MyGame.myAssets.getTexture(Assets.TILE_THREE)))), position, size);
 
-        tileAnimation = MyGame.myAssets.prepareAnimation(MyGame.myAssets.getTexture(Assets.GLOWING_TILE_THREE),
+        tileAnimation = MyGame.myAssets.prepareAnimation(Assets.GLOWING_TILE_THREE,
                 NUMBER_OF_COLUMNS, NUMBER_OF_ROWS, FRAME_DURATION);
 
         for(Vector vector: getLinesDirection())
