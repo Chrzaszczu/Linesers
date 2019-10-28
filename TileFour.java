@@ -4,9 +4,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-public class TileOne extends SquareTile
+public class TileFour extends SquareTile
 {
-    public TileOne(int rotationAngle)
+    public TileFour(int rotationAngle)
     {
         setRotationAngle(rotationAngle);
     }
@@ -14,11 +14,13 @@ public class TileOne extends SquareTile
     public void initializeTile(Vector position, float size)
     {
         getLinesDirection().add(new Vector(0,1));
+        getLinesDirection().add(new Vector(1,0));
         getLinesDirection().add(new Vector(0,-1));
+        getLinesDirection().add(new Vector(-1,0));
         initializeImageButton(new ImageButton(new TextureRegionDrawable(
-                new TextureRegion(MyGame.myAssets.getTexture(Assets.TILE_ONE)))), position, size);
+                new TextureRegion(MyGame.myAssets.getTexture(Assets.TILE_FOUR)))), position, size);
 
-        tileAnimation = MyGame.myAssets.prepareAnimation(MyGame.myAssets.getTexture(Assets.GLOWING_TILE_ONE),
+        tileAnimation = MyGame.myAssets.prepareAnimation(MyGame.myAssets.getTexture(Assets.GLOWING_TILE_FOUR),
                 NUMBER_OF_COLUMNS, NUMBER_OF_ROWS, FRAME_DURATION);
 
         for(Vector vector: getLinesDirection())
@@ -36,7 +38,7 @@ public class TileOne extends SquareTile
         else
         {
             getImageButton().getStyle().imageUp = new TextureRegionDrawable(
-                    new TextureRegion(MyGame.myAssets.getTexture(Assets.TILE_ONE)));
+                    new TextureRegion(MyGame.myAssets.getTexture(Assets.TILE_FOUR)));
         }
     }
 }

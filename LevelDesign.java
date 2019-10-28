@@ -13,35 +13,35 @@ public class LevelDesign
     private List<List<SquareTile>> levelTmp()
     {
         squareTiles.add(new ArrayList<SquareTile>(Arrays.asList(
-                new SquareTile(TileType.ONE_LINE,0),
-                new SquareTile(TileType.THREE_LINES, 0),
-                new SquareTile(TileType.THREE_LINES, 0),
-                new SquareTile(TileType.THREE_LINES, 0),
-                new SquareTile(TileType.FINAL_TILE, -180)
+                new TileOne(0),
+                new TileThree(0),
+                new TileThree(0),
+                new TileTwo(0),
+                new TileFinal(-180)
         )));
 
         squareTiles.add(new ArrayList<SquareTile>(Arrays.asList(
-                new SquareTile(TileType.HALF_LINE,-90),
-                new SquareTile(TileType.THREE_LINES, -90),
-                new SquareTile(TileType.THREE_LINES, -90),
-                new SquareTile(TileType.THREE_LINES, -90),
-                new SquareTile(TileType.TWO_LINES, -180)
+                new TileHalf(-90),
+                new TileOne(-90),
+                new TileThree(-90),
+                new TileTwo(-90),
+                new TileOne(0)
         )));
 
         squareTiles.add(new ArrayList<SquareTile>(Arrays.asList(
-                new SquareTile(TileType.HALF_LINE,-90),
-                new SquareTile(TileType.THREE_LINES, -90),
-                new SquareTile(TileType.THREE_LINES, -90),
-                new SquareTile(TileType.THREE_LINES, -90),
-                new SquareTile(TileType.TWO_LINES, -180)
+                new TileHalf(0),
+                new TileThree(0),
+                new TileThree(0),
+                new TileThree(0),
+                new TileTwo(0)
         )));
 
         squareTiles.add(new ArrayList<SquareTile>(Arrays.asList(
-                new SquareTile(TileType.STARTING_TILE,-90),
-                new SquareTile(TileType.TWO_LINES, -270),
-                new SquareTile(TileType.TWO_LINES, -270),
-                new SquareTile(TileType.TWO_LINES, -270),
-                new SquareTile(TileType.TWO_LINES, -180)
+                new TileStart(-90),
+                new TileTwo(-270),
+                new TileTwo(-270),
+                new TileTwo(-270),
+                new TileTwo(-270)
         )));
 
         return squareTiles;

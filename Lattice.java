@@ -2,12 +2,8 @@ package com.patryk.main;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.patryk.main.tiles.TileType;
 
 import java.util.List;
-
-import tiles.SquareTile;
-import tiles.TileType;
 
 public class Lattice
 {
@@ -31,13 +27,24 @@ public class Lattice
         return startingTile;
     }
 
+    public void updateAnimations(float stateTime)
+    {
+        for(List<SquareTile> tempSquareTiles: squareTiles)
+        {
+            for(SquareTile sqrTiles: tempSquareTiles)
+            {
+                sqrTiles.updateImage(stateTime);
+            }
+        }
+    }
+
     public boolean isFinished()
     {
         for(List<SquareTile> tempSquareTiles: squareTiles)
         {
             for(SquareTile sqrTiles: tempSquareTiles)
             {
-                if(sqrTiles.getTileType() == TileType.FINAL_TILE)
+                if(sqrTiles.getClass() == TileFinal.class)
                 {
                     numberOfGlowingFinalTiles += 1;
                 }
@@ -45,19 +52,6 @@ public class Lattice
         }
 
         return numberOfGlowingFinalTiles == numberOfFinalTiles;
-    }
-
-    private void turnOff()
-    {
-        for(List<SquareTile> tempSquareTiles: squareTiles)
-        {
-            for(SquareTile sqrTiles: tempSquareTiles)
-            {
-                sqrTiles.setGlowing(false);
-            }
-        }
-
-        numberOfGlowingFinalTiles = 0;
     }
 
     public void onLatticeTouch()
@@ -76,6 +70,19 @@ public class Lattice
         }
     }
 
+    private void turnOff()
+    {
+        for(List<SquareTile> tempSquareTiles: squareTiles)
+        {
+            for(SquareTile sqrTiles: tempSquareTiles)
+            {
+                sqrTiles.setGlowing(false);
+            }
+        }
+
+        numberOfGlowingFinalTiles = 0;
+    }
+
     public void addActors(Stage myStage)
     {
         for(List<SquareTile> tempSquareTiles: squareTiles)
@@ -90,8 +97,8 @@ public class Lattice
     private Vector preparePosition(int tileIndexX, int tileIndexY)
     {
         return new Vector(
-                (int)(0.05f * Gdx.graphics.getWidth() + this.tileSize * tileIndexX * 0.999f),
-                (int)(Gdx.graphics.getHeight()/2f + this.tileSize * (squareTiles.size()-2)/2f  - this.tileSize * tileIndexY * 0.999f));
+                (int)(0.05f * Gdx.graphics.getWidth() + this.tileSize * tileIndexX),
+                (int)(Gdx.graphics.getHeight()/2f + this.tileSize * (squareTiles.size()-2f)/2f  - this.tileSize * tileIndexY));
     }
 
     public void setLattice(int selectedLevel)
@@ -107,14 +114,14 @@ public class Lattice
             tileIndexX = 0;
             for(SquareTile sqrTiles: tempSquareTiles)
             {
-                sqrTiles.setSquareTile(preparePosition(tileIndexX, tileIndexY), tileSize);
+                sqrTiles.initializeTile(preparePosition(tileIndexX, tileIndexY), tileSize);
 
-                if(sqrTiles.getTileType() == TileType.STARTING_TILE)
+                if(sqrTiles.getClass() == TileStart.class)
                 {
                     startingTile = new Vector(tileIndexX, tileIndexY);
                 }
 
-                if(sqrTiles.getTileType() == TileType.FINAL_TILE)
+                if(sqrTiles.getClass() == TileFinal.class)
                 {
                     numberOfFinalTiles += 1;
                 }

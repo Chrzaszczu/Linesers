@@ -28,6 +28,7 @@ public class MainGame implements Screen
 
     private long lastTouch = 0;
     private int levelNumber;
+    private float stateTime = 0f;
 
     public MainGame (MyGame myGame, int levelNumber)
     {
@@ -69,6 +70,7 @@ public class MainGame implements Screen
     public void render(float delta)
     {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        stateTime += Gdx.graphics.getDeltaTime();
 
         if(Gdx.input.isTouched())
         {
@@ -81,6 +83,8 @@ public class MainGame implements Screen
                 gameState.setFinished(squareLattice.isFinished());
             }
         }
+
+        squareLattice.updateAnimations(stateTime);
 
         returnButton.addListener(new ClickListener()
         {

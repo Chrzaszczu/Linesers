@@ -66,18 +66,16 @@ public class SelectLevelScreen implements Screen
         selectLevel.setLevelButtons();
         selectLevel.addActors(myStage);
 
+        prepareButtonsListener();
+
         myStage.addActor(returnButton);
         myStage.addActor(nextPage);
         myStage.addActor(previousPage);
         Gdx.input.setInputProcessor(myStage);
     }
 
-    @Override
-    public void render(float delta)
+    private void prepareButtonsListener()
     {
-        Gdx.gl.glClearColor(0,0,1,1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         for(LevelButton lButton: selectLevel.getLevelButtons())
         {
             final int levelNum = lButton.getLevelNumber();
@@ -120,6 +118,23 @@ public class SelectLevelScreen implements Screen
                 selectLevel.previousPage();
             }
         });
+    }
+
+    @Override
+    public void render(float delta)
+    {
+        Gdx.gl.glClearColor(0,0,1,1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+
+        for(LevelButton lButton: selectLevel.getLevelButtons())
+        {
+            lButton.getImageButton().getClickListener();
+        }
+
+        returnButton.getClickListener();
+        nextPage.getClickListener();
+        previousPage.getClickListener();
 
         MyGame.batch.enableBlending();
         MyGame.batch.begin();

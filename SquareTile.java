@@ -1,12 +1,9 @@
 package com.patryk.main;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.patryk.main.Assets;
-import com.patryk.main.MyGame;
-import com.patryk.main.Vector;
+
 
 import java.util.LinkedList;
 
@@ -15,14 +12,38 @@ enum TileType {ONE_LINE, TWO_LINES, THREE_LINES, FOUR_LINES, HALF_LINE, STARTING
 public class SquareTile
 {
     public static final int ROTATION_ANGLE_STEP = -90;
+    public static final int NUMBER_OF_COLUMNS = 6;
+    public static final int NUMBER_OF_ROWS = 1;
+    public static final float FRAME_DURATION = 0.05f;
 
-    private LinkedList<Vector> linesDirection = new LinkedList<Vector>();
-    private ImageButton imageButton;
+    protected Animation<TextureRegion> tileAnimation;
 
+    protected LinkedList<Vector> linesDirection = new LinkedList<Vector>();
+    protected ImageButton imageButton;
+
+    private boolean glowing = false;
     private int rotationAngle;
 
     public SquareTile()
     {
+    }
+
+    public void initializeTile(Vector position, float size)
+    {
+    }
+
+    public void updateImage(float stateTime)
+    {
+    }
+
+    public boolean isGlowing()
+    {
+        return glowing;
+    }
+
+    public void setGlowing(boolean glowing)
+    {
+        this.glowing = glowing;
     }
 
     public void setRotationAngle(int rotationAngle)
@@ -30,7 +51,7 @@ public class SquareTile
         this.rotationAngle = rotationAngle;
     }
 
-    protected int getRotationAngle()
+    public int getRotationAngle()
     {
         return this.rotationAngle;
     }
@@ -45,7 +66,12 @@ public class SquareTile
         return imageButton;
     }
 
-    protected void setImageButton(ImageButton imageButton, Vector position, float size)
+    protected TextureRegion getAnimationFrame(float stateTime)
+    {
+        return this.tileAnimation.getKeyFrame(stateTime, true);
+    }
+
+    protected void initializeImageButton(ImageButton imageButton, Vector position, float size)
     {
         this.imageButton = imageButton;
         this.imageButton.setTransform(true);
@@ -71,7 +97,7 @@ public class SquareTile
         return this.rotationAngle;
     }
 
-    public void setTile(Vector position, float size)
+   /* public void setTile(Vector position, float size)
     {
         switch(tileType)
         {
@@ -137,7 +163,7 @@ public class SquareTile
         {
             vector.rotateVector(rotationAngle);
         }
-    }
+    }*/
 
     /*private void updateImage(boolean glowing)
     {

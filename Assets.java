@@ -1,11 +1,11 @@
 package com.patryk.main;
 
-import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.PixmapLoader;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -67,6 +67,25 @@ public class Assets
     public Texture getTexture(String assetName)
     {
         return myAssets.get(assetName, Texture.class);
+    }
+
+    public Animation<TextureRegion> prepareAnimation(Texture texture, int numberOfColumns, int numberOfRows, float frameDuration)
+    {
+        TextureRegion[][] temporary = TextureRegion.split(texture,
+                texture.getWidth() / numberOfColumns, texture.getHeight() / numberOfRows);
+
+        TextureRegion[] preparedFrames = new TextureRegion[numberOfColumns * numberOfRows];
+
+        int index = 0;
+        for(int row = 0; row < numberOfRows; ++row)
+        {
+            for(int column = 0; column < numberOfColumns; ++column)
+            {
+                preparedFrames[index++] = temporary[row][column];
+            }
+        }
+
+        return new Animation<TextureRegion>(frameDuration, preparedFrames);
     }
 
     public void loadAssets()
