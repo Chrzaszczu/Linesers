@@ -16,11 +16,11 @@ public class TileThree extends SquareTile
         getLinesDirection().add(new Vector(0,1));
         getLinesDirection().add(new Vector(1,0));
         getLinesDirection().add(new Vector(0,-1));
-        initializeImageButton(new ImageButton(new TextureRegionDrawable(
-                new TextureRegion(MyGame.myAssets.getTexture(Assets.TILE_THREE)))), position, size);
+        initializeImageButton(new ImageButton(new TextureRegionDrawable(new TextureRegion(
+                MyGame.myAssets.getTexture(Assets.TILE_THREE)))), position, size);
 
-        tileAnimation = MyGame.myAssets.prepareAnimation(Assets.GLOWING_TILE_THREE,
-                NUMBER_OF_COLUMNS, NUMBER_OF_ROWS, FRAME_DURATION);
+        tileAnimation = MyGame.myAssets.prepareAnimation(
+                Assets.GLOWING_TILE_THREE, NUMBER_OF_COLUMNS, NUMBER_OF_ROWS, FRAME_DURATION);
 
         for(Vector vector: getLinesDirection())
         {

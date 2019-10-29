@@ -14,6 +14,11 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class Menu implements Screen
 {
+    private static final int MAIN_BUTTONS_WIDTH = (int)(0.45f * Gdx.graphics.getWidth());
+    private static final int MAIN_BUTTONS_HEIGHT = (int)(0.07f * Gdx.graphics.getHeight());
+    private static final int MINOR_BUTTONS_WIDTH = (int)(0.1f * Gdx.graphics.getWidth());
+    private static final int MINOR_BUTTONS_HEIGHT = (int)(0.1f * Gdx.graphics.getHeight());
+
     private MyGame myGame;
 
     private ImageButton startButton;
@@ -43,9 +48,9 @@ public class Menu implements Screen
         myStage = new Stage(new ScreenViewport());
 
         startButton = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.START_BUTTON))));
+                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.START_BUTTON, MAIN_BUTTONS_WIDTH, MAIN_BUTTONS_HEIGHT))));
         exitButton = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.EXIT_BUTTON))));
+                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.EXIT_BUTTON, MAIN_BUTTONS_WIDTH, MAIN_BUTTONS_HEIGHT))));
         optionsButton = new ImageButton(
                 new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.OPTIONS_BUTTON))));
         infoButton = new ImageButton(
@@ -70,13 +75,13 @@ public class Menu implements Screen
 
     private void initializeButtons()
     {
-        startButton.setSize(0.5f * Gdx.graphics.getWidth(), 0.12f * Gdx.graphics.getHeight());
-        exitButton.setSize(0.5f * Gdx.graphics.getWidth(), 0.12f * Gdx.graphics.getHeight());
-        optionsButton.setSize(0.12f * Gdx.graphics.getWidth(), 0.12f * Gdx.graphics.getHeight());
-        infoButton.setSize(0.12f * Gdx.graphics.getWidth(), 0.12f * Gdx.graphics.getHeight());
+        startButton.setSize(MAIN_BUTTONS_WIDTH, MAIN_BUTTONS_HEIGHT);
+        exitButton.setSize(MAIN_BUTTONS_WIDTH, MAIN_BUTTONS_HEIGHT);
+        optionsButton.setSize(MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT);
+        infoButton.setSize(MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT);
 
-        startButton.setPosition(Gdx.graphics.getWidth()/2f - startButton.getWidth()/2,Gdx.graphics.getHeight()/2);
-        exitButton.setPosition(Gdx.graphics.getWidth()/2f - exitButton.getWidth()/2,Gdx.graphics.getHeight()/2f - 1.1f * exitButton.getHeight());
+        startButton.setPosition(Gdx.graphics.getWidth()/2 - startButton.getWidth()/2, Gdx.graphics.getHeight()/2);
+        exitButton.setPosition(Gdx.graphics.getWidth()/2 - exitButton.getWidth()/2,Gdx.graphics.getHeight()/2f - 1.3f * exitButton.getHeight());
         optionsButton.setPosition(0.05f * Gdx.graphics.getWidth(), 0.01f * Gdx.graphics.getHeight());
         infoButton.setPosition(0.1f * Gdx.graphics.getWidth() + infoButton.getWidth(), 0.01f * Gdx.graphics.getHeight());
     }

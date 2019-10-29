@@ -13,19 +13,19 @@ public class GameState
     {
         return finished;
     }
-    public boolean getRunning()
+    public boolean isRunning()
     {
         return running;
     }
 
-    public void setRunning(boolean R)
+    public void setRunning(boolean running)
     {
-        running = R;
+        this.running = running;
     }
 
-    public void setFinished(boolean F)
+    public void setFinished(boolean finished)
     {
-        finished = F;
+        this.finished = finished;
     }
 
     public GameState()

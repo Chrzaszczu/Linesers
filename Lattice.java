@@ -96,16 +96,15 @@ public class Lattice
 
     private Vector preparePosition(int tileIndexX, int tileIndexY)
     {
-        return new Vector(
-                (int)(0.05f * Gdx.graphics.getWidth() + this.tileSize * tileIndexX),
-                (int)(Gdx.graphics.getHeight()/2f + this.tileSize * (squareTiles.size()-2f)/2f  - this.tileSize * tileIndexY));
+        return new Vector((0.05f * Gdx.graphics.getWidth() + this.tileSize * tileIndexX),
+                (Gdx.graphics.getHeight()/2f + this.tileSize * (squareTiles.size()-2f)/2f  - this.tileSize * tileIndexY));
     }
 
     public void setLattice(int selectedLevel)
     {
         squareTiles = levelDesign.setLevel(selectedLevel);
 
-        this.tileSize = (0.9f * Gdx.graphics.getWidth()) / squareTiles.get(0).size();
+        this.tileSize = (0.9f * Gdx.graphics.getWidth()) / (float)squareTiles.get(0).size();
 
         int tileIndexX;
         int tileIndexY = 0;

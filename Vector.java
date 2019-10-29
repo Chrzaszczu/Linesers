@@ -5,6 +5,15 @@ public class Vector
     private int x;
     private int y;
 
+    private float fX;
+    private float fY;
+
+    public Vector(float fX, float fY)
+    {
+        this.fX = fX;
+        this.fY = fY;
+    }
+
     public Vector(int x, int y)
     {
         this.x = x;
@@ -63,5 +72,15 @@ public class Vector
     public int getY()
     {
         return y;
+    }
+
+    public float getFX()
+    {
+        return fX;
+    }
+
+    public float getFY()
+    {
+        return fY;
     }
 }

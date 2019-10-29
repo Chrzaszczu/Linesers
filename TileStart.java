@@ -14,8 +14,8 @@ public class TileStart extends SquareTile
     {
         getLinesDirection().add(new Vector(0,1));
 
-        tileAnimation = MyGame.myAssets.prepareAnimation(Assets.TILE_START,
-                NUMBER_OF_COLUMNS, NUMBER_OF_ROWS, FRAME_DURATION);
+        tileAnimation = MyGame.myAssets.prepareAnimation(
+                Assets.TILE_START, NUMBER_OF_COLUMNS, NUMBER_OF_ROWS, FRAME_DURATION);
 
         initializeImageButton(new ImageButton(new TextureRegionDrawable(getAnimationFrame(0f))), position, size);
 

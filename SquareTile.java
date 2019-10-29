@@ -44,16 +44,6 @@ public class SquareTile
         this.glowing = glowing;
     }
 
-    public void setRotationAngle(int rotationAngle)
-    {
-        this.rotationAngle = rotationAngle;
-    }
-
-    public int getRotationAngle()
-    {
-        return this.rotationAngle;
-    }
-
     public LinkedList<Vector> getLinesDirection()
     {
         return linesDirection;
@@ -62,6 +52,16 @@ public class SquareTile
     public ImageButton getImageButton()
     {
         return imageButton;
+    }
+
+    protected void setRotationAngle(int rotationAngle)
+    {
+        this.rotationAngle = rotationAngle;
+    }
+
+    protected int getRotationAngle()
+    {
+        return this.rotationAngle;
     }
 
     protected TextureRegion getAnimationFrame(float stateTime)
@@ -74,7 +74,7 @@ public class SquareTile
         this.imageButton = imageButton;
         this.imageButton.setTransform(true);
         this.imageButton.setSize(size, size);
-        this.imageButton.setPosition(position.getX(), position.getY());
+        this.imageButton.setPosition(position.getFX(), position.getFY());
         this.imageButton.setOrigin(size/2, size/2);
         this.imageButton.setRotation(getRotationAngle());
     }
