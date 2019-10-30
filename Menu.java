@@ -17,7 +17,7 @@ public class Menu implements Screen
     private static final int MAIN_BUTTONS_WIDTH = (int)(0.45f * Gdx.graphics.getWidth());
     private static final int MAIN_BUTTONS_HEIGHT = (int)(0.07f * Gdx.graphics.getHeight());
     private static final int MINOR_BUTTONS_WIDTH = (int)(0.1f * Gdx.graphics.getWidth());
-    private static final int MINOR_BUTTONS_HEIGHT = (int)(0.1f * Gdx.graphics.getHeight());
+    private static final int MINOR_BUTTONS_HEIGHT = (int)(0.06f * Gdx.graphics.getHeight());
 
     private MyGame myGame;
 
@@ -52,9 +52,9 @@ public class Menu implements Screen
         exitButton = new ImageButton(
                 new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.EXIT_BUTTON, MAIN_BUTTONS_WIDTH, MAIN_BUTTONS_HEIGHT))));
         optionsButton = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.OPTIONS_BUTTON))));
+                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.OPTIONS_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
         infoButton = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.INFO_BUTTON))));
+                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.INFO_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
 
         logo = new Texture(Assets.LOGO2);
 
@@ -75,15 +75,15 @@ public class Menu implements Screen
 
     private void initializeButtons()
     {
-        startButton.setSize(MAIN_BUTTONS_WIDTH, MAIN_BUTTONS_HEIGHT);
-        exitButton.setSize(MAIN_BUTTONS_WIDTH, MAIN_BUTTONS_HEIGHT);
-        optionsButton.setSize(MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT);
-        infoButton.setSize(MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT);
-
         startButton.setPosition(Gdx.graphics.getWidth()/2 - startButton.getWidth()/2, Gdx.graphics.getHeight()/2);
         exitButton.setPosition(Gdx.graphics.getWidth()/2 - exitButton.getWidth()/2,Gdx.graphics.getHeight()/2f - 1.3f * exitButton.getHeight());
         optionsButton.setPosition(0.05f * Gdx.graphics.getWidth(), 0.01f * Gdx.graphics.getHeight());
         infoButton.setPosition(0.1f * Gdx.graphics.getWidth() + infoButton.getWidth(), 0.01f * Gdx.graphics.getHeight());
+
+        startButton.setSize(MAIN_BUTTONS_WIDTH, MAIN_BUTTONS_HEIGHT);
+        exitButton.setSize(MAIN_BUTTONS_WIDTH, MAIN_BUTTONS_HEIGHT);
+        optionsButton.setSize(MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT);
+        infoButton.setSize(MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT);
     }
 
     private void prepareButtonsListener()
@@ -134,6 +134,7 @@ public class Menu implements Screen
         MyGame.batch.draw(logo, 0.85f * Gdx.graphics.getWidth(), 0.01f * Gdx.graphics.getHeight(),0.12f * Gdx.graphics.getWidth(), 0.095f * Gdx.graphics.getHeight());
         MyGame.batch.end();
 
+        myStage.act(Gdx.graphics.getDeltaTime());
         myStage.draw();
     }
 

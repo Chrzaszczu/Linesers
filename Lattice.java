@@ -1,19 +1,25 @@
 package com.patryk.main;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Lattice
 {
     private LevelDesign levelDesign = new LevelDesign();
     private List<List<SquareTile>> squareTiles;
+    private List<LaserPosition> laserPositions = new LinkedList<LaserPosition>();
+    private Animation<TextureRegion> laserAnimation = MyGame.myAssets.prepareAnimation(Assets.LASER, 6, 1, 0.05f);
 
     private Vector startingTile;
 
-    private int numberOfFinalTiles = 0;
-    private int numberOfGlowingFinalTiles = 0;
+    private static int numberOfFinalTiles = 0;
+    private static int numberOfGlowingFinalTiles = 0;
 
     private float tileSize;
 
@@ -27,24 +33,40 @@ public class Lattice
         return startingTile;
     }
 
-    public void updateAnimations(float stateTime)
+    public List<LaserPosition> getLaserPositions()
     {
-        for(List<SquareTile> tempSquareTiles: squareTiles)
+        return laserPositions;
+    }
+
+    public void drawLasers(float stateTime)
+    {
+        Vector start;
+        Vector end;
+        int rotation;
+
+        MyGame.batch.begin();
+        for(LaserPosition laserPosition: laserPositions)
         {
-            for(SquareTile sqrTiles: tempSquareTiles)
-            {
-                sqrTiles.updateImage(stateTime);
-            }
+            start = preparePosition(laserPosition.getStartingPoint());
+            end = preparePosition(laserPosition.getEndingPoint());
+            rotation = (end.getFX() - start.getFX() != 0) ? 90 : 0;
+
+            MyGame.batch.draw(laserAnimation.getKeyFrame(stateTime, true),
+                    start.getFX() + (end.getFX() - start.getFX())/2, start.getFY() + (end.getFY() - start.getFY())/2,
+                     tileSize/2, tileSize/2, tileSize, tileSize,1,1, rotation);
         }
+        MyGame.batch.end();
     }
 
     public boolean isFinished()
     {
+        numberOfGlowingFinalTiles = 0;
+
         for(List<SquareTile> tempSquareTiles: squareTiles)
         {
             for(SquareTile sqrTiles: tempSquareTiles)
             {
-                if(sqrTiles.getClass() == TileFinal.class)
+                if(sqrTiles.getClass() == TileFinal.class && sqrTiles.isGlowing())
                 {
                     numberOfGlowingFinalTiles += 1;
                 }
@@ -94,10 +116,10 @@ public class Lattice
         }
     }
 
-    private Vector preparePosition(int tileIndexX, int tileIndexY)
+    private Vector preparePosition(Vector vector)
     {
-        return new Vector((0.05f * Gdx.graphics.getWidth() + this.tileSize * tileIndexX),
-                (Gdx.graphics.getHeight()/2f + this.tileSize * (squareTiles.size()-2f)/2f  - this.tileSize * tileIndexY));
+        return new Vector((0.05f * Gdx.graphics.getWidth() + this.tileSize * vector.getX()),
+                (Gdx.graphics.getHeight()/2f + this.tileSize * (squareTiles.size()-2f)/2f  - this.tileSize * vector.getY()));
     }
 
     public void setLattice(int selectedLevel)
@@ -113,7 +135,7 @@ public class Lattice
             tileIndexX = 0;
             for(SquareTile sqrTiles: tempSquareTiles)
             {
-                sqrTiles.initializeTile(preparePosition(tileIndexX, tileIndexY), tileSize);
+                sqrTiles.initializeTile(preparePosition(new Vector(tileIndexX, tileIndexY)), tileSize);
 
                 if(sqrTiles.getClass() == TileStart.class)
                 {

@@ -5,16 +5,19 @@ import java.util.List;
 public class ConnectionChecker
 {
     private List<List<SquareTile>> squareTiles;
+    private List<LaserPosition> laserPositions;
     private Vector startingTile;
 
-    public ConnectionChecker(List<List<SquareTile>> squareTiles, Vector startingTile)
+    public ConnectionChecker(List<List<SquareTile>> squareTiles, Vector startingTile, List<LaserPosition> laserPositions)
     {
         this.squareTiles = squareTiles;
         this.startingTile = startingTile;
+        this.laserPositions = laserPositions;
     }
 
-    public void checkConnections()
+    public void assambleConnections()
     {
+        laserPositions.clear();
         int startingTileX = startingTile.getX();
         int startingTileY = startingTile.getY();
 
@@ -26,13 +29,16 @@ public class ConnectionChecker
                 int nextTileY = startingTileY - lineDirection.getY();
                 if(isWithinLattice(nextTileX, nextTileY))
                 {
-                    checkConnections(nextTileX, nextTileY, lineDirection);
+                    laserPositions.add(new LaserPosition(
+                            new Vector(startingTileX, startingTileY),
+                            new Vector(nextTileX, nextTileY)));
+                    assambleConnections(nextTileX, nextTileY, lineDirection);
                 }
             }
         }
     }
 
-    private void checkConnections(int nextTileX, int nextTileY, Vector previousLineDirection)
+    private void assambleConnections(int nextTileX, int nextTileY, Vector previousLineDirection)
     {
         SquareTile nextTile = squareTiles.get(nextTileY).get(nextTileX);
 
@@ -44,17 +50,24 @@ public class ConnectionChecker
 
                 for(Vector lineDirectionB: nextTile.getLinesDirection())
                 {
-                    if(isThereAnotherLine(nextTileX, nextTileY, lineDirection, lineDirectionB))
+                    if(isThereAnotherTile(nextTileX, nextTileY, lineDirection, lineDirectionB))
                     {
-                        checkConnections(nextTileX + lineDirectionB.getX(),
-                                nextTileY - lineDirectionB.getY(), lineDirectionB);
+                        laserPositions.add(new LaserPosition(
+                                new Vector(nextTileX, nextTileY),
+                                new Vector(nextTileX + lineDirectionB.getX(), nextTileY - lineDirectionB.getY())));
+
+                        if(!squareTiles.get(nextTileY - lineDirectionB.getY()).get(nextTileX + lineDirectionB.getX()).isGlowing())
+                        {
+                            assambleConnections(nextTileX + lineDirectionB.getX(),
+                                    nextTileY - lineDirectionB.getY(), lineDirectionB);
+                        }
                     }
                 }
             }
         }
     }
 
-    private boolean isThereAnotherLine(int tileX, int tileY, Vector lineDirectionA, Vector lineDirectionB)
+    private boolean isThereAnotherTile(int tileX, int tileY, Vector lineDirectionA, Vector lineDirectionB)
     {
         if(lineDirectionA != lineDirectionB)
         {
@@ -62,10 +75,7 @@ public class ConnectionChecker
             {
                 if(isWithinLattice(tileX + lineDirectionB.getX(), tileY - lineDirectionB.getY()))
                 {
-                    if(!squareTiles.get(tileY - lineDirectionB.getY()).get(tileX + lineDirectionB.getX()).isGlowing())
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
         }

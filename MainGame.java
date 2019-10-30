@@ -18,6 +18,8 @@ public class MainGame implements Screen
     private static final int MINOR_BUTTONS_WIDTH = (int)(0.1f * Gdx.graphics.getWidth());
     private static final int MINOR_BUTTONS_HEIGHT = (int)(0.1f * Gdx.graphics.getHeight());
 
+    private enum GameState {RUNNING, PAUSE, FINISHED}
+
     private final MyGame myGame;
     private Stage myStage;
 
@@ -29,7 +31,7 @@ public class MainGame implements Screen
 
     private Lattice squareLattice;
     private ConnectionChecker connectionChecker;
-    private static GameState gameState;
+    private GameState gameState = GameState.RUNNING;
 
     private long lastTouch = 0;
     private int levelNumber;
@@ -56,14 +58,13 @@ public class MainGame implements Screen
         screenDarkening = MyGame.myAssets.getTexture(Assets.SCREEN_DARKENING);
         background = MyGame.myAssets.getTexture(Assets.BACKGROUND_AQUA, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        gameState = new GameState();
-
         squareLattice = new Lattice();
         squareLattice.setLattice(1);
 
-        connectionChecker = new ConnectionChecker(squareLattice.getSquareTiles(), squareLattice.getStartingTile());
+        connectionChecker = new ConnectionChecker(squareLattice.getSquareTiles(), squareLattice.getStartingTile(), squareLattice.getLaserPositions());
 
         initializeButtons();
+        prepareButtonsListener();
 
         squareLattice.addActors(myStage);
         myStage.addActor(returnButton);
@@ -71,7 +72,7 @@ public class MainGame implements Screen
         myStage.addActor(menuButton);
         Gdx.input.setInputProcessor(myStage);
 
-        connectionChecker.checkConnections();
+        connectionChecker.assambleConnections();
     }
 
     private void initializeButtons()
@@ -92,7 +93,12 @@ public class MainGame implements Screen
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stateTime += Gdx.graphics.getDeltaTime();
 
-        if(gameState.isRunning())
+        MyGame.batch.enableBlending();
+        MyGame.batch.begin();
+        MyGame.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        MyGame.batch.end();
+
+        if(gameState == GameState.RUNNING)
         {
             if (Gdx.input.isTouched())
             {
@@ -101,29 +107,24 @@ public class MainGame implements Screen
                     lastTouch = System.currentTimeMillis();
 
                     squareLattice.onLatticeTouch();
-                    connectionChecker.checkConnections();
-                    gameState.setFinished(squareLattice.isFinished());
+                    connectionChecker.assambleConnections();
+                    gameState = (squareLattice.isFinished()) ? GameState.FINISHED : GameState.RUNNING;
                 }
             }
 
-            squareLattice.updateAnimations(stateTime);
+            squareLattice.drawLasers(stateTime);
         }
-
-        prepareButtonsListener();
-
-        MyGame.batch.enableBlending();
-        MyGame.batch.begin();
-        MyGame.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        MyGame.batch.end();
+        else
+        {
+            squareLattice.drawLasers(0f);
+        }
 
         myStage.act(Gdx.graphics.getDeltaTime());
         myStage.draw();
 
-        if(!gameState.isRunning())
+        if(gameState == GameState.PAUSE)
         {
-            MyGame.batch.begin();
-            MyGame.batch.draw(screenDarkening, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-            MyGame.batch.end();
+            drawMenu();
         }
     }
 
@@ -144,7 +145,7 @@ public class MainGame implements Screen
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                gameState.setRunning(false);
+                gameState = GameState.PAUSE;
             }
         });
 
@@ -153,9 +154,22 @@ public class MainGame implements Screen
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                gameState.setRunning(true);
+                gameState = GameState.RUNNING;
             }
         });
+    }
+
+    private void drawMenu()
+    {
+        Texture pauseWindow = MyGame.myAssets.getTexture(Assets.PAUSE_WINDOW, (int)(0.7 * Gdx.graphics.getWidth()), (int)(0.3 * Gdx.graphics.getHeight()));
+        float windowPositionX = Gdx.graphics.getWidth()/2 - pauseWindow.getWidth()/2;
+        float windowPositionY = Gdx.graphics.getHeight()/2 - pauseWindow.getHeight()/2;
+
+
+        MyGame.batch.begin();
+        MyGame.batch.draw(screenDarkening, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        MyGame.batch.draw(pauseWindow, windowPositionX, windowPositionY, pauseWindow.getWidth(), pauseWindow.getHeight());
+        MyGame.batch.end();
     }
 
     @Override
