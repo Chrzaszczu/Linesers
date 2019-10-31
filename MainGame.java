@@ -1,5 +1,6 @@
 package com.patryk.main;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -10,32 +11,38 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
+import static com.patryk.main.Menu.MINOR_BUTTONS_HEIGHT;
+import static com.patryk.main.Menu.MINOR_BUTTONS_WIDTH;
+
+enum GameState {RUNNING, PAUSE, FINISHED, QUIT}
 
 public class MainGame implements Screen
 {
     private final static int TOUCH_COOLDOWN = 250;
-    private static final int MINOR_BUTTONS_WIDTH = (int)(0.1f * Gdx.graphics.getWidth());
-    private static final int MINOR_BUTTONS_HEIGHT = (int)(0.1f * Gdx.graphics.getHeight());
-
-    private enum GameState {RUNNING, PAUSE, FINISHED}
 
     private final MyGame myGame;
-    private Stage myStage;
+    private Stage myStage = new Stage(new ScreenViewport());
 
-    private ImageButton returnButton;
-    private ImageButton pauseButton;
-    private ImageButton menuButton;
-    private Texture background;
-    private Texture screenDarkening;
+    private ImageButton pauseButton = new ImageButton(
+                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.PAUSE_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
+    private ImageButton returnButton = new ImageButton(
+                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.RETURN_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
+    private ImageButton menuButton = new ImageButton(
+                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.MENU_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
+
+    private Texture background = MyGame.myAssets.getTexture(Assets.BACKGROUND_AQUA, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
     private Lattice squareLattice;
     private ConnectionChecker connectionChecker;
-    private GameState gameState = GameState.RUNNING;
+    private PauseWindow pauseWindow;
+    private GameState gameState;
 
     private long lastTouch = 0;
-    private int levelNumber;
     private float stateTime = 0f;
+    private int levelNumber;
 
     public MainGame (MyGame myGame, int levelNumber)
     {
@@ -47,19 +54,13 @@ public class MainGame implements Screen
     public void show()
     {
         myStage = new Stage(new ScreenViewport());
-
-        pauseButton = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.PAUSE_BUTTON))));
-        returnButton = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.RETURN_BUTTON))));
-        menuButton = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.MENU_BUTTON))));
-
-        screenDarkening = MyGame.myAssets.getTexture(Assets.SCREEN_DARKENING);
-        background = MyGame.myAssets.getTexture(Assets.BACKGROUND_AQUA, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        gameState = GameState.RUNNING;
 
         squareLattice = new Lattice();
         squareLattice.setLattice(1);
+
+        pauseWindow = new PauseWindow(myGame,this, myStage);
+        pauseWindow.initializeWindow();
 
         connectionChecker = new ConnectionChecker(squareLattice.getSquareTiles(), squareLattice.getStartingTile(), squareLattice.getLaserPositions());
 
@@ -124,7 +125,13 @@ public class MainGame implements Screen
 
         if(gameState == GameState.PAUSE)
         {
-            drawMenu();
+            pauseWindow.draw();
+        }
+
+        if(gameState == GameState.QUIT)
+        {
+            dispose();
+            myGame.setScreen(new Menu(myGame));
         }
     }
 
@@ -159,17 +166,9 @@ public class MainGame implements Screen
         });
     }
 
-    private void drawMenu()
+    protected void setGameState(GameState gameState)
     {
-        Texture pauseWindow = MyGame.myAssets.getTexture(Assets.PAUSE_WINDOW, (int)(0.7 * Gdx.graphics.getWidth()), (int)(0.3 * Gdx.graphics.getHeight()));
-        float windowPositionX = Gdx.graphics.getWidth()/2 - pauseWindow.getWidth()/2;
-        float windowPositionY = Gdx.graphics.getHeight()/2 - pauseWindow.getHeight()/2;
-
-
-        MyGame.batch.begin();
-        MyGame.batch.draw(screenDarkening, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        MyGame.batch.draw(pauseWindow, windowPositionX, windowPositionY, pauseWindow.getWidth(), pauseWindow.getHeight());
-        MyGame.batch.end();
+        this.gameState = gameState;
     }
 
     @Override

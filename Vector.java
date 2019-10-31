@@ -5,17 +5,8 @@ public class Vector
     private int x;
     private int y;
 
-    private float fX;
-    private float fY;
-
     public Vector()
     {
-    }
-
-    public Vector(float fX, float fY)
-    {
-        this.fX = fX;
-        this.fY = fY;
     }
 
     public Vector(int x, int y)
@@ -30,12 +21,6 @@ public class Vector
         this.y = y;
     }
 
-    public void setVector(float fX, float fY)
-    {
-        this.fX = fX;
-        this.fY = fY;
-    }
-
     public int getX()
     {
         return x;
@@ -44,16 +29,6 @@ public class Vector
     public int getY()
     {
         return y;
-    }
-
-    public float getFX()
-    {
-        return fX;
-    }
-
-    public float getFY()
-    {
-        return fY;
     }
 
     public double vectorNorm()

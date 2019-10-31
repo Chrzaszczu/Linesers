@@ -1,5 +1,6 @@
 package com.patryk.main;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,15 +18,8 @@ public class Assets
     public final static String TILE_THREE = "tile_three.png";
     public final static String TILE_FOUR = "tile_four.png";
     public final static String TILE_HALF = "tile_half.png";
-    public final static String TILE_START = "starting.png";
     public final static String TILE_FINAL = "tmpk.png";
     public final static String LASER = "Laser.png";
-    public final static String GLOWING_TILE_ONE = "glowing_one.png";
-    public final static String GLOWING_TILE_TWO = "glowing_two.png";
-    public final static String GLOWING_TILE_THREE = "glowing_three.png";
-    public final static String GLOWING_TILE_FOUR = "glowing_four.png";
-    public final static String GLOWING_TILE_HALF = "glowing_half.png";
-    public final static String GLOWING_TILE_FINAL = "final.png";
     public final static String START_BUTTON = "Start_BTN.png";
     public final static String EXIT_BUTTON = "Exit_BTN.png";
     public final static String OPTIONS_BUTTON = "Settings_BTN.png";
@@ -36,6 +30,8 @@ public class Assets
     public final static String PAUSE_BUTTON = "Pause_BTN.png";
     public final static String PLAY_BUTTON = "Play_BTN.png";
     public final static String MENU_BUTTON = "Menu_BTN.png";
+    public final static String OK_BUTTON = "Ok_BTN.png";
+    public final static String CLOSE_BUTTON = "Close_BTN.png";
     public final static String LEVEL_LOCKED = "Star_02.png";
     public final static String LEVEL_FINISHED = "Star_03.png";
     public final static String PANEL = "Options_panel.png";
@@ -44,13 +40,14 @@ public class Assets
     public final static String SCREEN_DARKENING = "Darkening.png";
     public final static String LOGO2 = "Logotmp.png";
     public final static String PAUSE_WINDOW = "Window.png";
+    public final static String RESUME = "Resume_tex.png";
 
     private final AssetManager myAssets = new AssetManager();
 
     private List<String> graphicsList = new ArrayList<String>(Arrays.asList(TILE_ONE, TILE_TWO, TILE_THREE, TILE_FOUR, TILE_HALF,
-            TILE_START, TILE_FINAL, LASER, GLOWING_TILE_ONE, GLOWING_TILE_TWO, GLOWING_TILE_THREE, GLOWING_TILE_FOUR, GLOWING_TILE_HALF,
-            GLOWING_TILE_FINAL, START_BUTTON, EXIT_BUTTON, OPTIONS_BUTTON, INFO_BUTTON, RETURN_BUTTON, FORWARD_BUTTON, BACKWARD_BUTTON,
-            PAUSE_BUTTON, PLAY_BUTTON, MENU_BUTTON, LEVEL_LOCKED, LEVEL_FINISHED, PANEL, BACKGROUND_BLUE, BACKGROUND_AQUA, SCREEN_DARKENING, PAUSE_WINDOW, LOGO2));
+            TILE_FINAL, LASER, START_BUTTON, EXIT_BUTTON, OPTIONS_BUTTON, INFO_BUTTON, RETURN_BUTTON, FORWARD_BUTTON, BACKWARD_BUTTON,
+            PAUSE_BUTTON, PLAY_BUTTON, OK_BUTTON, CLOSE_BUTTON, MENU_BUTTON, LEVEL_LOCKED, LEVEL_FINISHED, PANEL, BACKGROUND_BLUE,
+            BACKGROUND_AQUA, SCREEN_DARKENING, PAUSE_WINDOW, LOGO2, RESUME));
     private List<String> soundList = new ArrayList<String>();
 
     public Texture getTexture(String textureName, int width, int height)

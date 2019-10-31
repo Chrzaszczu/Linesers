@@ -14,10 +14,10 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class Menu implements Screen
 {
-    private static final int MAIN_BUTTONS_WIDTH = (int)(0.45f * Gdx.graphics.getWidth());
-    private static final int MAIN_BUTTONS_HEIGHT = (int)(0.07f * Gdx.graphics.getHeight());
-    private static final int MINOR_BUTTONS_WIDTH = (int)(0.1f * Gdx.graphics.getWidth());
-    private static final int MINOR_BUTTONS_HEIGHT = (int)(0.06f * Gdx.graphics.getHeight());
+    public static final int MAIN_BUTTONS_WIDTH = (int)(0.45f * Gdx.graphics.getWidth());
+    public static final int MAIN_BUTTONS_HEIGHT = (int)(0.07f * Gdx.graphics.getHeight());
+    public static final int MINOR_BUTTONS_WIDTH = (int)(0.1f * Gdx.graphics.getWidth());
+    public static final int MINOR_BUTTONS_HEIGHT = (int)(0.06f * Gdx.graphics.getHeight());
 
     private MyGame myGame;
 

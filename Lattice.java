@@ -49,10 +49,10 @@ public class Lattice
         {
             start = preparePosition(laserPosition.getStartingPoint());
             end = preparePosition(laserPosition.getEndingPoint());
-            rotation = (end.getFX() - start.getFX() != 0) ? 90 : 0;
+            rotation = (end.getX() - start.getX() != 0) ? 90 : 0;
 
             MyGame.batch.draw(laserAnimation.getKeyFrame(stateTime, true),
-                    start.getFX() + (end.getFX() - start.getFX())/2, start.getFY() + (end.getFY() - start.getFY())/2,
+                    start.getX() + (end.getX() - start.getX())/2, start.getY() + (end.getY() - start.getY())/2,
                      tileSize/2, tileSize/2, tileSize, tileSize,1,1, rotation);
         }
         MyGame.batch.end();
@@ -118,8 +118,8 @@ public class Lattice
 
     private Vector preparePosition(Vector vector)
     {
-        return new Vector((0.05f * Gdx.graphics.getWidth() + this.tileSize * vector.getX()),
-                (Gdx.graphics.getHeight()/2f + this.tileSize * (squareTiles.size()-2f)/2f  - this.tileSize * vector.getY()));
+        return new Vector((int)(0.05f * Gdx.graphics.getWidth() + this.tileSize * vector.getX()),
+                (int)(Gdx.graphics.getHeight()/2f + this.tileSize * (squareTiles.size()-2f)/2f  - this.tileSize * vector.getY()));
     }
 
     public void setLattice(int selectedLevel)

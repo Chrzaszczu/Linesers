@@ -58,7 +58,7 @@ public class SquareTile
         this.imageButton = imageButton;
         this.imageButton.setTransform(true);
         this.imageButton.setSize(size, size);
-        this.imageButton.setPosition(position.getFX(), position.getFY());
+        this.imageButton.setPosition(position.getX(), position.getY());
         this.imageButton.setOrigin(size/2, size/2);
         this.imageButton.setRotation(getRotationAngle());
     }
