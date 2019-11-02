@@ -27,4 +27,7 @@ public class TileFinal extends SquareTile
     {
         return getRotationAngle();
     }
+    public void playSound()
+    {
+    }
 }

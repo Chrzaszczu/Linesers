@@ -78,6 +78,7 @@ public class SelectLevelScreen implements Screen
                 @Override
                 public void clicked(InputEvent event, float x, float y)
                 {
+                    MyGame.myAssets.getSound(Assets.SOUND_BUTTON).play(MyGame.options.getVolume());
                     dispose();
                     myGame.setScreen(new MainGame(myGame, levelNum));
                 }
@@ -89,6 +90,7 @@ public class SelectLevelScreen implements Screen
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
+                MyGame.myAssets.getSound(Assets.SOUND_BUTTON).play(MyGame.options.getVolume());
                 dispose();
                 myGame.setScreen(new Menu(myGame, background));
             }
@@ -99,6 +101,7 @@ public class SelectLevelScreen implements Screen
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
+                MyGame.myAssets.getSound(Assets.SOUND_BUTTON).play(MyGame.options.getVolume());
                 selectLevel.nextPage();
             }
         });
@@ -108,6 +111,7 @@ public class SelectLevelScreen implements Screen
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
+                MyGame.myAssets.getSound(Assets.SOUND_BUTTON).play(MyGame.options.getVolume());
                 selectLevel.previousPage();
             }
         });

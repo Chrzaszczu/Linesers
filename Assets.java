@@ -1,7 +1,8 @@
 package com.patryk.main;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -42,13 +43,20 @@ public class Assets
     public final static String PAUSE_WINDOW = "Window.png";
     public final static String RESUME = "Resume_tex.png";
 
+    public final static String SOUND_BUTTON = "sound_button.wav";
+    public final static String ROTATE_LASER_SOUND = "rotate_laser.wav";
+    public final static String WIN_LASER_SOUND = "win_laser.wav";
+
+    public final static String MUSIC = "circus.wav";
+
     private final AssetManager myAssets = new AssetManager();
 
     private List<String> graphicsList = new ArrayList<String>(Arrays.asList(TILE_ONE, TILE_TWO, TILE_THREE, TILE_FOUR, TILE_HALF,
             TILE_FINAL, LASER, START_BUTTON, EXIT_BUTTON, OPTIONS_BUTTON, INFO_BUTTON, RETURN_BUTTON, FORWARD_BUTTON, BACKWARD_BUTTON,
             PAUSE_BUTTON, PLAY_BUTTON, OK_BUTTON, CLOSE_BUTTON, MENU_BUTTON, LEVEL_LOCKED, LEVEL_FINISHED, PANEL, BACKGROUND_BLUE,
             BACKGROUND_AQUA, SCREEN_DARKENING, PAUSE_WINDOW, LOGO2, RESUME));
-    private List<String> soundList = new ArrayList<String>();
+
+    private List<String> soundList = new ArrayList<String>(Arrays.asList(SOUND_BUTTON, ROTATE_LASER_SOUND, WIN_LASER_SOUND));
 
     public Texture getTexture(String textureName, int width, int height)
     {
@@ -101,12 +109,29 @@ public class Assets
         return new Animation<TextureRegion>(frameDuration, preparedFrames);
     }
 
+    public Sound getSound(String assetName)
+    {
+        return myAssets.get(assetName, Sound.class);
+    }
+
+    public Music getMusic(String assetName)
+    {
+        return myAssets.get(assetName, Music.class);
+    }
+
     public void loadAssets()
     {
         for(String fileName: graphicsList)
         {
             myAssets.load(fileName, Texture.class);
         }
+
+        for(String fileName: soundList)
+        {
+            myAssets.load(fileName, Sound.class);
+        }
+
+        myAssets.load(MUSIC, Music.class);
 
         myAssets.finishLoading();
     }

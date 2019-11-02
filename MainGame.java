@@ -1,6 +1,5 @@
 package com.patryk.main;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -11,13 +10,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import static com.patryk.main.Menu.MINOR_BUTTONS_HEIGHT;
 import static com.patryk.main.Menu.MINOR_BUTTONS_WIDTH;
 
-enum GameState {RUNNING, PAUSE, FINISHED, QUIT}
+enum GameState {RUNNING, PAUSE, FINISHED, QUIT, CHANGE_LEVEL}
 
 public class MainGame implements Screen
 {
@@ -38,6 +36,7 @@ public class MainGame implements Screen
     private Lattice squareLattice;
     private ConnectionChecker connectionChecker;
     private PauseWindow pauseWindow;
+    private YouWinWindow youWinWindow;
     private GameState gameState;
 
     private long lastTouch = 0;
@@ -61,6 +60,9 @@ public class MainGame implements Screen
 
         pauseWindow = new PauseWindow(myGame,this, myStage);
         pauseWindow.initializeWindow();
+
+        youWinWindow = new YouWinWindow(myGame, this, myStage);
+        youWinWindow.initializeWindow();
 
         connectionChecker = new ConnectionChecker(squareLattice.getSquareTiles(), squareLattice.getStartingTile(), squareLattice.getLaserPositions());
 
@@ -123,15 +125,24 @@ public class MainGame implements Screen
         myStage.act(Gdx.graphics.getDeltaTime());
         myStage.draw();
 
-        if(gameState == GameState.PAUSE)
+        switch(gameState)
         {
-            pauseWindow.draw();
-        }
+            case PAUSE:
+                pauseWindow.draw();
+                break;
 
-        if(gameState == GameState.QUIT)
-        {
-            dispose();
-            myGame.setScreen(new Menu(myGame));
+            case FINISHED:
+                youWinWindow.draw();
+                break;
+
+            case QUIT:
+                dispose();
+                myGame.setScreen(new Menu(myGame));
+                break;
+
+            case CHANGE_LEVEL:
+                dispose();
+                myGame.setScreen(new MainGame(myGame, levelNumber++));
         }
     }
 

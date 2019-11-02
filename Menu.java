@@ -93,6 +93,7 @@ public class Menu implements Screen
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
+                MyGame.myAssets.getSound(Assets.SOUND_BUTTON).play(MyGame.options.getVolume());
                 dispose();
                 myGame.setScreen(new SelectLevelScreen(myGame, background));
             }
@@ -103,6 +104,7 @@ public class Menu implements Screen
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
+                MyGame.myAssets.getSound(Assets.SOUND_BUTTON).play(MyGame.options.getVolume());
                 dispose();
                 System.exit(0);
             }
@@ -113,6 +115,7 @@ public class Menu implements Screen
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
+                MyGame.myAssets.getSound(Assets.SOUND_BUTTON).play(MyGame.options.getVolume());
                 dispose();
                 myGame.setScreen(new OptionsScreen(myGame, background));
             }

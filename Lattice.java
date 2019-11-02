@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -73,6 +72,11 @@ public class Lattice
             }
         }
 
+        if(numberOfGlowingFinalTiles == numberOfFinalTiles)
+        {
+            MyGame.myAssets.getSound(Assets.WIN_LASER_SOUND).play(MyGame.options.getVolume());
+        }
+
         return numberOfGlowingFinalTiles == numberOfFinalTiles;
     }
 
@@ -86,6 +90,7 @@ public class Lattice
             {
                 if(sqrTiles.getImageButton().isPressed())
                 {
+                    sqrTiles.playSound();
                     sqrTiles.getImageButton().setRotation(sqrTiles.rotateTile(sqrTiles.ROTATION_ANGLE_STEP));
                 }
             }
@@ -125,6 +130,8 @@ public class Lattice
     public void setLattice(int selectedLevel)
     {
         squareTiles = levelDesign.setLevel(selectedLevel);
+        numberOfFinalTiles = 0;
+        numberOfGlowingFinalTiles = 0;
 
         this.tileSize = (0.9f * Gdx.graphics.getWidth()) / (float)squareTiles.get(0).size();
 

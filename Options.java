@@ -12,9 +12,10 @@ public class Options
 
     private Preferences myPreferences;
 
-    private int volume;
+    private float volume = 1.0f;
     private int finishedLevel;
     private boolean sound;
+    private boolean music;
 
     private Options()
     {
@@ -25,12 +26,18 @@ public class Options
 
     }
 
-    public int getVolume()
+    public float getVolume()
     {
         return volume;
     }
+
     public boolean isSound()
     {
         return sound;
+    }
+
+    public boolean isMusic()
+    {
+        return music;
     }
 }

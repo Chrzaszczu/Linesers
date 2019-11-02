@@ -33,4 +33,8 @@ public class TileStart extends SquareTile
     {
         return true;
     }
+    public void playSound()
+    {
+
+    }
 }

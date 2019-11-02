@@ -21,9 +21,9 @@ public class PauseWindow
     private static final int TEXT_WIDTH = (int)(0.4 * Gdx.graphics.getWidth());
     private static final int TEXT_HEIGHT = (int)(0.1 * Gdx.graphics.getWidth());
 
-    private static ImageButton resumeButton = new ImageButton(
+    private static ImageButton resume = new ImageButton(
             new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.OK_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
-    private static ImageButton closeButton = new ImageButton(
+    private static ImageButton close = new ImageButton(
             new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.CLOSE_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
 
     private Texture pauseWindow = MyGame.myAssets.getTexture(Assets.PAUSE_WINDOW, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -34,10 +34,10 @@ public class PauseWindow
     private float windowPositionY;
     private float textPositionX;
     private float textPositionY;
-    private float resumeButtonX;
-    private float resumeButtonY;
-    private float closeButtonX;
-    private float closeButtonY;
+    private float resumeX;
+    private float resumeY;
+    private float closeX;
+    private float closeY;
 
     private Stage myStage;
     private Stage pauseStage;
@@ -58,26 +58,26 @@ public class PauseWindow
         windowPositionY = Gdx.graphics.getHeight()/2 - pauseWindow.getHeight()/2;
         textPositionX = Gdx.graphics.getWidth()/2 - resumeText.getWidth()/2;
         textPositionY = Gdx.graphics.getHeight()/2 - resumeText.getHeight()/2;
-        resumeButtonX = 0.7f * Gdx.graphics.getWidth();
-        resumeButtonY = 0.42f * Gdx.graphics.getHeight();
-        closeButtonX = 0.2f * Gdx.graphics.getWidth();
-        closeButtonY = 0.42f * Gdx.graphics.getHeight();
+        resumeX = 0.7f * Gdx.graphics.getWidth();
+        resumeY = 0.42f * Gdx.graphics.getHeight();
+        closeX = 0.2f * Gdx.graphics.getWidth();
+        closeY = 0.42f * Gdx.graphics.getHeight();
 
         pauseStage = new Stage(new ScreenViewport());
 
-        pauseStage.addActor(resumeButton);
-        pauseStage.addActor(closeButton);
+        pauseStage.addActor(resume);
+        pauseStage.addActor(close);
 
         inputMultiplexer.addProcessor(pauseStage);
         inputMultiplexer.addProcessor(myStage);
 
-        resumeButton.setPosition(resumeButtonX, resumeButtonY);
-        closeButton.setPosition(closeButtonX, closeButtonY);
+        resume.setPosition(resumeX, resumeY);
+        close.setPosition(closeX, closeY);
     }
 
     private void prepareButtonsListener()
     {
-        closeButton.addListener(new ClickListener()
+        close.addListener(new ClickListener()
         {
             @Override
             public void clicked(InputEvent event, float x, float y)
@@ -86,7 +86,7 @@ public class PauseWindow
             }
         });
 
-        resumeButton.addListener(new ClickListener()
+        resume.addListener(new ClickListener()
         {
             @Override
             public void clicked(InputEvent event, float x, float y)

@@ -28,6 +28,11 @@ public class SquareTile
         return glowing;
     }
 
+    public void playSound()
+    {
+        MyGame.myAssets.getSound(Assets.ROTATE_LASER_SOUND).play(MyGame.options.getVolume());
+    }
+
     public void setGlowing(boolean glowing)
     {
         this.glowing = glowing;
