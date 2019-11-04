@@ -74,7 +74,7 @@ public class Lattice
 
         if(numberOfGlowingFinalTiles == numberOfFinalTiles)
         {
-            MyGame.myAssets.getSound(Assets.WIN_LASER_SOUND).play(MyGame.options.getVolume());
+            MyGame.myAssets.getSound(Assets.WIN_LASER_SOUND).play(MyGame.options.getSoundVolume());
         }
 
         return numberOfGlowingFinalTiles == numberOfFinalTiles;

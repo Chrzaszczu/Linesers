@@ -57,7 +57,7 @@ public class OptionsScreen implements Screen
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                MyGame.myAssets.getSound(Assets.SOUND_BUTTON).play(MyGame.options.getVolume());
+                MyGame.myAssets.getSound(Assets.SOUND_OF_BUTTON).play(MyGame.options.getSoundVolume());
                 dispose();
                 myGame.setScreen(new Menu(myGame, background));
             }

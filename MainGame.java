@@ -101,6 +101,16 @@ public class MainGame implements Screen
         MyGame.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         MyGame.batch.end();
 
+        gameLogic();
+
+        myStage.act(Gdx.graphics.getDeltaTime());
+        myStage.draw();
+
+        onGameStateChange();
+    }
+
+    private void gameLogic()
+    {
         if(gameState == GameState.RUNNING)
         {
             if (Gdx.input.isTouched())
@@ -121,10 +131,10 @@ public class MainGame implements Screen
         {
             squareLattice.drawLasers(0f);
         }
+    }
 
-        myStage.act(Gdx.graphics.getDeltaTime());
-        myStage.draw();
-
+    private void onGameStateChange()
+    {
         switch(gameState)
         {
             case PAUSE:

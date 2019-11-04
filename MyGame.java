@@ -30,7 +30,7 @@ public class MyGame extends Game
 
         myAssets.loadAssets();
 
-        myAssets.getMusic(Assets.MUSIC).setVolume(0.2f);
+        myAssets.getMusic(Assets.MUSIC).setVolume(options.getMusicVolume());
         myAssets.getMusic(Assets.MUSIC).setLooping(true);
         myAssets.getMusic(Assets.MUSIC).play();
 

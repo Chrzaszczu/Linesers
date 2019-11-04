@@ -14,20 +14,23 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class Menu implements Screen
 {
-    public static final int MAIN_BUTTONS_WIDTH = (int)(0.45f * Gdx.graphics.getWidth());
-    public static final int MAIN_BUTTONS_HEIGHT = (int)(0.07f * Gdx.graphics.getHeight());
-    public static final int MINOR_BUTTONS_WIDTH = (int)(0.1f * Gdx.graphics.getWidth());
-    public static final int MINOR_BUTTONS_HEIGHT = (int)(0.06f * Gdx.graphics.getHeight());
+    public static final int MAIN_BUTTONS_WIDTH = (int)(0.55f * Gdx.graphics.getWidth());
+    public static final int MAIN_BUTTONS_HEIGHT = (int)(0.1f * Gdx.graphics.getHeight());
+    public static final int MINOR_BUTTONS_WIDTH = (int)(0.12f * Gdx.graphics.getWidth());
+    public static final int MINOR_BUTTONS_HEIGHT = (int)(0.07f * Gdx.graphics.getHeight());
+
+    private static final int LOGO_WIDTH = (int)(0.16f * Gdx.graphics.getWidth());
+    private static final int LOGO_HEIGHT = (int)(0.15f * Gdx.graphics.getHeight());
 
     private MyGame myGame;
 
     private ImageButton startButton;
     private ImageButton exitButton;
-    private ImageButton optionsButton;
-    private ImageButton infoButton;
+    private ImageButton musicButton;
+    private ImageButton soundButton;
+    private ImageButton logo;
 
     private Texture background;
-    private Texture logo;
 
     private Stage myStage;
 
@@ -51,12 +54,12 @@ public class Menu implements Screen
                 new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.START_BUTTON, MAIN_BUTTONS_WIDTH, MAIN_BUTTONS_HEIGHT))));
         exitButton = new ImageButton(
                 new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.EXIT_BUTTON, MAIN_BUTTONS_WIDTH, MAIN_BUTTONS_HEIGHT))));
-        optionsButton = new ImageButton(
+        musicButton = new ImageButton(
                 new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.OPTIONS_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
-        infoButton = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.INFO_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
-
-        logo = new Texture(Assets.LOGO2);
+        soundButton = new ImageButton(
+                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.OPTIONS_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
+        logo = new ImageButton(
+                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.LOGO2, LOGO_WIDTH, LOGO_HEIGHT))));
 
         if(background == null)
         {
@@ -67,23 +70,29 @@ public class Menu implements Screen
         prepareButtonsListener();
 
         myStage.addActor(startButton);
-        myStage.addActor(optionsButton);
+        myStage.addActor(soundButton);
+        myStage.addActor(musicButton);
         myStage.addActor(exitButton);
-        myStage.addActor(infoButton);
+        myStage.addActor(logo);
         Gdx.input.setInputProcessor(myStage);
     }
 
     private void initializeButtons()
     {
-        startButton.setPosition(Gdx.graphics.getWidth()/2 - startButton.getWidth()/2, Gdx.graphics.getHeight()/2);
-        exitButton.setPosition(Gdx.graphics.getWidth()/2 - exitButton.getWidth()/2,Gdx.graphics.getHeight()/2f - 1.3f * exitButton.getHeight());
-        optionsButton.setPosition(0.05f * Gdx.graphics.getWidth(), 0.01f * Gdx.graphics.getHeight());
-        infoButton.setPosition(0.1f * Gdx.graphics.getWidth() + infoButton.getWidth(), 0.01f * Gdx.graphics.getHeight());
-
         startButton.setSize(MAIN_BUTTONS_WIDTH, MAIN_BUTTONS_HEIGHT);
+        startButton.setPosition(Gdx.graphics.getWidth()/2 - startButton.getWidth()/2, Gdx.graphics.getHeight()/2);
+
         exitButton.setSize(MAIN_BUTTONS_WIDTH, MAIN_BUTTONS_HEIGHT);
-        optionsButton.setSize(MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT);
-        infoButton.setSize(MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT);
+        exitButton.setPosition(Gdx.graphics.getWidth()/2 - exitButton.getWidth()/2,Gdx.graphics.getHeight()/2f - 1.5f * exitButton.getHeight());
+
+        musicButton.setSize(MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT);
+        musicButton.setPosition(0.05f * Gdx.graphics.getWidth(), 0.01f * Gdx.graphics.getHeight());
+
+        soundButton.setSize(MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT);
+        soundButton.setPosition(0.2f * Gdx.graphics.getWidth(), 0.01f * Gdx.graphics.getHeight());
+
+        logo.setSize(LOGO_WIDTH, LOGO_HEIGHT);
+        logo.setPosition(0.83f * Gdx.graphics.getWidth(), 0.01f * Gdx.graphics.getHeight());
     }
 
     private void prepareButtonsListener()
@@ -93,7 +102,7 @@ public class Menu implements Screen
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                MyGame.myAssets.getSound(Assets.SOUND_BUTTON).play(MyGame.options.getVolume());
+                playButtonSound();
                 dispose();
                 myGame.setScreen(new SelectLevelScreen(myGame, background));
             }
@@ -104,22 +113,65 @@ public class Menu implements Screen
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                MyGame.myAssets.getSound(Assets.SOUND_BUTTON).play(MyGame.options.getVolume());
+                playButtonSound();
                 dispose();
                 System.exit(0);
             }
         });
 
-        optionsButton.addListener(new ClickListener()
+        musicButton.addListener(new ClickListener()
         {
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                MyGame.myAssets.getSound(Assets.SOUND_BUTTON).play(MyGame.options.getVolume());
-                dispose();
-                myGame.setScreen(new OptionsScreen(myGame, background));
+                if(MyGame.options.isMusic())
+                {
+                    playButtonSound();
+                    MyGame.options.setMusic(false);
+                    MyGame.myAssets.getMusic(Assets.MUSIC).stop();
+                }
+                else
+                {
+                    playButtonSound();
+                    MyGame.options.setMusic(true);
+                    MyGame.myAssets.getMusic(Assets.MUSIC).play();
+                }
             }
         });
+
+        soundButton.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y)
+            {
+                if(MyGame.options.isSound())
+                {
+                    MyGame.options.setSound(false);
+                }
+                else
+                {
+                    MyGame.options.setSound(true);
+                    playButtonSound();
+                }
+            }
+        });
+
+        logo.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y)
+            {
+                //playButtonSound();
+            }
+        });
+    }
+
+    private void playButtonSound()
+    {
+        if(MyGame.options.isSound())
+        {
+            MyGame.myAssets.getSound(Assets.SOUND_OF_BUTTON).play(MyGame.options.getSoundVolume());
+        }
     }
 
     @Override
@@ -127,14 +179,9 @@ public class Menu implements Screen
     {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        startButton.getClickListener();
-        optionsButton.getClickListener();
-        exitButton.getClickListener();
-
         MyGame.batch.enableBlending();
         MyGame.batch.begin();
         MyGame.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        MyGame.batch.draw(logo, 0.85f * Gdx.graphics.getWidth(), 0.01f * Gdx.graphics.getHeight(),0.12f * Gdx.graphics.getWidth(), 0.095f * Gdx.graphics.getHeight());
         MyGame.batch.end();
 
         myStage.act(Gdx.graphics.getDeltaTime());
@@ -170,9 +217,5 @@ public class Menu implements Screen
     {
         myGame.dispose();
         myStage.dispose();
-        logo.dispose();
-
-        startButton = null;
-        optionsButton = null;
     }
 }

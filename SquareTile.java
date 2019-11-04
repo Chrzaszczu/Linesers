@@ -9,8 +9,8 @@ public class SquareTile
 {
     public static final int ROTATION_ANGLE_STEP = -90;
 
-    protected LinkedList<Vector> linesDirection = new LinkedList<Vector>();
-    protected ImageButton imageButton;
+    private LinkedList<Vector> linesDirection = new LinkedList<Vector>();
+    private ImageButton imageButton;
 
     private boolean glowing = false;
     private int rotationAngle;
@@ -30,7 +30,7 @@ public class SquareTile
 
     public void playSound()
     {
-        MyGame.myAssets.getSound(Assets.ROTATE_LASER_SOUND).play(MyGame.options.getVolume());
+        MyGame.myAssets.getSound(Assets.ROTATE_LASER_SOUND).play(MyGame.options.getSoundVolume());
     }
 
     public void setGlowing(boolean glowing)
