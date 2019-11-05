@@ -26,9 +26,12 @@ public class SelectLevelScreen implements Screen
     private ImageButton returnButton;
     private ImageButton nextPage;
     private ImageButton previousPage;
+    private ImageButton musicButton;
+    private ImageButton soundButton;
 
     private Texture background;
     private Texture panel;
+    private Texture selectLevelText;
 
     private int page = 0;
 
@@ -54,6 +57,12 @@ public class SelectLevelScreen implements Screen
                 new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.FORWARD_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
         previousPage = new ImageButton(
                 new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.BACKWARD_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
+        musicButton = new ImageButton(
+                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.MUSIC_TEXTURE_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
+        soundButton = new ImageButton(
+                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.SOUND_TEXTURE_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
+
+        selectLevelText = MyGame.myAssets.getTexture(Assets.SELECT_LEVEL, (int)(0.8f * Gdx.graphics.getWidth()), (int)(0.28f * Gdx.graphics.getHeight()));
 
         if(background == null)
         {
@@ -70,6 +79,8 @@ public class SelectLevelScreen implements Screen
         myStage.addActor(returnButton);
         myStage.addActor(nextPage);
         myStage.addActor(previousPage);
+        myStage.addActor(musicButton);
+        myStage.addActor(soundButton);
         Gdx.input.setInputProcessor(myStage);
     }
 
@@ -121,6 +132,43 @@ public class SelectLevelScreen implements Screen
                 selectLevel.previousPage();
             }
         });
+
+        musicButton.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y)
+            {
+                if(MyGame.options.isMusic())
+                {
+                    playButtonSound();
+                    MyGame.options.setMusic(false);
+                    MyGame.myAssets.getMusic(Assets.MUSIC).stop();
+                }
+                else
+                {
+                    playButtonSound();
+                    MyGame.options.setMusic(true);
+                    MyGame.myAssets.getMusic(Assets.MUSIC).play();
+                }
+            }
+        });
+
+        soundButton.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y)
+            {
+                if(MyGame.options.isSound())
+                {
+                    MyGame.options.setSound(false);
+                }
+                else
+                {
+                    MyGame.options.setSound(true);
+                    playButtonSound();
+                }
+            }
+        });
     }
 
     private void playButtonSound()
@@ -134,15 +182,21 @@ public class SelectLevelScreen implements Screen
     private void initializeButtons()
     {
         returnButton.setSize(MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT);
-        returnButton.setPosition(0.05f * Gdx.graphics.getWidth(), 0.01f * Gdx.graphics.getHeight());
+        returnButton.setPosition(0.85f * Gdx.graphics.getWidth(), 0.01f * Gdx.graphics.getHeight());
 
         nextPage.setSize(MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT);
-        nextPage.setPosition(Gdx.graphics.getWidth() * 0.6f,Gdx.graphics.getHeight() * 0.12f);
+        nextPage.setPosition(Gdx.graphics.getWidth() * 0.6f,Gdx.graphics.getHeight() * 0.15f);
 
         previousPage.setSize(MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT);
-        previousPage.setPosition(Gdx.graphics.getWidth() * 0.3f,Gdx.graphics.getHeight() * 0.12f);
+        previousPage.setPosition(Gdx.graphics.getWidth() * 0.3f,Gdx.graphics.getHeight() * 0.15f);
 
-        panel = MyGame.myAssets.getTexture(Assets.PANEL,(int)(0.8 * Gdx.graphics.getWidth()), (int)(0.6 * Gdx.graphics.getHeight()));
+        musicButton.setSize(MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT);
+        musicButton.setPosition(0.05f * Gdx.graphics.getWidth(), 0.01f * Gdx.graphics.getHeight());
+
+        soundButton.setSize(MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT);
+        soundButton.setPosition(0.2f * Gdx.graphics.getWidth(), 0.01f * Gdx.graphics.getHeight());
+
+        panel = MyGame.myAssets.getTexture(Assets.PANEL,(int)(0.85 * Gdx.graphics.getWidth()), (int)(0.52f * Gdx.graphics.getHeight()));
     }
 
     @Override
@@ -154,7 +208,8 @@ public class SelectLevelScreen implements Screen
         MyGame.batch.enableBlending();
         MyGame.batch.begin();
         MyGame.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        MyGame.batch.draw(panel, 0.1f * Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 2 - 0.85f * panel.getHeight() / 2);
+        MyGame.batch.draw(panel, Gdx.graphics.getWidth()/2 - panel.getWidth()/2, 0.26f * Gdx.graphics.getHeight());
+        MyGame.batch.draw(selectLevelText, Gdx.graphics.getWidth()/2 - selectLevelText.getWidth()/2, 0.75f * Gdx.graphics.getHeight(), selectLevelText.getWidth(), selectLevelText.getHeight());
         MyGame.batch.end();
 
         myStage.draw();

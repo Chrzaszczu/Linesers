@@ -31,6 +31,7 @@ public class Menu implements Screen
     private ImageButton logo;
 
     private Texture background;
+    private Texture title;
 
     private Stage myStage;
 
@@ -55,11 +56,13 @@ public class Menu implements Screen
         exitButton = new ImageButton(
                 new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.EXIT_BUTTON, MAIN_BUTTONS_WIDTH, MAIN_BUTTONS_HEIGHT))));
         musicButton = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.OPTIONS_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
+                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.MUSIC_TEXTURE_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
         soundButton = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.OPTIONS_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
+                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.SOUND_TEXTURE_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
         logo = new ImageButton(
                 new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.LOGO2, LOGO_WIDTH, LOGO_HEIGHT))));
+
+        title = MyGame.myAssets.getTexture(Assets.TITLE, (int)(0.88f * Gdx.graphics.getWidth()), (int)(0.22f * Gdx.graphics.getHeight()));
 
         if(background == null)
         {
@@ -182,6 +185,7 @@ public class Menu implements Screen
         MyGame.batch.enableBlending();
         MyGame.batch.begin();
         MyGame.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        MyGame.batch.draw(title, Gdx.graphics.getWidth()/2 - title.getWidth()/2, 0.7f * Gdx.graphics.getHeight(), title.getWidth(), title.getHeight());
         MyGame.batch.end();
 
         myStage.act(Gdx.graphics.getDeltaTime());
