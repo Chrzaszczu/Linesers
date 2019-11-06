@@ -26,10 +26,10 @@ public class MainGame implements Screen
 
     private ImageButton pauseButton = new ImageButton(
                 new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.PAUSE_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
-    private ImageButton returnButton = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.RETURN_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
-    private ImageButton menuButton = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.MENU_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
+    private ImageButton musicButton = new ImageButton(
+            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.MUSIC_TEXTURE_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
+    private ImageButton soundButton = new ImageButton(
+            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.SOUND_TEXTURE_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
 
     private Texture background = MyGame.myAssets.getTexture(Assets.BACKGROUND_AQUA, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
@@ -66,9 +66,11 @@ public class MainGame implements Screen
         prepareButtonsListener();
 
         squareLattice.addActors(myStage);
-        myStage.addActor(returnButton);
+
         myStage.addActor(pauseButton);
-        myStage.addActor(menuButton);
+        myStage.addActor(musicButton);
+        myStage.addActor(soundButton);
+
         Gdx.input.setInputProcessor(myStage);
 
         connectionChecker.assambleConnections();
@@ -76,14 +78,71 @@ public class MainGame implements Screen
 
     private void initializeButtons()
     {
-        returnButton.setPosition(50,50);
-        returnButton.setSize(MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT);
-
-        pauseButton.setPosition(200,50);
         pauseButton.setSize(MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT);
+        pauseButton.setPosition(0.85f * Gdx.graphics.getWidth(), 0.01f * Gdx.graphics.getHeight());
 
-        menuButton.setPosition(350,50);
-        menuButton.setSize(MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT);
+        musicButton.setSize(MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT);
+        musicButton.setPosition(0.05f * Gdx.graphics.getWidth(), 0.01f * Gdx.graphics.getHeight());
+
+        soundButton.setSize(MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT);
+        soundButton.setPosition(0.2f * Gdx.graphics.getWidth(), 0.01f * Gdx.graphics.getHeight());
+    }
+
+    private void prepareButtonsListener()
+    {
+        pauseButton.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y)
+            {
+                gameState = GameState.PAUSE;
+            }
+        });
+
+        musicButton.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y)
+            {
+                if(MyGame.options.isMusic())
+                {
+                    playButtonSound();
+                    MyGame.options.setMusic(false);
+                    MyGame.myAssets.getMusic(Assets.MUSIC).stop();
+                }
+                else
+                {
+                    playButtonSound();
+                    MyGame.options.setMusic(true);
+                    MyGame.myAssets.getMusic(Assets.MUSIC).play();
+                }
+            }
+        });
+
+        soundButton.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y)
+            {
+                if(MyGame.options.isSound())
+                {
+                    MyGame.options.setSound(false);
+                }
+                else
+                {
+                    MyGame.options.setSound(true);
+                    playButtonSound();
+                }
+            }
+        });
+    }
+
+    private void playButtonSound()
+    {
+        if(MyGame.options.isSound())
+        {
+            MyGame.myAssets.getSound(Assets.SOUND_OF_BUTTON).play(MyGame.options.getSoundVolume());
+        }
     }
 
     @Override
@@ -99,6 +158,7 @@ public class MainGame implements Screen
 
         gameLogic();
 
+        Gdx.input.setInputProcessor(myStage);
         myStage.act(Gdx.graphics.getDeltaTime());
         myStage.draw();
 
@@ -152,37 +212,6 @@ public class MainGame implements Screen
         }
     }
 
-    private void prepareButtonsListener()
-    {
-        returnButton.addListener(new ClickListener()
-        {
-            @Override
-            public void clicked(InputEvent event, float x, float y)
-            {
-                dispose();
-                myGame.setScreen(new Menu(myGame));
-            }
-        });
-
-        pauseButton.addListener(new ClickListener()
-        {
-            @Override
-            public void clicked(InputEvent event, float x, float y)
-            {
-                gameState = GameState.PAUSE;
-            }
-        });
-
-        menuButton.addListener(new ClickListener()
-        {
-            @Override
-            public void clicked(InputEvent event, float x, float y)
-            {
-                gameState = GameState.RUNNING;
-            }
-        });
-    }
-
     protected void setGameState(GameState gameState)
     {
         this.gameState = gameState;
@@ -215,6 +244,5 @@ public class MainGame implements Screen
         myStage.dispose();
 
         squareLattice = null;
-        returnButton = null;
     }
 }

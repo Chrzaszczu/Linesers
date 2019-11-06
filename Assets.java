@@ -39,6 +39,7 @@ public class Assets
     public final static String LEVEL_FINISHED = "Star_03.png";
     public final static String PANEL = "Options_panel.png";
     public final static String TITLE = "Title.png";
+    public final static String YOU_WIN_TEXT = "YouWin.png";
     public final static String SELECT_LEVEL = "SelectLevel.png";
     public final static String BACKGROUND_BLUE = "background.png";
     public final static String BACKGROUND_AQUA = "background.png";
@@ -46,6 +47,7 @@ public class Assets
     public final static String LOGO2 = "Logotmp.png";
     public final static String PAUSE_WINDOW = "Window.png";
     public final static String RESUME = "Resume_tex.png";
+    public final static String NEXT_GAME = "Next_level.png";
 
     public final static String SOUND_OF_BUTTON = "sound_button.wav";
     public final static String ROTATE_LASER_SOUND = "rotate_laser.wav";
@@ -58,7 +60,8 @@ public class Assets
     private List<String> graphicsList = new ArrayList<String>(Arrays.asList(TILE_ONE, TILE_TWO, TILE_THREE, TILE_FOUR, TILE_HALF,
             TILE_FINAL, LASER, START_BUTTON, EXIT_BUTTON, OPTIONS_BUTTON, INFO_BUTTON, RETURN_BUTTON, FORWARD_BUTTON, BACKWARD_BUTTON,
             PAUSE_BUTTON, PLAY_BUTTON, OK_BUTTON, CLOSE_BUTTON, MENU_BUTTON, SOUND_TEXTURE_BUTTON, MUSIC_TEXTURE_BUTTON, LEVEL_LOCKED,
-            LEVEL_FINISHED, PANEL, SELECT_LEVEL, TITLE, BACKGROUND_BLUE, BACKGROUND_AQUA, SCREEN_DARKENING, PAUSE_WINDOW, LOGO2, RESUME));
+            LEVEL_FINISHED, PANEL, SELECT_LEVEL, TITLE, YOU_WIN_TEXT, BACKGROUND_BLUE, BACKGROUND_AQUA, SCREEN_DARKENING, PAUSE_WINDOW,
+            LOGO2, RESUME, NEXT_GAME));
 
     private List<String> soundList = new ArrayList<String>(Arrays.asList(SOUND_OF_BUTTON, ROTATE_LASER_SOUND, WIN_LASER_SOUND));
 

@@ -16,17 +16,17 @@ import static com.patryk.main.Menu.MINOR_BUTTONS_WIDTH;
 
 public class PauseWindow
 {
-    private static final int WINDOW_WIDTH = (int)(0.7 * Gdx.graphics.getWidth());
-    private static final int WINDOW_HEIGHT = (int)(0.35 * Gdx.graphics.getWidth());
-    private static final int TEXT_WIDTH = (int)(0.4 * Gdx.graphics.getWidth());
-    private static final int TEXT_HEIGHT = (int)(0.1 * Gdx.graphics.getWidth());
+    private static final int WINDOW_WIDTH = (int)(0.8 * Gdx.graphics.getWidth());
+    private static final int WINDOW_HEIGHT = (int)(0.5 * Gdx.graphics.getWidth());
+    private static final int TEXT_WIDTH = (int)(0.7f * Gdx.graphics.getWidth());
+    private static final int TEXT_HEIGHT = (int)(0.2f * Gdx.graphics.getWidth());
 
     private static ImageButton resume = new ImageButton(
             new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.OK_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
     private static ImageButton close = new ImageButton(
             new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.CLOSE_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
 
-    private Texture pauseWindow = MyGame.myAssets.getTexture(Assets.PAUSE_WINDOW, WINDOW_WIDTH, WINDOW_HEIGHT);
+    private Texture pauseWindow = MyGame.myAssets.getTexture(Assets.PANEL, WINDOW_WIDTH, WINDOW_HEIGHT);
     private Texture screenDarkening = MyGame.myAssets.getTexture(Assets.SCREEN_DARKENING, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     private Texture resumeText = MyGame.myAssets.getTexture(Assets.RESUME, TEXT_WIDTH, TEXT_HEIGHT);
 
@@ -55,11 +55,11 @@ public class PauseWindow
         windowPositionX = Gdx.graphics.getWidth()/2 - pauseWindow.getWidth()/2;
         windowPositionY = Gdx.graphics.getHeight()/2 - pauseWindow.getHeight()/2;
         textPositionX = Gdx.graphics.getWidth()/2 - resumeText.getWidth()/2;
-        textPositionY = Gdx.graphics.getHeight()/2 - resumeText.getHeight()/2;
-        resumeX = 0.7f * Gdx.graphics.getWidth();
-        resumeY = 0.42f * Gdx.graphics.getHeight();
+        textPositionY = Gdx.graphics.getHeight()/2;
+        resumeX = 0.68f * Gdx.graphics.getWidth();
+        resumeY = 0.4f * Gdx.graphics.getHeight();
         closeX = 0.2f * Gdx.graphics.getWidth();
-        closeY = 0.42f * Gdx.graphics.getHeight();
+        closeY = 0.4f * Gdx.graphics.getHeight();
 
         pauseStage.addActor(resume);
         pauseStage.addActor(close);
