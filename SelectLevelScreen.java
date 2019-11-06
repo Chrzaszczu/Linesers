@@ -17,28 +17,27 @@ import static com.patryk.main.Menu.MINOR_BUTTONS_WIDTH;
 
 public class SelectLevelScreen implements Screen
 {
-
-
     private MyGame myGame;
-    private Stage myStage;
     private SelectLevel selectLevel;
 
-    private ImageButton returnButton;
-    private ImageButton nextPage;
-    private ImageButton previousPage;
-    private ImageButton musicButton;
-    private ImageButton soundButton;
+    private Stage myStage = new Stage(new ScreenViewport());
+
+    private ImageButton returnButton = new ImageButton(
+                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.RETURN_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
+    private ImageButton nextPage = new ImageButton(
+                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.FORWARD_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
+    private ImageButton previousPage = new ImageButton(
+                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.BACKWARD_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
+    private ImageButton musicButton = new ImageButton(
+                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.MUSIC_TEXTURE_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
+    private ImageButton soundButton = new ImageButton(
+                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.SOUND_TEXTURE_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
 
     private Texture background;
     private Texture panel;
-    private Texture selectLevelText;
+    private Texture selectLevelText = MyGame.myAssets.getTexture(Assets.SELECT_LEVEL, (int)(0.8f * Gdx.graphics.getWidth()), (int)(0.28f * Gdx.graphics.getHeight()));
 
     private int page = 0;
-
-    public SelectLevelScreen(MyGame myGame)
-    {
-        this.myGame = myGame;
-    }
 
     public SelectLevelScreen(MyGame myGame, Texture background)
     {
@@ -49,27 +48,12 @@ public class SelectLevelScreen implements Screen
     @Override
     public void show()
     {
-        myStage = new Stage(new ScreenViewport());
-
-        returnButton = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.RETURN_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
-        nextPage = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.FORWARD_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
-        previousPage = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.BACKWARD_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
-        musicButton = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.MUSIC_TEXTURE_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
-        soundButton = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.SOUND_TEXTURE_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
-
-        selectLevelText = MyGame.myAssets.getTexture(Assets.SELECT_LEVEL, (int)(0.8f * Gdx.graphics.getWidth()), (int)(0.28f * Gdx.graphics.getHeight()));
-
         if(background == null)
         {
             background = MyGame.myAssets.getTexture(Assets.BACKGROUND_BLUE, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         }
 
-        selectLevel = new SelectLevel(0);
+        selectLevel = new SelectLevel(page);
         selectLevel.setLevelButtons();
         selectLevel.addActors(myStage);
 

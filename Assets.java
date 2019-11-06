@@ -42,7 +42,7 @@ public class Assets
     public final static String SELECT_LEVEL = "SelectLevel.png";
     public final static String BACKGROUND_BLUE = "background.png";
     public final static String BACKGROUND_AQUA = "background.png";
-    public final static String SCREEN_DARKENING = "Darkening.png";
+    public final static String SCREEN_DARKENING = "shadow.png";
     public final static String LOGO2 = "Logotmp.png";
     public final static String PAUSE_WINDOW = "Window.png";
     public final static String RESUME = "Resume_tex.png";
@@ -57,8 +57,8 @@ public class Assets
 
     private List<String> graphicsList = new ArrayList<String>(Arrays.asList(TILE_ONE, TILE_TWO, TILE_THREE, TILE_FOUR, TILE_HALF,
             TILE_FINAL, LASER, START_BUTTON, EXIT_BUTTON, OPTIONS_BUTTON, INFO_BUTTON, RETURN_BUTTON, FORWARD_BUTTON, BACKWARD_BUTTON,
-            PAUSE_BUTTON, PLAY_BUTTON, OK_BUTTON, CLOSE_BUTTON, MENU_BUTTON, SOUND_TEXTURE_BUTTON, MUSIC_TEXTURE_BUTTON, LEVEL_LOCKED, LEVEL_FINISHED,
-            PANEL, SELECT_LEVEL, TITLE, BACKGROUND_BLUE, BACKGROUND_AQUA, SCREEN_DARKENING, PAUSE_WINDOW, LOGO2, RESUME));
+            PAUSE_BUTTON, PLAY_BUTTON, OK_BUTTON, CLOSE_BUTTON, MENU_BUTTON, SOUND_TEXTURE_BUTTON, MUSIC_TEXTURE_BUTTON, LEVEL_LOCKED,
+            LEVEL_FINISHED, PANEL, SELECT_LEVEL, TITLE, BACKGROUND_BLUE, BACKGROUND_AQUA, SCREEN_DARKENING, PAUSE_WINDOW, LOGO2, RESUME));
 
     private List<String> soundList = new ArrayList<String>(Arrays.asList(SOUND_OF_BUTTON, ROTATE_LASER_SOUND, WIN_LASER_SOUND));
 

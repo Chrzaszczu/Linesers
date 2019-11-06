@@ -33,11 +33,11 @@ public class MainGame implements Screen
 
     private Texture background = MyGame.myAssets.getTexture(Assets.BACKGROUND_AQUA, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-    private Lattice squareLattice;
+    private Lattice squareLattice = new Lattice();
+    private GameState gameState = GameState.RUNNING;
     private ConnectionChecker connectionChecker;
     private PauseWindow pauseWindow;
     private YouWinWindow youWinWindow;
-    private GameState gameState;
 
     private long lastTouch = 0;
     private float stateTime = 0f;
@@ -52,16 +52,12 @@ public class MainGame implements Screen
     @Override
     public void show()
     {
-        myStage = new Stage(new ScreenViewport());
-        gameState = GameState.RUNNING;
-
-        squareLattice = new Lattice();
         squareLattice.setLattice(1);
 
-        pauseWindow = new PauseWindow(myGame,this, myStage);
+        pauseWindow = new PauseWindow(this, myStage);
         pauseWindow.initializeWindow();
 
-        youWinWindow = new YouWinWindow(myGame, this, myStage);
+        youWinWindow = new YouWinWindow(this, myStage);
         youWinWindow.initializeWindow();
 
         connectionChecker = new ConnectionChecker(squareLattice.getSquareTiles(), squareLattice.getStartingTile(), squareLattice.getLaserPositions());

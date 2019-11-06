@@ -39,17 +39,16 @@ public class YouWinWindow
     private float closeX;
     private float closeY;
 
-    private Stage myStage;
-    private Stage pauseStage;
-    private MainGame mainGame;
-    private MyGame myGame;
+    private Stage pauseStage = new Stage(new ScreenViewport());
     private InputMultiplexer inputMultiplexer = new InputMultiplexer();
+    private Stage myStage;
+    private MainGame mainGame;
 
-    public YouWinWindow(MyGame myGame, MainGame mainGame, Stage myStage)
+
+    public YouWinWindow(MainGame mainGame, Stage myStage)
     {
         this.myStage = myStage;
         this.mainGame = mainGame;
-        this.myGame = myGame;
     }
 
     public void initializeWindow()
@@ -62,8 +61,6 @@ public class YouWinWindow
         nextLevelY = 0.42f * Gdx.graphics.getHeight();
         closeX = 0.2f * Gdx.graphics.getWidth();
         closeY = 0.42f * Gdx.graphics.getHeight();
-
-        pauseStage = new Stage(new ScreenViewport());
 
         pauseStage.addActor(nextLevel);
         pauseStage.addActor(close);

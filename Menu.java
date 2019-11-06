@@ -23,17 +23,21 @@ public class Menu implements Screen
     private static final int LOGO_HEIGHT = (int)(0.15f * Gdx.graphics.getHeight());
 
     private MyGame myGame;
+    private Stage myStage = new Stage(new ScreenViewport());
 
-    private ImageButton startButton;
-    private ImageButton exitButton;
-    private ImageButton musicButton;
-    private ImageButton soundButton;
-    private ImageButton logo;
+    private ImageButton startButton = new ImageButton(
+            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.START_BUTTON, MAIN_BUTTONS_WIDTH, MAIN_BUTTONS_HEIGHT))));
+    private ImageButton exitButton = new ImageButton(
+                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.EXIT_BUTTON, MAIN_BUTTONS_WIDTH, MAIN_BUTTONS_HEIGHT))));
+    private ImageButton musicButton = new ImageButton(
+                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.MUSIC_TEXTURE_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
+    private ImageButton soundButton = new ImageButton(
+                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.SOUND_TEXTURE_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
+    private ImageButton logo = new ImageButton(
+                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.LOGO2, LOGO_WIDTH, LOGO_HEIGHT))));
 
+    private Texture title = MyGame.myAssets.getTexture(Assets.TITLE, (int)(0.88f * Gdx.graphics.getWidth()), (int)(0.22f * Gdx.graphics.getHeight()));
     private Texture background;
-    private Texture title;
-
-    private Stage myStage;
 
     public Menu(MyGame myGame)
     {
@@ -49,21 +53,6 @@ public class Menu implements Screen
     @Override
     public void show()
     {
-        myStage = new Stage(new ScreenViewport());
-
-        startButton = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.START_BUTTON, MAIN_BUTTONS_WIDTH, MAIN_BUTTONS_HEIGHT))));
-        exitButton = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.EXIT_BUTTON, MAIN_BUTTONS_WIDTH, MAIN_BUTTONS_HEIGHT))));
-        musicButton = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.MUSIC_TEXTURE_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
-        soundButton = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.SOUND_TEXTURE_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
-        logo = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.LOGO2, LOGO_WIDTH, LOGO_HEIGHT))));
-
-        title = MyGame.myAssets.getTexture(Assets.TITLE, (int)(0.88f * Gdx.graphics.getWidth()), (int)(0.22f * Gdx.graphics.getHeight()));
-
         if(background == null)
         {
             background = MyGame.myAssets.getTexture(Assets.BACKGROUND_BLUE, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -159,14 +148,14 @@ public class Menu implements Screen
             }
         });
 
-        logo.addListener(new ClickListener()
+       /* logo.addListener(new ClickListener()
         {
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
                 //playButtonSound();
             }
-        });
+        });*/
     }
 
     private void playButtonSound()

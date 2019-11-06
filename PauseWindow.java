@@ -39,17 +39,15 @@ public class PauseWindow
     private float closeX;
     private float closeY;
 
-    private Stage myStage;
-    private Stage pauseStage;
-    private MainGame mainGame;
-    private MyGame myGame;
+    private Stage pauseStage = new Stage(new ScreenViewport());
     private InputMultiplexer inputMultiplexer = new InputMultiplexer();
+    private Stage myStage;
+    private MainGame mainGame;
 
-    public PauseWindow(MyGame myGame, MainGame mainGame, Stage myStage)
+    public PauseWindow(MainGame mainGame, Stage myStage)
     {
         this.myStage = myStage;
         this.mainGame = mainGame;
-        this.myGame = myGame;
     }
 
     public void initializeWindow()
@@ -62,8 +60,6 @@ public class PauseWindow
         resumeY = 0.42f * Gdx.graphics.getHeight();
         closeX = 0.2f * Gdx.graphics.getWidth();
         closeY = 0.42f * Gdx.graphics.getHeight();
-
-        pauseStage = new Stage(new ScreenViewport());
 
         pauseStage.addActor(resume);
         pauseStage.addActor(close);
