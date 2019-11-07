@@ -15,12 +15,6 @@ public class Vector
         this.y = y;
     }
 
-    public void setVector(int x, int y)
-    {
-        this.x = x;
-        this.y = y;
-    }
-
     public int getX()
     {
         return x;
@@ -51,21 +45,21 @@ public class Vector
         int temporaryX = 0;
         int temporaryY = 0;
 
-        switch(-rotationAngle)
+        switch(rotationAngle)
         {
             case 0:
                 temporaryX = this.x;
                 temporaryY = this.y;
                 break;
-            case 90:
+            case -90:
                 temporaryX = this.y;
                 temporaryY = -this.x;
                 break;
-            case 180:
+            case -180:
                 temporaryX = -this.x;
                 temporaryY = -this.y;
                 break;
-            case 270:
+            case -270:
                 temporaryX = -this.y;
                 temporaryY = this.x;
                 break;

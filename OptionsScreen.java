@@ -38,7 +38,7 @@ public class OptionsScreen implements Screen
 
         if(background == null)
         {
-            background = MyGame.myAssets.getTexture(Assets.BACKGROUND_BLUE, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            background = MyGame.myAssets.getTexture(Assets.BACKGROUND, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         }
 
         returnButton.setSize(0.12f * Gdx.graphics.getWidth(), 0.12f * Gdx.graphics.getHeight());

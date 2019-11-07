@@ -16,7 +16,7 @@ public class TileStart extends SquareTile
         getLinesDirection().add(new Vector(0,1));
 
         initializeImageButton(new ImageButton(new TextureRegionDrawable(
-                new TextureRegion(MyGame.myAssets.getTexture(Assets.TILE_FINAL)))), position, size);
+                new TextureRegion(MyGame.myAssets.getTexture(Assets.TILE_START)))), position, size);
 
         for(Vector vector: getLinesDirection())
         {

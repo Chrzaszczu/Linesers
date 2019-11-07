@@ -8,59 +8,28 @@ import java.util.List;
 
 public class LevelDesign
 {
-    public final static int NUMBER_OF_LEVELS = 20;
+    //public final static int NUMBER_OF_LEVELS = 1;
 
     private List<List<SquareTile>> squareTiles = new ArrayList<List<SquareTile>>();
 
     public List<List<SquareTile>> setLevel(int levelNumber)
     {
-        JSONArray mapDesign = MyGame.myAssets.parseJSONFile("Maps/1.txt");
-/*
+        JSONArray mapDesign = MyGame.myAssets.parseJSONFile("Maps/" + levelNumber + ".json");
+
         if(mapDesign != null)
         {
-            mapDesign.forEach(design ->
+            for(int y = 0; y < mapDesign.length(); y++)
             {
-                JSONArray tile = new JSONArray(design.toString());
-
-            });
-        }*/
-
-        return levelTmp();
-    }
-
-    private List<List<SquareTile>> levelTmp()
-    {
-        squareTiles.add(new ArrayList<SquareTile>(Arrays.asList(
-                new TileOne(0),
-                new TileThree(0),
-                new TileThree(0),
-                new TileTwo(0),
-                new TileFinal(-180)
-        )));
-
-        squareTiles.add(new ArrayList<SquareTile>(Arrays.asList(
-                new TileHalf(-90),
-                new TileOne(-90),
-                new TileThree(-90),
-                new TileTwo(-90),
-                new TileOne(0)
-        )));
-
-        squareTiles.add(new ArrayList<SquareTile>(Arrays.asList(
-                new TileHalf(0),
-                new TileThree(0),
-                new TileThree(0),
-                new TileThree(0),
-                new TileTwo(0)
-        )));
-
-        squareTiles.add(new ArrayList<SquareTile>(Arrays.asList(
-                new TileStart(-90),
-                new TileTwo(-270),
-                new TileTwo(-270),
-                new TileTwo(-270),
-                new TileTwo(-270)
-        )));
+                List<SquareTile> temporary = new ArrayList();
+                for(int x = 0; x < mapDesign.getJSONArray(y).length(); x++)
+                {
+                    int type = (int)mapDesign.getJSONArray(y).getJSONArray(x).get(0);
+                    int rotation = -(int)mapDesign.getJSONArray(y).getJSONArray(x).get(1);
+                    temporary.add(TileFactory.getTile(type, rotation));
+                }
+                squareTiles.add(temporary);
+            }
+        }
 
         return squareTiles;
     }

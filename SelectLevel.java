@@ -22,12 +22,12 @@ public class SelectLevel
 
     public void nextPage()
     {
-        if(page + 1 < Math.ceil((double)LevelDesign.NUMBER_OF_LEVELS/(double)NUMBER_OF_LEVELS_PER_PAGE))
+        if(page + 1 < Math.ceil((double)MyGame.myAssets.numberOfMaps()/(double)NUMBER_OF_LEVELS_PER_PAGE))
         {
             this.page += 1;
             for(LevelButton lButton: levelButtons)
             {
-                if(lButton.getLevelNumber() + NUMBER_OF_LEVELS_PER_PAGE < LevelDesign.NUMBER_OF_LEVELS)
+                if(lButton.getLevelNumber() + NUMBER_OF_LEVELS_PER_PAGE < MyGame.myAssets.numberOfMaps())
                 {
                     lButton.enable();
                 }
@@ -67,7 +67,10 @@ public class SelectLevel
 
     public void setLevelButtons()
     {
-        for(int levelNumber = 0; levelNumber < NUMBER_OF_LEVELS_PER_PAGE; ++levelNumber)
+        int numberOfMaps = MyGame.myAssets.numberOfMaps();
+        int numberOfButtons = (NUMBER_OF_LEVELS_PER_PAGE < numberOfMaps) ? NUMBER_OF_LEVELS_PER_PAGE : numberOfMaps;
+
+        for(int levelNumber = 0; levelNumber < numberOfButtons; levelNumber++)
         {
                 levelButtons.add(new LevelButton(levelNumber));
                 levelButtons.get(levelNumber).updateImage();

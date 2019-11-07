@@ -27,11 +27,11 @@ public class MainGame implements Screen
     private ImageButton pauseButton = new ImageButton(
                 new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.PAUSE_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
     private ImageButton musicButton = new ImageButton(
-            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.MUSIC_TEXTURE_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
+            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.MUSIC_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
     private ImageButton soundButton = new ImageButton(
-            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.SOUND_TEXTURE_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
+            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.SOUND_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
 
-    private Texture background = MyGame.myAssets.getTexture(Assets.BACKGROUND_AQUA, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    private Texture background = MyGame.myAssets.getTexture(Assets.BACKGROUND, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
     private Lattice squareLattice = new Lattice();
     private GameState gameState = GameState.RUNNING;
@@ -52,7 +52,7 @@ public class MainGame implements Screen
     @Override
     public void show()
     {
-        squareLattice.setLattice(1);
+        squareLattice.setLattice(levelNumber);
 
         pauseWindow = new PauseWindow(this, myStage);
         pauseWindow.initializeWindow();
@@ -208,7 +208,14 @@ public class MainGame implements Screen
 
             case CHANGE_LEVEL:
                 dispose();
-                myGame.setScreen(new MainGame(myGame, levelNumber++));
+                if(levelNumber + 1 >= MyGame.myAssets.numberOfMaps())
+                {
+                    myGame.setScreen(new Menu(myGame));
+                }
+                else
+                {
+                    myGame.setScreen(new MainGame(myGame, ++levelNumber));
+                }
         }
     }
 

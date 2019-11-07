@@ -20,7 +20,7 @@ public class YouWinWindow
     private static final int TEXT_HEIGHT = (int)(0.3f * Gdx.graphics.getWidth());
 
     private static ImageButton nextLevel = new ImageButton(
-            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.NEXT_GAME, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
+            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.NEXT_GAME_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
     private static ImageButton close = new ImageButton(
             new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.CLOSE_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
 

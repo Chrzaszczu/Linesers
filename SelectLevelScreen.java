@@ -29,9 +29,9 @@ public class SelectLevelScreen implements Screen
     private ImageButton previousPage = new ImageButton(
                 new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.BACKWARD_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
     private ImageButton musicButton = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.MUSIC_TEXTURE_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
+                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.MUSIC_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
     private ImageButton soundButton = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.SOUND_TEXTURE_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
+                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.SOUND_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
 
     private Texture background;
     private Texture panel;
@@ -50,7 +50,7 @@ public class SelectLevelScreen implements Screen
     {
         if(background == null)
         {
-            background = MyGame.myAssets.getTexture(Assets.BACKGROUND_BLUE, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            background = MyGame.myAssets.getTexture(Assets.BACKGROUND, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         }
 
         selectLevel = new SelectLevel(page);
