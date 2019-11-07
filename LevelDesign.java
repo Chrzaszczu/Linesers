@@ -1,5 +1,7 @@
 package com.patryk.main;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,6 +11,22 @@ public class LevelDesign
     public final static int NUMBER_OF_LEVELS = 20;
 
     private List<List<SquareTile>> squareTiles = new ArrayList<List<SquareTile>>();
+
+    public List<List<SquareTile>> setLevel(int levelNumber)
+    {
+        JSONArray mapDesign = MyGame.myAssets.parseJSONFile("Maps/1.txt");
+/*
+        if(mapDesign != null)
+        {
+            mapDesign.forEach(design ->
+            {
+                JSONArray tile = new JSONArray(design.toString());
+
+            });
+        }*/
+
+        return levelTmp();
+    }
 
     private List<List<SquareTile>> levelTmp()
     {
@@ -45,10 +63,5 @@ public class LevelDesign
         )));
 
         return squareTiles;
-    }
-
-    public List<List<SquareTile>> setLevel(int levelNumber)
-    {
-        return levelTmp();
     }
 }

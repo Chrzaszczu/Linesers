@@ -1,16 +1,21 @@
 package com.patryk.main;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 public class Assets
 {
@@ -113,7 +118,22 @@ public class Assets
             }
         }
 
-        return new Animation<TextureRegion>(frameDuration, preparedFrames);
+        return new Animation<>(frameDuration, preparedFrames);
+    }
+
+    public JSONArray parseJSONFile(String mapName)
+    {
+        StringBuilder content = new StringBuilder();
+        FileHandle fileHandle = Gdx.files.internal(mapName);
+
+        Scanner file = new Scanner(fileHandle.read());
+
+        while(file.hasNextLine())
+        {
+            content.append(file.nextLine());
+        }
+
+        return new JSONArray(content.toString());
     }
 
     public Sound getSound(String assetName)
