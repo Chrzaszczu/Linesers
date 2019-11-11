@@ -1,4 +1,4 @@
-package com.patryk.main;
+package com.mygdx.linesers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -19,7 +19,7 @@ public class Menu implements Screen
     public static final int MINOR_BUTTONS_WIDTH = (int)(0.12f * Gdx.graphics.getWidth());
     public static final int MINOR_BUTTONS_HEIGHT = (int)(0.07f * Gdx.graphics.getHeight());
 
-    private static final int LOGO_WIDTH = (int)(0.16f * Gdx.graphics.getWidth());
+    private static final int LOGO_WIDTH = (int)(0.18f * Gdx.graphics.getWidth());
     private static final int LOGO_HEIGHT = (int)(0.15f * Gdx.graphics.getHeight());
 
     private MyGame myGame;
@@ -84,7 +84,7 @@ public class Menu implements Screen
         soundButton.setPosition(0.2f * Gdx.graphics.getWidth(), 0.01f * Gdx.graphics.getHeight());
 
         logo.setSize(LOGO_WIDTH, LOGO_HEIGHT);
-        logo.setPosition(0.83f * Gdx.graphics.getWidth(), 0.01f * Gdx.graphics.getHeight());
+        logo.setPosition(0.8f * Gdx.graphics.getWidth(), 0.01f * Gdx.graphics.getHeight());
     }
 
     private void prepareButtonsListener()
@@ -94,7 +94,7 @@ public class Menu implements Screen
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                playButtonSound();
+                MyGame.myAssets.playSound(Assets.SOUND_OF_BUTTON);
                 dispose();
                 myGame.setScreen(new SelectLevelScreen(myGame, background));
             }
@@ -105,7 +105,7 @@ public class Menu implements Screen
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                playButtonSound();
+                MyGame.myAssets.playSound(Assets.SOUND_OF_BUTTON);
                 dispose();
                 System.exit(0);
             }
@@ -118,13 +118,13 @@ public class Menu implements Screen
             {
                 if(MyGame.options.isMusic())
                 {
-                    playButtonSound();
+                    MyGame.myAssets.playSound(Assets.SOUND_OF_BUTTON);
                     MyGame.options.setMusic(false);
                     MyGame.myAssets.getMusic(Assets.MUSIC).stop();
                 }
                 else
                 {
-                    playButtonSound();
+                    MyGame.myAssets.playSound(Assets.SOUND_OF_BUTTON);
                     MyGame.options.setMusic(true);
                     MyGame.myAssets.getMusic(Assets.MUSIC).play();
                 }
@@ -143,7 +143,7 @@ public class Menu implements Screen
                 else
                 {
                     MyGame.options.setSound(true);
-                    playButtonSound();
+                    MyGame.myAssets.playSound(Assets.SOUND_OF_BUTTON);
                 }
             }
         });
@@ -156,14 +156,6 @@ public class Menu implements Screen
                 //playButtonSound();
             }
         });*/
-    }
-
-    private void playButtonSound()
-    {
-        if(MyGame.options.isSound())
-        {
-            MyGame.myAssets.getSound(Assets.SOUND_OF_BUTTON).play(MyGame.options.getSoundVolume());
-        }
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.patryk.main;
+package com.mygdx.linesers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -11,8 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-import static com.patryk.main.Menu.MINOR_BUTTONS_HEIGHT;
-import static com.patryk.main.Menu.MINOR_BUTTONS_WIDTH;
+import static com.mygdx.linesers.Menu.MINOR_BUTTONS_HEIGHT;
+import static com.mygdx.linesers.Menu.MINOR_BUTTONS_WIDTH;
 
 public class PauseWindow
 {
@@ -69,6 +69,8 @@ public class PauseWindow
 
         resume.setPosition(resumeX, resumeY);
         close.setPosition(closeX, closeY);
+
+        prepareButtonsListener();
     }
 
     private void prepareButtonsListener()
@@ -78,6 +80,7 @@ public class PauseWindow
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
+                MyGame.myAssets.playSound(Assets.SOUND_OF_BUTTON);
                 mainGame.setGameState(GameState.QUIT);
             }
         });
@@ -87,6 +90,7 @@ public class PauseWindow
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
+                MyGame.myAssets.playSound(Assets.SOUND_OF_BUTTON);
                 mainGame.setGameState(GameState.RUNNING);
             }
         });
@@ -99,8 +103,6 @@ public class PauseWindow
         MyGame.batch.draw(pauseWindow, windowPositionX, windowPositionY, pauseWindow.getWidth(), pauseWindow.getHeight());
         MyGame.batch.draw(resumeText, textPositionX, textPositionY, resumeText.getWidth(), resumeText.getHeight());
         MyGame.batch.end();
-
-        prepareButtonsListener();
 
         Gdx.input.setInputProcessor(inputMultiplexer);
 

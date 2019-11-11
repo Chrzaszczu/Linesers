@@ -1,6 +1,10 @@
-package com.patryk.main;
+package com.mygdx.linesers;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class Options
 {
@@ -15,7 +19,7 @@ public class Options
     private float soundVolume = 1.0f;
     private float musicVolume = 0.3f;
 
-    private int finishedLevel;
+    private final List<Integer> finishedLevels = new LinkedList<>();
     private boolean sound = true;
     private boolean music = true;
 
@@ -25,7 +29,34 @@ public class Options
 
     public void loadConfigurationFile()
     {
+        myPreferences = Gdx.app.getPreferences("myPreferences");
+        sound = myPreferences.getBoolean("sound", true);
+        music = myPreferences.getBoolean("music", true);
 
+        for(int mapNumber = 0; mapNumber < MyGame.myAssets.numberOfMaps(); mapNumber++)
+        {
+            int temp = myPreferences.getInteger(String.valueOf(mapNumber), -1);
+
+            if(temp != -1)
+            {
+                finishedLevels.add(temp);
+            }
+        }
+    }
+
+    public void addFinishedLevel(int levelNumber)
+    {
+        if(!finishedLevels.contains(levelNumber))
+        {
+            finishedLevels.add(levelNumber);
+            myPreferences.putInteger(String.valueOf(levelNumber), levelNumber);
+        }
+        myPreferences.flush();
+    }
+
+    public List<Integer> getFinishedLevels()
+    {
+        return finishedLevels;
     }
 
     public float getSoundVolume()
@@ -51,10 +82,12 @@ public class Options
     public void setSound(boolean sound)
     {
         this.sound = sound;
+        myPreferences.flush();
     }
 
     public void setMusic(boolean music)
     {
         this.music = music;
+        myPreferences.flush();
     }
 }

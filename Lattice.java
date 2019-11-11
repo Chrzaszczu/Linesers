@@ -1,4 +1,4 @@
-package com.patryk.main;
+package com.mygdx.linesers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -10,9 +10,8 @@ import java.util.List;
 
 public class Lattice
 {
-    private LevelDesign levelDesign = new LevelDesign();
     private List<List<SquareTile>> squareTiles;
-    private List<LaserPosition> laserPositions = new LinkedList<LaserPosition>();
+    private List<LaserPosition> laserPositions = new LinkedList<>();
     private Animation<TextureRegion> laserAnimation = MyGame.myAssets.prepareAnimation(Assets.LASER, 6, 1, 0.05f);
 
     private Vector startingTile;
@@ -51,10 +50,20 @@ public class Lattice
             rotation = (end.getX() - start.getX() != 0) ? 90 : 0;
 
             MyGame.batch.draw(laserAnimation.getKeyFrame(stateTime, true),
-                    start.getX() + (end.getX() - start.getX())/2, start.getY() + (end.getY() - start.getY())/2,
-                     tileSize/2, tileSize/2, tileSize, tileSize,1,1, rotation);
+                    prepareLaserX(start, end), prepareLaserY(start, end), tileSize/2, tileSize/2,
+                    tileSize, tileSize,1,1, rotation);
         }
         MyGame.batch.end();
+    }
+
+    private int prepareLaserX(Vector start, Vector end)
+    {
+        return start.getX() + (end.getX() - start.getX())/2;
+    }
+
+    private int prepareLaserY(Vector start, Vector end)
+    {
+        return start.getY() + (end.getY() - start.getY())/2;
     }
 
     public boolean isFinished()
@@ -74,7 +83,7 @@ public class Lattice
 
         if(numberOfGlowingFinalTiles == numberOfFinalTiles)
         {
-            MyGame.myAssets.getSound(Assets.WIN_LASER_SOUND).play(MyGame.options.getSoundVolume());
+            MyGame.myAssets.playSound(Assets.WIN_LASER_SOUND);
         }
 
         return numberOfGlowingFinalTiles == numberOfFinalTiles;
@@ -91,7 +100,7 @@ public class Lattice
                 if(sqrTiles.getImageButton().isPressed())
                 {
                     sqrTiles.playSound();
-                    sqrTiles.getImageButton().setRotation(sqrTiles.rotateTile(sqrTiles.ROTATION_ANGLE_STEP));
+                    sqrTiles.getImageButton().setRotation(sqrTiles.rotateTile(SquareTile.ROTATION_ANGLE_STEP));
                 }
             }
         }
@@ -129,7 +138,7 @@ public class Lattice
 
     public void setLattice(int selectedLevel)
     {
-        squareTiles = levelDesign.setLevel(selectedLevel);
+        squareTiles = LevelDesign.setLevel(selectedLevel);
         numberOfFinalTiles = 0;
         numberOfGlowingFinalTiles = 0;
 

@@ -1,14 +1,17 @@
-package com.patryk.main;
+package com.mygdx.linesers;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+import java.util.stream.Collectors;
+
 public class LevelButton
 {
     private int levelNumber;
-    private ImageButton imageButton;
+    private ImageButton imageButton = new ImageButton(new TextureRegionDrawable(
+            new TextureRegion(MyGame.myAssets.getTexture(Assets.LEVEL_LOCKED))));
 
     public LevelButton(int levelNumber)
     {
@@ -37,6 +40,16 @@ public class LevelButton
         return this.levelNumber;
     }
 
+    public float getPositionX()
+    {
+        return imageButton.getX();
+    }
+
+    public float getPositionY()
+    {
+        return imageButton.getY();
+    }
+
     public ImageButton getImageButton()
     {
         return imageButton;
@@ -44,7 +57,15 @@ public class LevelButton
 
     public void updateImage()
     {
-        this.imageButton = new ImageButton(new TextureRegionDrawable(
-                new TextureRegion(MyGame.myAssets.getTexture(Assets.LEVEL_LOCKED))));
+        if(MyGame.options.getFinishedLevels().contains(levelNumber))
+        {
+            this.imageButton.getStyle().imageUp = new TextureRegionDrawable(
+                    new TextureRegion(MyGame.myAssets.getTexture(Assets.LEVEL_FINISHED)));
+        }
+        else
+        {
+            this.imageButton.getStyle().imageUp = new TextureRegionDrawable(
+                    new TextureRegion(MyGame.myAssets.getTexture(Assets.LEVEL_LOCKED)));
+        }
     }
 }

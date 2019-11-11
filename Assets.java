@@ -1,4 +1,4 @@
-package com.patryk.main;
+package com.mygdx.linesers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import org.json.JSONArray;
 
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -99,7 +100,6 @@ public class Assets
     public Animation<TextureRegion> prepareAnimation(String assetName, int numberOfColumns, int numberOfRows, float frameDuration)
     {
         Texture sheet = getTexture(assetName);
-
         TextureRegion[][] animationFrames = TextureRegion.split(sheet,
                 sheet.getWidth() / numberOfColumns, sheet.getHeight() / numberOfRows);
 
@@ -115,6 +115,11 @@ public class Assets
         }
 
         return new Animation<>(frameDuration, preparedFrames);
+    }
+
+    public FileHandle getFont()
+    {
+        return Gdx.files.internal("Font/pix_font.ttf");
     }
 
     public JSONArray parseJSONFile(String mapName)
@@ -136,6 +141,14 @@ public class Assets
     {
         FileHandle fileHandle = Gdx.files.internal("Maps");
         return fileHandle.list().length;
+    }
+
+    public void playSound(String assetName)
+    {
+        if(MyGame.options.isSound())
+        {
+            getSound(assetName).play(MyGame.options.getSoundVolume());
+        }
     }
 
     public Sound getSound(String assetName)

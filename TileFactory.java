@@ -1,4 +1,4 @@
-package com.patryk.main;
+package com.mygdx.linesers;
 
 public class TileFactory
 {

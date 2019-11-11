@@ -1,17 +1,26 @@
-package com.patryk.main;
+package com.mygdx.linesers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class SelectLevel
 {
     private final static int NUMBER_OF_LEVELS_PER_PAGE = 12;
     private final static int NUMBER_OF_ROWS = 3;
 
-    private List<LevelButton> levelButtons = new LinkedList<LevelButton>();
+    private List<LevelButton> levelButtons = new LinkedList<>();
+    FreeTypeFontGenerator generator = new FreeTypeFontGenerator(MyGame.myAssets.getFont());
+    FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+    BitmapFont font;
+
     private float buttonSize;
     private int page;
 
@@ -22,10 +31,10 @@ public class SelectLevel
 
     public void nextPage()
     {
-        if(page + 1 < Math.ceil((double)MyGame.myAssets.numberOfMaps()/(double)NUMBER_OF_LEVELS_PER_PAGE))
+        if (page + 1 < Math.ceil((double) MyGame.myAssets.numberOfMaps() / (double) NUMBER_OF_LEVELS_PER_PAGE))
         {
-            this.page += 1;
-            for(LevelButton lButton: levelButtons)
+            page += 1;
+            for(LevelButton lButton : levelButtons)
             {
                 if(lButton.getLevelNumber() + NUMBER_OF_LEVELS_PER_PAGE < MyGame.myAssets.numberOfMaps())
                 {
@@ -36,18 +45,19 @@ public class SelectLevel
                     lButton.disable();
                 }
                 lButton.setLevelNumber(lButton.getLevelNumber() + NUMBER_OF_LEVELS_PER_PAGE);
+                lButton.updateImage();
             }
         }
     }
 
     public void previousPage()
     {
-        if(page > 0)
+        if (page > 0)
         {
-            this.page -= 1;
-            for(LevelButton lButton: levelButtons)
+            page -= 1;
+            for (LevelButton lButton : levelButtons)
             {
-                if(lButton.getLevelNumber() - NUMBER_OF_LEVELS_PER_PAGE >= 0)
+                if (lButton.getLevelNumber() - NUMBER_OF_LEVELS_PER_PAGE >= 0)
                 {
                     lButton.enable();
                 }
@@ -56,6 +66,7 @@ public class SelectLevel
                     lButton.disable();
                 }
                 lButton.setLevelNumber(lButton.getLevelNumber() - NUMBER_OF_LEVELS_PER_PAGE);
+                lButton.updateImage();
             }
         }
     }
@@ -72,48 +83,81 @@ public class SelectLevel
 
         for(int levelNumber = 0; levelNumber < numberOfButtons; levelNumber++)
         {
-                levelButtons.add(new LevelButton(levelNumber));
-                levelButtons.get(levelNumber).updateImage();
+            levelButtons.add(new LevelButton(levelNumber));
+            levelButtons.get(levelNumber).updateImage();
         }
 
+        setFont();
         setPositions();
     }
 
-    public void addActors(Stage myStage)
+    private void setFont()
     {
-        for(LevelButton lButton: levelButtons)
+        parameter.size = (int)(0.06f * Gdx.graphics.getWidth());
+        font = generator.generateFont(parameter);
+        font.setColor(Color.WHITE);
+
+        generator.dispose();
+    }
+
+    public void drawLevelNumbers()
+    {
+        MyGame.batch.begin();
+        for(LevelButton button: levelButtons)
         {
-            myStage.addActor(lButton.getImageButton());
+            if(button.getImageButton().isVisible())
+            {
+                font.draw(MyGame.batch, String.valueOf(button.getLevelNumber() + 1), button.getPositionX(), fontYposition(button), buttonSize, (int) buttonSize, false);
+            }
         }
+        MyGame.batch.end();
     }
 
-    private int prepareX(int indexX)
+    private float fontYposition(LevelButton button)
     {
-        return (int)(0.175f * Gdx.graphics.getWidth() + (0.1f * Gdx.graphics.getWidth() + this.buttonSize) * indexX);
-    }
-
-    private int prepareY(int indexY)
-    {
-        return (int)(0.95f * Gdx.graphics.getHeight()/2f + 2f * this.buttonSize - (this.buttonSize + 0.05f * Gdx.graphics.getWidth()) * indexY);
+        return button.getPositionY() + button.getImageButton().getHeight()/2 + font.getXHeight()/2;
     }
 
     private void setPositions()
     {
-        this.buttonSize = (0.6f * Gdx.graphics.getWidth()) / (NUMBER_OF_LEVELS_PER_PAGE/NUMBER_OF_ROWS);
+        this.buttonSize = (0.6f * Gdx.graphics.getWidth()) / (NUMBER_OF_LEVELS_PER_PAGE / NUMBER_OF_ROWS);
         int indexX = 0;
         int indexY = 0;
 
-        for(LevelButton lButtons: levelButtons)
+        for (LevelButton lButtons : levelButtons)
         {
             lButtons.getImageButton().setPosition(prepareX(indexX), prepareY(indexY));
             lButtons.getImageButton().setSize(this.buttonSize, this.buttonSize);
 
             indexX += 1;
-            if(indexX == NUMBER_OF_ROWS)
+            if (indexX == NUMBER_OF_ROWS)
             {
                 indexX = 0;
                 indexY += 1;
             }
         }
+    }
+
+    private int prepareX(int indexX)
+    {
+        return (int) (0.175f * Gdx.graphics.getWidth() + (0.1f * Gdx.graphics.getWidth() + this.buttonSize) * indexX);
+    }
+
+    private int prepareY(int indexY)
+    {
+        return (int) (0.95f * Gdx.graphics.getHeight() / 2f + 2f * this.buttonSize - (this.buttonSize + 0.05f * Gdx.graphics.getWidth()) * indexY);
+    }
+
+    public void addActors(Stage myStage)
+    {
+        for (LevelButton lButton : levelButtons)
+        {
+            myStage.addActor(lButton.getImageButton());
+        }
+    }
+
+    public void dispose()
+    {
+       font.dispose();
     }
 }

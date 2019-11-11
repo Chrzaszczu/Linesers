@@ -1,19 +1,14 @@
-package com.patryk.main;
+package com.mygdx.linesers;
 
 import org.json.JSONArray;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class LevelDesign
 {
-    //public final static int NUMBER_OF_LEVELS = 1;
-
-    private List<List<SquareTile>> squareTiles = new ArrayList<List<SquareTile>>();
-
-    public List<List<SquareTile>> setLevel(int levelNumber)
+    public static List<List<SquareTile>> setLevel(int levelNumber)
     {
+        List<List<SquareTile>> squareTiles = new ArrayList<List<SquareTile>>();
         JSONArray mapDesign = MyGame.myAssets.parseJSONFile("Maps/" + levelNumber + ".json");
 
         if(mapDesign != null)

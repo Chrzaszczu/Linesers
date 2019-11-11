@@ -1,4 +1,4 @@
-package com.patryk.main;
+package com.mygdx.linesers;
 
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -30,7 +30,7 @@ public class SquareTile
 
     public void playSound()
     {
-        MyGame.myAssets.getSound(Assets.ROTATE_LASER_SOUND).play(MyGame.options.getSoundVolume());
+        MyGame.myAssets.playSound(Assets.ROTATE_LASER_SOUND);
     }
 
     public void setGlowing(boolean glowing)

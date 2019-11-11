@@ -1,4 +1,4 @@
-package com.patryk.main;
+package com.mygdx.linesers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -12,8 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-import static com.patryk.main.Menu.MINOR_BUTTONS_HEIGHT;
-import static com.patryk.main.Menu.MINOR_BUTTONS_WIDTH;
+import static com.mygdx.linesers.Menu.MINOR_BUTTONS_HEIGHT;
+import static com.mygdx.linesers.Menu.MINOR_BUTTONS_WIDTH;
 
 public class SelectLevelScreen implements Screen
 {
@@ -79,7 +79,7 @@ public class SelectLevelScreen implements Screen
                 @Override
                 public void clicked(InputEvent event, float x, float y)
                 {
-                    playButtonSound();
+                    MyGame.myAssets.playSound(Assets.SOUND_OF_BUTTON);
                     dispose();
                     myGame.setScreen(new MainGame(myGame, levelNum));
                 }
@@ -91,7 +91,7 @@ public class SelectLevelScreen implements Screen
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                playButtonSound();
+                MyGame.myAssets.playSound(Assets.SOUND_OF_BUTTON);
                 dispose();
                 myGame.setScreen(new Menu(myGame, background));
             }
@@ -102,7 +102,7 @@ public class SelectLevelScreen implements Screen
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                playButtonSound();
+                MyGame.myAssets.playSound(Assets.SOUND_OF_BUTTON);
                 selectLevel.nextPage();
             }
         });
@@ -112,7 +112,7 @@ public class SelectLevelScreen implements Screen
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
-                playButtonSound();
+                MyGame.myAssets.playSound(Assets.SOUND_OF_BUTTON);
                 selectLevel.previousPage();
             }
         });
@@ -124,13 +124,13 @@ public class SelectLevelScreen implements Screen
             {
                 if(MyGame.options.isMusic())
                 {
-                    playButtonSound();
+                    MyGame.myAssets.playSound(Assets.SOUND_OF_BUTTON);
                     MyGame.options.setMusic(false);
                     MyGame.myAssets.getMusic(Assets.MUSIC).stop();
                 }
                 else
                 {
-                    playButtonSound();
+                    MyGame.myAssets.playSound(Assets.SOUND_OF_BUTTON);
                     MyGame.options.setMusic(true);
                     MyGame.myAssets.getMusic(Assets.MUSIC).play();
                 }
@@ -149,18 +149,10 @@ public class SelectLevelScreen implements Screen
                 else
                 {
                     MyGame.options.setSound(true);
-                    playButtonSound();
+                    MyGame.myAssets.playSound(Assets.SOUND_OF_BUTTON);
                 }
             }
         });
-    }
-
-    private void playButtonSound()
-    {
-        if(MyGame.options.isSound())
-        {
-            MyGame.myAssets.getSound(Assets.SOUND_OF_BUTTON).play(MyGame.options.getSoundVolume());
-        }
     }
 
     private void initializeButtons()
@@ -197,6 +189,8 @@ public class SelectLevelScreen implements Screen
         MyGame.batch.end();
 
         myStage.draw();
+
+        selectLevel.drawLevelNumbers();
     }
 
     @Override
@@ -225,5 +219,6 @@ public class SelectLevelScreen implements Screen
         myGame.dispose();
         myStage.dispose();
         panel.dispose();
+        selectLevel.dispose();
     }
 }

@@ -1,4 +1,4 @@
-package com.patryk.main;
+package com.mygdx.linesers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -12,8 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-import static com.patryk.main.Menu.MINOR_BUTTONS_HEIGHT;
-import static com.patryk.main.Menu.MINOR_BUTTONS_WIDTH;
+import static com.mygdx.linesers.Menu.MINOR_BUTTONS_HEIGHT;
+import static com.mygdx.linesers.Menu.MINOR_BUTTONS_WIDTH;
 
 enum GameState {RUNNING, PAUSE, FINISHED, QUIT, CHANGE_LEVEL}
 
@@ -95,6 +95,7 @@ public class MainGame implements Screen
             @Override
             public void clicked(InputEvent event, float x, float y)
             {
+                MyGame.myAssets.playSound(Assets.SOUND_OF_BUTTON);
                 gameState = GameState.PAUSE;
             }
         });
@@ -106,13 +107,13 @@ public class MainGame implements Screen
             {
                 if(MyGame.options.isMusic())
                 {
-                    playButtonSound();
+                    MyGame.myAssets.playSound(Assets.SOUND_OF_BUTTON);
                     MyGame.options.setMusic(false);
                     MyGame.myAssets.getMusic(Assets.MUSIC).stop();
                 }
                 else
                 {
-                    playButtonSound();
+                    MyGame.myAssets.playSound(Assets.SOUND_OF_BUTTON);
                     MyGame.options.setMusic(true);
                     MyGame.myAssets.getMusic(Assets.MUSIC).play();
                 }
@@ -131,18 +132,10 @@ public class MainGame implements Screen
                 else
                 {
                     MyGame.options.setSound(true);
-                    playButtonSound();
+                    MyGame.myAssets.playSound(Assets.SOUND_OF_BUTTON);
                 }
             }
         });
-    }
-
-    private void playButtonSound()
-    {
-        if(MyGame.options.isSound())
-        {
-            MyGame.myAssets.getSound(Assets.SOUND_OF_BUTTON).play(MyGame.options.getSoundVolume());
-        }
     }
 
     @Override
@@ -158,7 +151,6 @@ public class MainGame implements Screen
 
         gameLogic();
 
-        Gdx.input.setInputProcessor(myStage);
         myStage.act(Gdx.graphics.getDeltaTime());
         myStage.draw();
 
@@ -169,6 +161,8 @@ public class MainGame implements Screen
     {
         if(gameState == GameState.RUNNING)
         {
+            Gdx.input.setInputProcessor(myStage);
+
             if (Gdx.input.isTouched())
             {
                 if (System.currentTimeMillis() - lastTouch > TOUCH_COOLDOWN)
@@ -198,6 +192,7 @@ public class MainGame implements Screen
                 break;
 
             case FINISHED:
+                MyGame.options.addFinishedLevel(levelNumber);
                 youWinWindow.draw();
                 break;
 
