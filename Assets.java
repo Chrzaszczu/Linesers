@@ -12,8 +12,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import org.json.JSONArray;
 
-import java.awt.*;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -148,6 +146,16 @@ public class Assets
         if(MyGame.options.isSound())
         {
             getSound(assetName).play(MyGame.options.getSoundVolume());
+        }
+    }
+
+    public void playMusic()
+    {
+        if(MyGame.options.isMusic())
+        {
+            getMusic(Assets.MUSIC).setVolume(MyGame.options.getMusicVolume());
+            getMusic(Assets.MUSIC).setLooping(true);
+            getMusic(Assets.MUSIC).play();
         }
     }
 

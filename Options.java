@@ -8,6 +8,9 @@ import java.util.List;
 
 public class Options
 {
+    private static final String SOUND_PREF = "sound";
+    private static final String MUSIC_PREF = "music";
+
     private static final Options instance = new Options();
     public static Options getInstance()
     {
@@ -30,8 +33,8 @@ public class Options
     public void loadConfigurationFile()
     {
         myPreferences = Gdx.app.getPreferences("myPreferences");
-        sound = myPreferences.getBoolean("sound", true);
-        music = myPreferences.getBoolean("music", true);
+        sound = myPreferences.getBoolean(SOUND_PREF, true);
+        music = myPreferences.getBoolean(MUSIC_PREF, true);
 
         for(int mapNumber = 0; mapNumber < MyGame.myAssets.numberOfMaps(); mapNumber++)
         {
@@ -82,12 +85,14 @@ public class Options
     public void setSound(boolean sound)
     {
         this.sound = sound;
+        myPreferences.putBoolean(SOUND_PREF, sound);
         myPreferences.flush();
     }
 
     public void setMusic(boolean music)
     {
         this.music = music;
+        myPreferences.putBoolean(MUSIC_PREF, music);
         myPreferences.flush();
     }
 }

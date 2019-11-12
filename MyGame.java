@@ -25,13 +25,9 @@ public class MyGame extends Game
 		//camera.update();
 		//batch.setProjectionMatrix(camera.combined);
 
-		myAssets.loadAssets();
-
-		myAssets.getMusic(Assets.MUSIC).setVolume(options.getMusicVolume());
-		myAssets.getMusic(Assets.MUSIC).setLooping(true);
-		myAssets.getMusic(Assets.MUSIC).play();
-
 		options.loadConfigurationFile();
+		myAssets.loadAssets();
+		myAssets.playMusic();
 
 		this.setScreen(new Menu(this));
 	}

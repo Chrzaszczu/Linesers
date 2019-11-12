@@ -72,8 +72,6 @@ public class SelectLevelScreen implements Screen
     {
         for(LevelButton lButton: selectLevel.getLevelButtons())
         {
-            final int levelNum = lButton.getLevelNumber();
-
             lButton.getImageButton().addListener(new ClickListener()
             {
                 @Override
@@ -81,7 +79,7 @@ public class SelectLevelScreen implements Screen
                 {
                     MyGame.myAssets.playSound(Assets.SOUND_OF_BUTTON);
                     dispose();
-                    myGame.setScreen(new MainGame(myGame, levelNum));
+                    myGame.setScreen(new MainGame(myGame, lButton.getLevelNumber()));
                 }
             });
         }

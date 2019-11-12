@@ -5,8 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-import java.util.stream.Collectors;
-
 public class LevelButton
 {
     private int levelNumber;

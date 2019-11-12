@@ -8,8 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 public class SelectLevel
 {
@@ -107,13 +105,13 @@ public class SelectLevel
         {
             if(button.getImageButton().isVisible())
             {
-                font.draw(MyGame.batch, String.valueOf(button.getLevelNumber() + 1), button.getPositionX(), fontYposition(button), buttonSize, (int) buttonSize, false);
+                font.draw(MyGame.batch, String.valueOf(button.getLevelNumber() + 1), button.getPositionX(), fontPositionY(button), buttonSize, 1, false);
             }
         }
         MyGame.batch.end();
     }
 
-    private float fontYposition(LevelButton button)
+    private float fontPositionY(LevelButton button)
     {
         return button.getPositionY() + button.getImageButton().getHeight()/2 + font.getXHeight()/2;
     }
