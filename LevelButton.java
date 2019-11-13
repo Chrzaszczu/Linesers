@@ -10,6 +10,10 @@ public class LevelButton
     private int levelNumber;
     private ImageButton imageButton = new ImageButton(new TextureRegionDrawable(
             new TextureRegion(MyGame.myAssets.getTexture(Assets.LEVEL_LOCKED))));
+    private TextureRegionDrawable levelFinished = new TextureRegionDrawable(
+            new TextureRegion(MyGame.myAssets.getTexture(Assets.LEVEL_FINISHED)));
+    private TextureRegionDrawable levelLocked = new TextureRegionDrawable(
+            new TextureRegion(MyGame.myAssets.getTexture(Assets.LEVEL_LOCKED)));
 
     public LevelButton(int levelNumber)
     {
@@ -57,13 +61,11 @@ public class LevelButton
     {
         if(MyGame.options.getFinishedLevels().contains(levelNumber))
         {
-            this.imageButton.getStyle().imageUp = new TextureRegionDrawable(
-                    new TextureRegion(MyGame.myAssets.getTexture(Assets.LEVEL_FINISHED)));
+            this.imageButton.getStyle().imageUp = levelFinished;
         }
         else
         {
-            this.imageButton.getStyle().imageUp = new TextureRegionDrawable(
-                    new TextureRegion(MyGame.myAssets.getTexture(Assets.LEVEL_LOCKED)));
+            this.imageButton.getStyle().imageUp = levelLocked;
         }
     }
 }

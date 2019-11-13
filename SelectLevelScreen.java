@@ -33,26 +33,20 @@ public class SelectLevelScreen implements Screen
     private ImageButton soundButton = new ImageButton(
                 new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.SOUND_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
 
-    private Texture background;
-    private Texture panel;
+    private Texture panel = MyGame.myAssets.getTexture(Assets.PANEL,(int)(0.85 * Gdx.graphics.getWidth()), (int)(0.52f * Gdx.graphics.getHeight()));
+    private Texture background = MyGame.myAssets.getTexture(Assets.BACKGROUND, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     private Texture selectLevelText = MyGame.myAssets.getTexture(Assets.SELECT_LEVEL, (int)(0.8f * Gdx.graphics.getWidth()), (int)(0.28f * Gdx.graphics.getHeight()));
 
     private int page = 0;
 
-    public SelectLevelScreen(MyGame myGame, Texture background)
+    public SelectLevelScreen(MyGame myGame)
     {
         this.myGame = myGame;
-        this.background = background;
     }
 
     @Override
     public void show()
     {
-        if(background == null)
-        {
-            background = MyGame.myAssets.getTexture(Assets.BACKGROUND, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        }
-
         selectLevel = new SelectLevel(page);
         selectLevel.setLevelButtons();
         selectLevel.addActors(myStage);
@@ -91,7 +85,7 @@ public class SelectLevelScreen implements Screen
             {
                 MyGame.myAssets.playSound(Assets.SOUND_OF_BUTTON);
                 dispose();
-                myGame.setScreen(new Menu(myGame, background));
+                myGame.setScreen(new Menu(myGame));
             }
         });
 
@@ -169,8 +163,6 @@ public class SelectLevelScreen implements Screen
 
         soundButton.setSize(MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT);
         soundButton.setPosition(0.2f * Gdx.graphics.getWidth(), 0.01f * Gdx.graphics.getHeight());
-
-        panel = MyGame.myAssets.getTexture(Assets.PANEL,(int)(0.85 * Gdx.graphics.getWidth()), (int)(0.52f * Gdx.graphics.getHeight()));
     }
 
     @Override
@@ -214,9 +206,18 @@ public class SelectLevelScreen implements Screen
     @Override
     public void dispose()
     {
-        myGame.dispose();
+        myStage.clear();
         myStage.dispose();
         panel.dispose();
+        background.dispose();
+        selectLevelText.dispose();
         selectLevel.dispose();
+
+        returnButton = null;
+        nextPage = null;
+        previousPage = null;
+        musicButton = null;
+        soundButton = null;
+        MyGame.myAssets.disposeTextures();
     }
 }

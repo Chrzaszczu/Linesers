@@ -19,8 +19,8 @@ public class Menu implements Screen
     public static final int MINOR_BUTTONS_WIDTH = (int)(0.12f * Gdx.graphics.getWidth());
     public static final int MINOR_BUTTONS_HEIGHT = (int)(0.07f * Gdx.graphics.getHeight());
 
-    private static final int LOGO_WIDTH = (int)(0.18f * Gdx.graphics.getWidth());
-    private static final int LOGO_HEIGHT = (int)(0.15f * Gdx.graphics.getHeight());
+    private final int LOGO_WIDTH = (int)(0.18f * Gdx.graphics.getWidth());
+    private final int LOGO_HEIGHT = (int)(0.15f * Gdx.graphics.getHeight());
 
     private MyGame myGame;
     private Stage myStage = new Stage(new ScreenViewport());
@@ -37,27 +37,16 @@ public class Menu implements Screen
                 new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.LOGO2, LOGO_WIDTH, LOGO_HEIGHT))));
 
     private Texture title = MyGame.myAssets.getTexture(Assets.TITLE, (int)(0.88f * Gdx.graphics.getWidth()), (int)(0.22f * Gdx.graphics.getHeight()));
-    private Texture background;
+    private Texture background = MyGame.myAssets.getTexture(Assets.BACKGROUND, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
     public Menu(MyGame myGame)
     {
         this.myGame = myGame;
     }
 
-    public Menu(MyGame myGame, Texture background)
-    {
-        this.myGame = myGame;
-        this.background = background;
-    }
-
     @Override
     public void show()
     {
-        if(background == null)
-        {
-            background = MyGame.myAssets.getTexture(Assets.BACKGROUND, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        }
-
         initializeButtons();
         prepareButtonsListener();
 
@@ -96,7 +85,7 @@ public class Menu implements Screen
             {
                 MyGame.myAssets.playSound(Assets.SOUND_OF_BUTTON);
                 dispose();
-                myGame.setScreen(new SelectLevelScreen(myGame, background));
+                myGame.setScreen(new SelectLevelScreen(myGame));
             }
         });
 
@@ -200,7 +189,17 @@ public class Menu implements Screen
     @Override
     public void dispose()
     {
-        myGame.dispose();
+        myStage.clear();
         myStage.dispose();
+        title.dispose();
+        background.dispose();
+
+        startButton = null;
+        exitButton = null;
+        musicButton = null;
+        soundButton = null;
+        logo = null;
+
+        MyGame.myAssets.disposeTextures();
     }
 }

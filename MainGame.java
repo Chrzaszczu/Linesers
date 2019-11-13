@@ -19,13 +19,13 @@ enum GameState {RUNNING, PAUSE, FINISHED, QUIT, CHANGE_LEVEL}
 
 public class MainGame implements Screen
 {
-    private final static int TOUCH_COOLDOWN = 250;
+    private final int TOUCH_COOLDOWN = 250;
 
     private final MyGame myGame;
     private Stage myStage = new Stage(new ScreenViewport());
 
     private ImageButton pauseButton = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.PAUSE_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
+            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.PAUSE_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
     private ImageButton musicButton = new ImageButton(
             new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.MUSIC_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
     private ImageButton soundButton = new ImageButton(
@@ -242,9 +242,13 @@ public class MainGame implements Screen
     @Override
     public void dispose()
     {
-        myGame.dispose();
+        pauseWindow.dispose();
+        youWinWindow.dispose();
         myStage.dispose();
+        background.dispose();
 
         squareLattice = null;
+        connectionChecker = null;
+        MyGame.myAssets.disposeTextures();
     }
 }

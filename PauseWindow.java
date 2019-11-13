@@ -16,14 +16,14 @@ import static com.mygdx.linesers.Menu.MINOR_BUTTONS_WIDTH;
 
 public class PauseWindow
 {
-    private static final int WINDOW_WIDTH = (int)(0.8 * Gdx.graphics.getWidth());
-    private static final int WINDOW_HEIGHT = (int)(0.5 * Gdx.graphics.getWidth());
-    private static final int TEXT_WIDTH = (int)(0.7f * Gdx.graphics.getWidth());
-    private static final int TEXT_HEIGHT = (int)(0.2f * Gdx.graphics.getWidth());
+    private final int WINDOW_WIDTH = (int)(0.8 * Gdx.graphics.getWidth());
+    private final int WINDOW_HEIGHT = (int)(0.5 * Gdx.graphics.getWidth());
+    private final int TEXT_WIDTH = (int)(0.7f * Gdx.graphics.getWidth());
+    private final int TEXT_HEIGHT = (int)(0.2f * Gdx.graphics.getWidth());
 
-    private static ImageButton resume = new ImageButton(
+    private ImageButton resume = new ImageButton(
             new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.OK_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
-    private static ImageButton close = new ImageButton(
+    private ImageButton close = new ImageButton(
             new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.CLOSE_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
 
     private Texture pauseWindow = MyGame.myAssets.getTexture(Assets.PANEL, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -108,5 +108,14 @@ public class PauseWindow
 
         pauseStage.act(Gdx.graphics.getDeltaTime());
         pauseStage.draw();
+    }
+
+    public void dispose()
+    {
+        pauseWindow.dispose();
+        screenDarkening.dispose();
+        resumeText.dispose();
+        resume = null;
+        close = null;
     }
 }

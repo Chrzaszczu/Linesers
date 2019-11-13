@@ -16,12 +16,12 @@ import static com.mygdx.linesers.Menu.MINOR_BUTTONS_WIDTH;
 
 public class YouWinWindow
 {
-    private static final int TEXT_WIDTH = (int)(0.9f * Gdx.graphics.getWidth());
-    private static final int TEXT_HEIGHT = (int)(0.3f * Gdx.graphics.getWidth());
+    private final int TEXT_WIDTH = (int)(0.9f * Gdx.graphics.getWidth());
+    private final int TEXT_HEIGHT = (int)(0.3f * Gdx.graphics.getWidth());
 
-    private static ImageButton nextLevel = new ImageButton(
+    private ImageButton nextLevel = new ImageButton(
             new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.NEXT_GAME_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
-    private static ImageButton close = new ImageButton(
+    private ImageButton close = new ImageButton(
             new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.CLOSE_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
 
     private Texture screenDarkening = MyGame.myAssets.getTexture(Assets.SCREEN_DARKENING, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -105,5 +105,14 @@ public class YouWinWindow
 
         youWinStage.act(Gdx.graphics.getDeltaTime());
         youWinStage.draw();
+    }
+
+    public void dispose()
+    {
+        screenDarkening.dispose();
+        youWinText.dispose();
+        youWinStage.dispose();
+        nextLevel = null;
+        close = null;
     }
 }

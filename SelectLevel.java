@@ -15,9 +15,9 @@ public class SelectLevel
     private final static int NUMBER_OF_ROWS = 3;
 
     private List<LevelButton> levelButtons = new LinkedList<>();
-    FreeTypeFontGenerator generator = new FreeTypeFontGenerator(MyGame.myAssets.getFont());
-    FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-    BitmapFont font;
+    private FreeTypeFontGenerator generator = new FreeTypeFontGenerator(MyGame.myAssets.getFont());
+    private FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+    private BitmapFont font;
 
     private float buttonSize;
     private int page;
@@ -96,6 +96,7 @@ public class SelectLevel
         font.setColor(Color.WHITE);
 
         generator.dispose();
+        parameter = null;
     }
 
     public void drawLevelNumbers()
@@ -157,5 +158,6 @@ public class SelectLevel
     public void dispose()
     {
        font.dispose();
+
     }
 }

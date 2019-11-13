@@ -1,4 +1,4 @@
-package com.mygdx.linesers;
+/*package com.mygdx.linesers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -59,7 +59,7 @@ public class OptionsScreen implements Screen
             {
                 MyGame.myAssets.getSound(Assets.SOUND_OF_BUTTON).play(MyGame.options.getSoundVolume());
                 dispose();
-                myGame.setScreen(new Menu(myGame, background));
+                myGame.setScreen(new Menu(myGame));
             }
         });
     }
@@ -115,3 +115,4 @@ public class OptionsScreen implements Screen
         returnButton = null;
     }
 }
+*/

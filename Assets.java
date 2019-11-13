@@ -14,12 +14,13 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Assets
 {
-    public final static String BACKGROUND = "background.png";
+    public final static String BACKGROUND = "background1.png";
     public final static String TILE_ONE = "tile_one.png";
     public final static String TILE_TWO = "tile_two.png";
     public final static String TILE_THREE = "tile_three.png";
@@ -65,6 +66,8 @@ public class Assets
 
     private List<String> soundList = new ArrayList<String>(Arrays.asList(SOUND_OF_BUTTON, ROTATE_LASER_SOUND, WIN_LASER_SOUND));
 
+    private List<Texture> disposables = new LinkedList<>();
+
     public Texture getTexture(String textureName, int width, int height)
     {
         Texture originalTexture;
@@ -84,6 +87,8 @@ public class Assets
 
         newTexture = new Texture(newPixmap);
 
+        disposables.add(newTexture);
+        originalTexture.dispose();
         originalPixmap.dispose();
         newPixmap.dispose();
 
@@ -97,9 +102,8 @@ public class Assets
 
     public Animation<TextureRegion> prepareAnimation(String assetName, int numberOfColumns, int numberOfRows, float frameDuration)
     {
-        Texture sheet = getTexture(assetName);
-        TextureRegion[][] animationFrames = TextureRegion.split(sheet,
-                sheet.getWidth() / numberOfColumns, sheet.getHeight() / numberOfRows);
+        TextureRegion[][] animationFrames = TextureRegion.split(getTexture(assetName),
+                getTexture(assetName).getWidth() / numberOfColumns, getTexture(assetName).getHeight() / numberOfRows);
 
         TextureRegion[] preparedFrames = new TextureRegion[numberOfColumns * numberOfRows];
 
@@ -184,5 +188,10 @@ public class Assets
         myAssets.load(MUSIC, Music.class);
 
         myAssets.finishLoading();
+    }
+
+    public void disposeTextures()
+    {
+        disposables.forEach(asset -> asset.dispose());
     }
 }
