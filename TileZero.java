@@ -4,9 +4,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-public class TileFinal extends SquareTile
+public class TileZero extends SquareTile
 {
-    public TileFinal(int rotationAngle)
+    public TileZero(int rotationAngle)
     {
         setRotationAngle(rotationAngle);
     }
@@ -15,7 +15,7 @@ public class TileFinal extends SquareTile
     {
         getLinesDirection().add(new Vector(0,1));
         initializeImageButton(new ImageButton(new TextureRegionDrawable(
-                new TextureRegion(MyGame.myAssets.getTexture(Assets.TILE_FINAL)))), position, size);
+                new TextureRegion(MyGame.myAssets.getTexture(Assets.TILE_ZERO)))), position, size);
 
         for(Vector vector: getLinesDirection())
         {

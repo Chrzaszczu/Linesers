@@ -20,7 +20,7 @@ public class TileFactory
 
             case 7: return new TileFinal(rotation);
 
-            default: return new TileOne(0);
+            default: return new TileZero(0);
         }
     }
 }

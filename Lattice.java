@@ -130,19 +130,13 @@ public class Lattice
         }
     }
 
-    private Vector preparePosition(Vector vector)
-    {
-        return new Vector((int)(0.05f * Gdx.graphics.getWidth() + this.tileSize * vector.getX()),
-                (int)(Gdx.graphics.getHeight()/2f + this.tileSize * (squareTiles.size()-2f)/2f  - this.tileSize * vector.getY()));
-    }
-
     public void setLattice(int selectedLevel)
     {
         squareTiles = LevelDesign.setLevel(selectedLevel);
         numberOfFinalTiles = 0;
         numberOfGlowingFinalTiles = 0;
 
-        this.tileSize = (0.9f * Gdx.graphics.getWidth()) / (float)squareTiles.get(0).size();
+        this.tileSize = setTileSize();
 
         int tileIndexX;
         int tileIndexY = 0;
@@ -167,5 +161,25 @@ public class Lattice
             }
             tileIndexY += 1;
         }
+    }
+
+    private float setTileSize()
+    {
+        float sizeW = (0.9f * Gdx.graphics.getWidth()) / (float)squareTiles.get(0).size();
+        float sizeH = (0.8f * Gdx.graphics.getHeight()) / (float)squareTiles.size();
+
+        return (sizeW < sizeH) ? sizeW : sizeH;
+    }
+
+    /*private Vector preparePosition(Vector vector)
+    {
+        return new Vector((int)(0.05f * Gdx.graphics.getWidth() + this.tileSize * vector.getX()),
+                (int)(Gdx.graphics.getHeight()/2f + this.tileSize * (squareTiles.size()-2f)/2f  - this.tileSize * vector.getY()));
+    }*/
+
+    private Vector preparePosition(Vector vector)
+    {
+        return new Vector((int)(Gdx.graphics.getWidth()/2 - this.tileSize * squareTiles.get(0).size()/2 + this.tileSize * vector.getX()),
+                (int)(Gdx.graphics.getHeight()/2f + this.tileSize * (squareTiles.size()-2f)/2f  - this.tileSize * vector.getY()));
     }
 }
