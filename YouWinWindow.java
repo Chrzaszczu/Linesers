@@ -16,26 +16,24 @@ import static com.mygdx.linesers.Menu.MINOR_BUTTONS_WIDTH;
 
 public class YouWinWindow
 {
-    private final int TEXT_WIDTH = (int)(0.9f * Gdx.graphics.getWidth());
-    private final int TEXT_HEIGHT = (int)(0.3f * Gdx.graphics.getWidth());
+    private final int TEXT_WIDTH = Gdx.graphics.getWidth();
+    private final int TEXT_HEIGHT = (int)(0.13f * Gdx.graphics.getHeight());
 
     private ImageButton nextLevel = new ImageButton(
-            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.NEXT_GAME_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
-    private ImageButton close = new ImageButton(
-            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.CLOSE_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
+            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.NEXT_GAME_BUTTON, Gdx.graphics.getWidth()/2, (int)(0.06f * Gdx.graphics.getHeight())))));
+    private ImageButton menu = new ImageButton(
+            new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.MENU_BUTTON, Gdx.graphics.getWidth()/2, (int)(0.06f * Gdx.graphics.getHeight())))));
 
-    private Texture screenDarkening = MyGame.myAssets.getTexture(Assets.SCREEN_DARKENING, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     private Texture youWinText = MyGame.myAssets.getTexture(Assets.YOU_WIN_TEXT, TEXT_WIDTH, TEXT_HEIGHT);
 
     private float textPositionX;
     private float textPositionY;
     private float nextLevelX;
     private float nextLevelY;
-    private float closeX;
-    private float closeY;
+    private float menuX;
+    private float menuY;
 
     private Stage youWinStage = new Stage(new ScreenViewport());
-    private InputMultiplexer inputMultiplexer = new InputMultiplexer();
     private Stage myStage;
     private MainGame mainGame;
 
@@ -49,31 +47,24 @@ public class YouWinWindow
     public void initializeWindow()
     {
         textPositionX = Gdx.graphics.getWidth()/2 - youWinText.getWidth()/2;
-        textPositionY = Gdx.graphics.getHeight()/2 + youWinText.getHeight();
-        nextLevelX = 0.7f * Gdx.graphics.getWidth();
-        nextLevelY = 0.4f * Gdx.graphics.getHeight();
-        closeX = 0.2f * Gdx.graphics.getWidth();
-        closeY = 0.4f * Gdx.graphics.getHeight();
+        textPositionY = (int)(0.75f * Gdx.graphics.getHeight());
+        nextLevelX = 0.5f * Gdx.graphics.getWidth();
+        nextLevelY = 0.15f * Gdx.graphics.getHeight();
+        menuX = 0;
+        menuY = 0.15f * Gdx.graphics.getHeight();
 
         youWinStage.addActor(nextLevel);
-        youWinStage.addActor(close);
-
-        nextLevel.setTransform(true);
-        nextLevel.setOrigin(nextLevel.getWidth()/2, nextLevel.getHeight()/2);
-        nextLevel.setRotation(-90);
-
-        inputMultiplexer.addProcessor(youWinStage);
-        inputMultiplexer.addProcessor(myStage);
+        youWinStage.addActor(menu);
 
         nextLevel.setPosition(nextLevelX, nextLevelY);
-        close.setPosition(closeX, closeY);
+        menu.setPosition(menuX, menuY);
 
         prepareButtonsListener();
     }
 
     private void prepareButtonsListener()
     {
-        close.addListener(new ClickListener()
+        menu.addListener(new ClickListener()
         {
             @Override
             public void clicked(InputEvent event, float x, float y)
@@ -97,11 +88,10 @@ public class YouWinWindow
     public void draw()
     {
         MyGame.batch.begin();
-        MyGame.batch.draw(screenDarkening, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         MyGame.batch.draw(youWinText, textPositionX, textPositionY, youWinText.getWidth(), youWinText.getHeight());
         MyGame.batch.end();
 
-        Gdx.input.setInputProcessor(inputMultiplexer);
+        Gdx.input.setInputProcessor(youWinStage);
 
         youWinStage.act(Gdx.graphics.getDeltaTime());
         youWinStage.draw();
@@ -109,10 +99,9 @@ public class YouWinWindow
 
     public void dispose()
     {
-        screenDarkening.dispose();
         youWinText.dispose();
         youWinStage.dispose();
         nextLevel = null;
-        close = null;
+        menu = null;
     }
 }

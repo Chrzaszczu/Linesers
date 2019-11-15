@@ -19,9 +19,6 @@ public class Menu implements Screen
     public static final int MINOR_BUTTONS_WIDTH = (int)(0.12f * Gdx.graphics.getWidth());
     public static final int MINOR_BUTTONS_HEIGHT = (int)(0.07f * Gdx.graphics.getHeight());
 
-    private final int LOGO_WIDTH = (int)(0.18f * Gdx.graphics.getWidth());
-    private final int LOGO_HEIGHT = (int)(0.15f * Gdx.graphics.getHeight());
-
     private MyGame myGame;
     private Stage myStage = new Stage(new ScreenViewport());
 
@@ -33,10 +30,8 @@ public class Menu implements Screen
                 new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.MUSIC_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
     private ImageButton soundButton = new ImageButton(
                 new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.SOUND_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
-    private ImageButton logo = new ImageButton(
-                new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.LOGO2, LOGO_WIDTH, LOGO_HEIGHT))));
 
-    private Texture title = MyGame.myAssets.getTexture(Assets.TITLE, (int)(0.88f * Gdx.graphics.getWidth()), (int)(0.22f * Gdx.graphics.getHeight()));
+    private Texture title = MyGame.myAssets.getTexture(Assets.TITLE, Gdx.graphics.getWidth(), (int)(0.13f * Gdx.graphics.getHeight()));
     private Texture background = MyGame.myAssets.getTexture(Assets.BACKGROUND, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
     public Menu(MyGame myGame)
@@ -54,7 +49,6 @@ public class Menu implements Screen
         myStage.addActor(soundButton);
         myStage.addActor(musicButton);
         myStage.addActor(exitButton);
-        myStage.addActor(logo);
         Gdx.input.setInputProcessor(myStage);
     }
 
@@ -71,9 +65,6 @@ public class Menu implements Screen
 
         soundButton.setSize(MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT);
         soundButton.setPosition(0.2f * Gdx.graphics.getWidth(), 0.01f * Gdx.graphics.getHeight());
-
-        logo.setSize(LOGO_WIDTH, LOGO_HEIGHT);
-        logo.setPosition(0.8f * Gdx.graphics.getWidth(), 0.01f * Gdx.graphics.getHeight());
     }
 
     private void prepareButtonsListener()
@@ -136,15 +127,6 @@ public class Menu implements Screen
                 }
             }
         });
-
-       /* logo.addListener(new ClickListener()
-        {
-            @Override
-            public void clicked(InputEvent event, float x, float y)
-            {
-                //playButtonSound();
-            }
-        });*/
     }
 
     @Override
@@ -155,7 +137,7 @@ public class Menu implements Screen
         MyGame.batch.enableBlending();
         MyGame.batch.begin();
         MyGame.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        MyGame.batch.draw(title, Gdx.graphics.getWidth()/2 - title.getWidth()/2, 0.7f * Gdx.graphics.getHeight(), title.getWidth(), title.getHeight());
+        MyGame.batch.draw(title, Gdx.graphics.getWidth()/2 - title.getWidth()/2, 0.75f * Gdx.graphics.getHeight(), title.getWidth(), title.getHeight());
         MyGame.batch.end();
 
         myStage.act(Gdx.graphics.getDeltaTime());
@@ -198,7 +180,6 @@ public class Menu implements Screen
         exitButton = null;
         musicButton = null;
         soundButton = null;
-        logo = null;
 
         MyGame.myAssets.disposeTextures();
     }

@@ -18,8 +18,8 @@ public class PauseWindow
 {
     private final int WINDOW_WIDTH = (int)(0.8 * Gdx.graphics.getWidth());
     private final int WINDOW_HEIGHT = (int)(0.5 * Gdx.graphics.getWidth());
-    private final int TEXT_WIDTH = (int)(0.7f * Gdx.graphics.getWidth());
-    private final int TEXT_HEIGHT = (int)(0.2f * Gdx.graphics.getWidth());
+    private final int TEXT_WIDTH = (int)(0.6f * Gdx.graphics.getWidth());
+    private final int TEXT_HEIGHT = (int)(0.13f * Gdx.graphics.getWidth());
 
     private ImageButton resume = new ImageButton(
             new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.OK_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
@@ -27,7 +27,6 @@ public class PauseWindow
             new TextureRegionDrawable(new TextureRegion(MyGame.myAssets.getTexture(Assets.CLOSE_BUTTON, MINOR_BUTTONS_WIDTH, MINOR_BUTTONS_HEIGHT))));
 
     private Texture pauseWindow = MyGame.myAssets.getTexture(Assets.PANEL, WINDOW_WIDTH, WINDOW_HEIGHT);
-    private Texture screenDarkening = MyGame.myAssets.getTexture(Assets.SCREEN_DARKENING, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     private Texture resumeText = MyGame.myAssets.getTexture(Assets.RESUME, TEXT_WIDTH, TEXT_HEIGHT);
 
     private float windowPositionX;
@@ -99,7 +98,6 @@ public class PauseWindow
     public void draw()
     {
         MyGame.batch.begin();
-        MyGame.batch.draw(screenDarkening, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         MyGame.batch.draw(pauseWindow, windowPositionX, windowPositionY, pauseWindow.getWidth(), pauseWindow.getHeight());
         MyGame.batch.draw(resumeText, textPositionX, textPositionY, resumeText.getWidth(), resumeText.getHeight());
         MyGame.batch.end();
@@ -113,7 +111,6 @@ public class PauseWindow
     public void dispose()
     {
         pauseWindow.dispose();
-        screenDarkening.dispose();
         resumeText.dispose();
         resume = null;
         close = null;

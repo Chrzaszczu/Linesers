@@ -93,7 +93,7 @@ public class SelectLevel
     {
         parameter.size = (int)(0.06f * Gdx.graphics.getWidth());
         font = generator.generateFont(parameter);
-        font.setColor(Color.WHITE);
+        font.setColor(Color.GRAY);
 
         generator.dispose();
         parameter = null;

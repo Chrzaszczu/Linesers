@@ -171,12 +171,6 @@ public class Lattice
         return (sizeW < sizeH) ? sizeW : sizeH;
     }
 
-    /*private Vector preparePosition(Vector vector)
-    {
-        return new Vector((int)(0.05f * Gdx.graphics.getWidth() + this.tileSize * vector.getX()),
-                (int)(Gdx.graphics.getHeight()/2f + this.tileSize * (squareTiles.size()-2f)/2f  - this.tileSize * vector.getY()));
-    }*/
-
     private Vector preparePosition(Vector vector)
     {
         return new Vector((int)(Gdx.graphics.getWidth()/2 - this.tileSize * squareTiles.get(0).size()/2 + this.tileSize * vector.getX()),

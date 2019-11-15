@@ -35,7 +35,7 @@ public class SelectLevelScreen implements Screen
 
     private Texture panel = MyGame.myAssets.getTexture(Assets.PANEL,(int)(0.85 * Gdx.graphics.getWidth()), (int)(0.52f * Gdx.graphics.getHeight()));
     private Texture background = MyGame.myAssets.getTexture(Assets.BACKGROUND, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-    private Texture selectLevelText = MyGame.myAssets.getTexture(Assets.SELECT_LEVEL, (int)(0.8f * Gdx.graphics.getWidth()), (int)(0.28f * Gdx.graphics.getHeight()));
+    private Texture selectLevelText = MyGame.myAssets.getTexture(Assets.SELECT_LEVEL, Gdx.graphics.getWidth(), (int)(0.13f * Gdx.graphics.getHeight()));
 
     private int page = 0;
 
@@ -175,7 +175,7 @@ public class SelectLevelScreen implements Screen
         MyGame.batch.begin();
         MyGame.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         MyGame.batch.draw(panel, Gdx.graphics.getWidth()/2 - panel.getWidth()/2, 0.26f * Gdx.graphics.getHeight());
-        MyGame.batch.draw(selectLevelText, Gdx.graphics.getWidth()/2 - selectLevelText.getWidth()/2, 0.75f * Gdx.graphics.getHeight(), selectLevelText.getWidth(), selectLevelText.getHeight());
+        MyGame.batch.draw(selectLevelText, Gdx.graphics.getWidth()/2 - selectLevelText.getWidth()/2, 0.8f * Gdx.graphics.getHeight(), selectLevelText.getWidth(), selectLevelText.getHeight());
         MyGame.batch.end();
 
         myStage.draw();
