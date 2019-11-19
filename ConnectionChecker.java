@@ -8,6 +8,8 @@ public class ConnectionChecker
     private List<LaserPosition> laserPositions;
     private Vector startingTile;
 
+    private int numberOfGlowingFinalTiles = 0;
+
     public ConnectionChecker(List<List<SquareTile>> squareTiles, Vector startingTile, List<LaserPosition> laserPositions)
     {
         this.squareTiles = squareTiles;
@@ -15,9 +17,15 @@ public class ConnectionChecker
         this.laserPositions = laserPositions;
     }
 
+    public int getNumberOfGowingFinalTiles()
+    {
+        return numberOfGlowingFinalTiles;
+    }
+
     public void assambleConnections()
     {
         laserPositions.clear();
+        numberOfGlowingFinalTiles = 0;
         int startingTileX = startingTile.getX();
         int startingTileY = startingTile.getY();
 
@@ -46,7 +54,7 @@ public class ConnectionChecker
         {
             if(Vector.normOfSum(lineDirection, previousLineDirection) == 0)
             {
-                nextTile.setGlowing(true);
+                lightUp(nextTile);
 
                 for(Vector lineDirectionB: nextTile.getLinesDirection())
                 {
@@ -64,6 +72,16 @@ public class ConnectionChecker
                     }
                 }
             }
+        }
+    }
+
+    private void lightUp(SquareTile tile)
+    {
+        tile.setGlowing(true);
+
+        if(tile.getClass() == TileFinal.class)
+        {
+            numberOfGlowingFinalTiles += 1;
         }
     }
 

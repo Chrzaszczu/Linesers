@@ -26,17 +26,16 @@ public class YouWinWindow
 
     private Texture youWinText = MyGame.myAssets.getTexture(Assets.YOU_WIN_TEXT, TEXT_WIDTH, TEXT_HEIGHT);
 
-    private float textPositionX;
-    private float textPositionY;
-    private float nextLevelX;
-    private float nextLevelY;
-    private float menuX;
-    private float menuY;
+    private float textPositionX = Gdx.graphics.getWidth()/2 - youWinText.getWidth()/2;
+    private float textPositionY = (int)(0.75f * Gdx.graphics.getHeight());
+    private float nextLevelX = 0.5f * Gdx.graphics.getWidth();
+    private float nextLevelY = 0.15f * Gdx.graphics.getHeight();
+    private float menuX = 0;
+    private float menuY = 0.15f * Gdx.graphics.getHeight();
 
     private Stage youWinStage = new Stage(new ScreenViewport());
     private Stage myStage;
     private MainGame mainGame;
-
 
     public YouWinWindow(MainGame mainGame, Stage myStage)
     {
@@ -46,13 +45,6 @@ public class YouWinWindow
 
     public void initializeWindow()
     {
-        textPositionX = Gdx.graphics.getWidth()/2 - youWinText.getWidth()/2;
-        textPositionY = (int)(0.75f * Gdx.graphics.getHeight());
-        nextLevelX = 0.5f * Gdx.graphics.getWidth();
-        nextLevelY = 0.15f * Gdx.graphics.getHeight();
-        menuX = 0;
-        menuY = 0.15f * Gdx.graphics.getHeight();
-
         youWinStage.addActor(nextLevel);
         youWinStage.addActor(menu);
 
@@ -71,6 +63,7 @@ public class YouWinWindow
             {
                 MyGame.myAssets.playSound(Assets.SOUND_OF_BUTTON);
                 mainGame.setGameState(GameState.QUIT);
+                Gdx.input.setInputProcessor(myStage);
             }
         });
 
@@ -81,6 +74,7 @@ public class YouWinWindow
             {
                 MyGame.myAssets.playSound(Assets.SOUND_OF_BUTTON);
                 mainGame.setGameState(GameState.CHANGE_LEVEL);
+                Gdx.input.setInputProcessor(myStage);
             }
         });
     }

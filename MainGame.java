@@ -19,8 +19,6 @@ enum GameState {RUNNING, PAUSE, FINISHED, QUIT, CHANGE_LEVEL}
 
 public class MainGame implements Screen
 {
-    private final int TOUCH_COOLDOWN = 250;
-
     private final MyGame myGame;
     private Stage myStage = new Stage(new ScreenViewport());
 
@@ -35,11 +33,9 @@ public class MainGame implements Screen
 
     private Lattice squareLattice = new Lattice();
     private GameState gameState = GameState.RUNNING;
-    private ConnectionChecker connectionChecker;
     private PauseWindow pauseWindow;
     private YouWinWindow youWinWindow;
 
-    private long lastTouch = 0;
     private float stateTime = 0f;
     private int levelNumber;
 
@@ -60,8 +56,6 @@ public class MainGame implements Screen
         youWinWindow = new YouWinWindow(this, myStage);
         youWinWindow.initializeWindow();
 
-        connectionChecker = new ConnectionChecker(squareLattice.getSquareTiles(), squareLattice.getStartingTile(), squareLattice.getLaserPositions());
-
         initializeButtons();
         prepareButtonsListener();
 
@@ -72,8 +66,6 @@ public class MainGame implements Screen
         myStage.addActor(soundButton);
 
         Gdx.input.setInputProcessor(myStage);
-
-        connectionChecker.assambleConnections();
     }
 
     private void initializeButtons()
@@ -149,41 +141,27 @@ public class MainGame implements Screen
         MyGame.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         MyGame.batch.end();
 
-        gameLogic();
-
-        myStage.act(Gdx.graphics.getDeltaTime());
-        myStage.draw();
-
-        onGameStateChange();
-    }
-
-    private void gameLogic()
-    {
         if(gameState == GameState.RUNNING)
         {
-            Gdx.input.setInputProcessor(myStage);
-
-            if (Gdx.input.isTouched())
-            {
-                if (System.currentTimeMillis() - lastTouch > TOUCH_COOLDOWN)
-                {
-                    lastTouch = System.currentTimeMillis();
-
-                    squareLattice.onLatticeTouch();
-                    connectionChecker.assambleConnections();
-                    gameState = (squareLattice.isFinished()) ? GameState.FINISHED : GameState.RUNNING;
-                }
-            }
-
             squareLattice.drawLasers(stateTime);
+
+            if(squareLattice.isFinished())
+            {
+                setGameState(GameState.FINISHED);
+            }
         }
         else
         {
             squareLattice.drawLasers(0f);
         }
+
+        myStage.act(Gdx.graphics.getDeltaTime());
+        myStage.draw();
+
+        gameLogic();
     }
 
-    private void onGameStateChange()
+    private void gameLogic()
     {
         switch(gameState)
         {
@@ -196,11 +174,6 @@ public class MainGame implements Screen
                 youWinWindow.draw();
                 break;
 
-            case QUIT:
-                dispose();
-                myGame.setScreen(new Menu(myGame));
-                break;
-
             case CHANGE_LEVEL:
                 dispose();
                 if(levelNumber + 1 >= MyGame.myAssets.numberOfMaps())
@@ -211,6 +184,12 @@ public class MainGame implements Screen
                 {
                     myGame.setScreen(new MainGame(myGame, ++levelNumber));
                 }
+                break;
+
+            case QUIT:
+                dispose();
+                myGame.setScreen(new Menu(myGame));
+                break;
         }
     }
 
@@ -248,7 +227,6 @@ public class MainGame implements Screen
         background.dispose();
 
         squareLattice = null;
-        connectionChecker = null;
         MyGame.myAssets.disposeTextures();
     }
 }

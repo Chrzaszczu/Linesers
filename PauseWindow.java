@@ -29,17 +29,16 @@ public class PauseWindow
     private Texture pauseWindow = MyGame.myAssets.getTexture(Assets.PANEL, WINDOW_WIDTH, WINDOW_HEIGHT);
     private Texture resumeText = MyGame.myAssets.getTexture(Assets.RESUME, TEXT_WIDTH, TEXT_HEIGHT);
 
-    private float windowPositionX;
-    private float windowPositionY;
-    private float textPositionX;
-    private float textPositionY;
-    private float resumeX;
-    private float resumeY;
-    private float closeX;
-    private float closeY;
+    private float windowPositionX = Gdx.graphics.getWidth()/2 - pauseWindow.getWidth()/2;
+    private float windowPositionY = Gdx.graphics.getHeight()/2 - pauseWindow.getHeight()/2;
+    private float textPositionX = Gdx.graphics.getWidth()/2 - resumeText.getWidth()/2;
+    private float textPositionY = Gdx.graphics.getHeight()/2;
+    private float resumeX = 0.68f * Gdx.graphics.getWidth();
+    private float resumeY = 0.4f * Gdx.graphics.getHeight();
+    private float closeX = 0.2f * Gdx.graphics.getWidth();
+    private float closeY = 0.4f * Gdx.graphics.getHeight();
 
     private Stage pauseStage = new Stage(new ScreenViewport());
-    private InputMultiplexer inputMultiplexer = new InputMultiplexer();
     private Stage myStage;
     private MainGame mainGame;
 
@@ -51,20 +50,8 @@ public class PauseWindow
 
     public void initializeWindow()
     {
-        windowPositionX = Gdx.graphics.getWidth()/2 - pauseWindow.getWidth()/2;
-        windowPositionY = Gdx.graphics.getHeight()/2 - pauseWindow.getHeight()/2;
-        textPositionX = Gdx.graphics.getWidth()/2 - resumeText.getWidth()/2;
-        textPositionY = Gdx.graphics.getHeight()/2;
-        resumeX = 0.68f * Gdx.graphics.getWidth();
-        resumeY = 0.4f * Gdx.graphics.getHeight();
-        closeX = 0.2f * Gdx.graphics.getWidth();
-        closeY = 0.4f * Gdx.graphics.getHeight();
-
         pauseStage.addActor(resume);
         pauseStage.addActor(close);
-
-        inputMultiplexer.addProcessor(pauseStage);
-        inputMultiplexer.addProcessor(myStage);
 
         resume.setPosition(resumeX, resumeY);
         close.setPosition(closeX, closeY);
@@ -81,6 +68,7 @@ public class PauseWindow
             {
                 MyGame.myAssets.playSound(Assets.SOUND_OF_BUTTON);
                 mainGame.setGameState(GameState.QUIT);
+                Gdx.input.setInputProcessor(myStage);
             }
         });
 
@@ -91,6 +79,7 @@ public class PauseWindow
             {
                 MyGame.myAssets.playSound(Assets.SOUND_OF_BUTTON);
                 mainGame.setGameState(GameState.RUNNING);
+                Gdx.input.setInputProcessor(myStage);
             }
         });
     }
@@ -102,7 +91,7 @@ public class PauseWindow
         MyGame.batch.draw(resumeText, textPositionX, textPositionY, resumeText.getWidth(), resumeText.getHeight());
         MyGame.batch.end();
 
-        Gdx.input.setInputProcessor(inputMultiplexer);
+        Gdx.input.setInputProcessor(pauseStage);
 
         pauseStage.act(Gdx.graphics.getDeltaTime());
         pauseStage.draw();

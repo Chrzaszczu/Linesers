@@ -3,7 +3,9 @@ package com.mygdx.linesers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -13,6 +15,7 @@ public class Lattice
     private List<List<SquareTile>> squareTiles;
     private List<LaserPosition> laserPositions = new LinkedList<>();
     private Animation<TextureRegion> laserAnimation = MyGame.myAssets.prepareAnimation(Assets.LASER, 6, 1, 0.05f);
+    private ConnectionChecker connectionChecker;
 
     private Vector startingTile;
 
@@ -66,59 +69,6 @@ public class Lattice
         return start.getY() + (end.getY() - start.getY())/2;
     }
 
-    public boolean isFinished()
-    {
-        numberOfGlowingFinalTiles = 0;
-
-        for(List<SquareTile> tempSquareTiles: squareTiles)
-        {
-            for(SquareTile sqrTiles: tempSquareTiles)
-            {
-                if(sqrTiles.getClass() == TileFinal.class && sqrTiles.isGlowing())
-                {
-                    numberOfGlowingFinalTiles += 1;
-                }
-            }
-        }
-
-        if(numberOfGlowingFinalTiles == numberOfFinalTiles)
-        {
-            MyGame.myAssets.playSound(Assets.WIN_LASER_SOUND);
-        }
-
-        return numberOfGlowingFinalTiles == numberOfFinalTiles;
-    }
-
-    public void onLatticeTouch()
-    {
-        turnOff();
-
-        for(List<SquareTile> tempSquareTiles: squareTiles)
-        {
-            for(SquareTile sqrTiles: tempSquareTiles)
-            {
-                if(sqrTiles.getImageButton().isPressed())
-                {
-                    sqrTiles.playSound();
-                    sqrTiles.getImageButton().setRotation(sqrTiles.rotateTile(SquareTile.ROTATION_ANGLE_STEP));
-                }
-            }
-        }
-    }
-
-    private void turnOff()
-    {
-        for(List<SquareTile> tempSquareTiles: squareTiles)
-        {
-            for(SquareTile sqrTiles: tempSquareTiles)
-            {
-                sqrTiles.setGlowing(false);
-            }
-        }
-
-        numberOfGlowingFinalTiles = 0;
-    }
-
     public void addActors(Stage myStage)
     {
         for(List<SquareTile> tempSquareTiles: squareTiles)
@@ -161,6 +111,11 @@ public class Lattice
             }
             tileIndexY += 1;
         }
+
+        initializeTilesListener();
+
+        connectionChecker = new ConnectionChecker(getSquareTiles(), getStartingTile(), getLaserPositions());
+        connectionChecker.assambleConnections();
     }
 
     private float setTileSize()
@@ -175,5 +130,54 @@ public class Lattice
     {
         return new Vector((int)(Gdx.graphics.getWidth()/2 - this.tileSize * squareTiles.get(0).size()/2 + this.tileSize * vector.getX()),
                 (int)(Gdx.graphics.getHeight()/2f + this.tileSize * (squareTiles.size()-2f)/2f  - this.tileSize * vector.getY()));
+    }
+
+    private void initializeTilesListener()
+    {
+        for(List<SquareTile> tempSquareTiles: squareTiles)
+        {
+            for(SquareTile sqrTiles: tempSquareTiles)
+            {
+                sqrTiles.getImageButton().addListener(new ClickListener()
+                {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y)
+                    {
+                        sqrTiles.playSound();
+                        sqrTiles.getImageButton().setRotation(rotateTile(sqrTiles));
+                        turnOff();
+                        connectionChecker.assambleConnections();
+
+                        if(connectionChecker.getNumberOfGowingFinalTiles() == numberOfFinalTiles)
+                        {
+                            MyGame.myAssets.playSound(Assets.WIN_LASER_SOUND);
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    private float rotateTile(SquareTile sqrTile)
+    {
+        return sqrTile.rotateTile(SquareTile.ROTATION_ANGLE_STEP);
+    }
+
+    private void turnOff()
+    {
+        for(List<SquareTile> tempSquareTiles: squareTiles)
+        {
+            for(SquareTile sqrTiles: tempSquareTiles)
+            {
+                sqrTiles.setGlowing(false);
+            }
+        }
+
+        numberOfGlowingFinalTiles = 0;
+    }
+
+    public boolean isFinished()
+    {
+        return connectionChecker.getNumberOfGowingFinalTiles() == numberOfFinalTiles;
     }
 }

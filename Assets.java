@@ -34,7 +34,7 @@ public class Assets
     public final static String EXIT_BUTTON = "Exit_BTN.png";
     public final static String RETURN_BUTTON = "Return_BTN.png";
     public final static String PAUSE_BUTTON = "Pause_BTN.png";
-    public final static String OK_BUTTON = "Ok_BTN.png";
+    public final static String OK_BUTTON = "OK_BTN.png";
     public final static String CLOSE_BUTTON = "Close_BTN.png";
     public final static String FORWARD_BUTTON = "Forward_BTN.png";
     public final static String BACKWARD_BUTTON = "Backward_BTN.png";
@@ -191,6 +191,9 @@ public class Assets
 
     public void disposeTextures()
     {
-        disposables.forEach(asset -> asset.dispose());
+        for(Texture asset: disposables)
+        {
+            asset.dispose();
+        }
     }
 }
