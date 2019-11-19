@@ -174,6 +174,8 @@ public class Assets
 
     public void loadAssets()
     {
+        myAssets.clear();
+
         for(String fileName: graphicsList)
         {
             myAssets.load(fileName, Texture.class);
