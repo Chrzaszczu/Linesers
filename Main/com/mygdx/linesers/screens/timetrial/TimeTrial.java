@@ -2,6 +2,7 @@ package Main.com.mygdx.linesers.screens.timetrial;
 
 import Main.com.mygdx.linesers.MyGame;
 import Main.com.mygdx.linesers.assets.Assets;
+import Main.com.mygdx.linesers.levels.timetrial.ScoreCounter;
 import Main.com.mygdx.linesers.screens.GameScreen;
 import Main.com.mygdx.linesers.GameState;
 import Main.com.mygdx.linesers.screens.Menu;

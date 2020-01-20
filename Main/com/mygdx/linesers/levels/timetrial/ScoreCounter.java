@@ -1,4 +1,4 @@
-package Main.com.mygdx.linesers.screens.timetrial;
+package Main.com.mygdx.linesers.levels.timetrial;
 
 import java.util.Date;
 

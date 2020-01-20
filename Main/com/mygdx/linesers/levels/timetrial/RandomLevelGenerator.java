@@ -1,5 +1,7 @@
-package Main.com.mygdx.linesers.levels;
+package Main.com.mygdx.linesers.levels.timetrial;
 
+import Main.com.mygdx.linesers.levels.ConnectionChecker;
+import Main.com.mygdx.linesers.levels.Vector;
 import Main.com.mygdx.linesers.tiles.*;
 
 import java.util.ArrayList;
@@ -55,7 +57,7 @@ public class RandomLevelGenerator
         squareTiles = randomLineArranger.getSquareTiles();
     }
 
-    void clear()
+    public void clear()
     {
         mapSize = new Vector(rollSideLength(), rollSideLength());
         startingTilePosition = rollTilePosition();

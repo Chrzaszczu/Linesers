@@ -1,4 +1,6 @@
-package Main.com.mygdx.linesers.levels;
+package Main.com.mygdx.linesers.levels.timetrial;
+
+import Main.com.mygdx.linesers.levels.Vector;
 
 import java.util.ArrayList;
 import java.util.Arrays;

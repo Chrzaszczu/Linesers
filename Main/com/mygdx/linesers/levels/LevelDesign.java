@@ -1,6 +1,7 @@
 package Main.com.mygdx.linesers.levels;
 
 import Main.com.mygdx.linesers.MyGame;
+import Main.com.mygdx.linesers.levels.timetrial.RandomLevelGenerator;
 import Main.com.mygdx.linesers.tiles.SquareTile;
 import Main.com.mygdx.linesers.tiles.TileFactory;
 import Main.com.mygdx.linesers.tiles.TileType;

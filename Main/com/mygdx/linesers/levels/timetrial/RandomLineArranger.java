@@ -1,5 +1,7 @@
-package Main.com.mygdx.linesers.levels;
+package Main.com.mygdx.linesers.levels.timetrial;
 
+import Main.com.mygdx.linesers.levels.ConnectionChecker;
+import Main.com.mygdx.linesers.levels.Vector;
 import Main.com.mygdx.linesers.tiles.*;
 
 
